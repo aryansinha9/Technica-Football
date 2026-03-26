@@ -1,22 +1,28 @@
-import { Facebook, Twitter, Instagram, Youtube, ChevronLeft, ChevronRight } from 'lucide-react';
+"use client";
+
+import { useState } from 'react';
+import { Facebook, Twitter, Instagram, Youtube, ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import TiltedCard from '../components/TiltedCard';
 
 export default function App() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#0A1F44] text-white overflow-x-hidden font-sans">
       {/* Header */}
-      <header className="relative z-50 flex items-center justify-between px-16 py-6 bg-[#21211f]">
-        <div className="flex items-center">
-          <img src="/HEADER.png" alt="Technica Football" className="h-32 md:h-40 lg:h-48 w-auto object-contain" />
+      <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-6 bg-[#21211f]">
+        <div className="flex items-center z-50">
+          <img src="/HEADER.png" alt="Technica Football" className="h-20 sm:h-24 md:h-32 lg:h-40 w-auto object-contain" />
         </div>
 
-        <nav className="flex items-center gap-8 text-sm uppercase tracking-wide">
-          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">Home</a>
-          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">About</a>
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm uppercase tracking-wide">
+          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">Home</a>
+          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">About</a>
 
           {/* Programs Dropdown */}
           <div className="relative group py-2">
-            <button className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg uppercase flex items-center gap-1 focus:outline-none cursor-pointer">
+            <button className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg uppercase flex items-center gap-1 focus:outline-none cursor-pointer">
               Programs
             </button>
             <div className="absolute top-full left-0 mt-0 bg-[#21211f] border border-gray-700/50 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 py-3 px-2 flex flex-col gap-3">
@@ -29,16 +35,50 @@ export default function App() {
             </div>
           </div>
 
-          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">Contact</a>
-          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">Apparel</a>
+          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">Contact</a>
+          <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">Apparel</a>
         </nav>
 
-        <div className="flex items-center gap-3">
+        {/* Desktop Socials */}
+        <div className="hidden lg:flex items-center gap-2 xl:gap-3">
           <Facebook className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
           <Twitter className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
           <Instagram className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
           <Youtube className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
-          <span className="text-xs ml-2 font-barlow tracking-widest uppercase">ENGLISH (USA)</span>
+          <span className="text-[10px] xl:text-xs ml-1 xl:ml-2 font-barlow tracking-widest uppercase">ENGLISH (USA)</span>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="flex lg:hidden text-white hover:text-orange-500 transition-colors focus:outline-none z-[110]"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+        </button>
+        
+        {/* Mobile Menu Overlay */}
+        <div className={`fixed inset-0 bg-[#21211f] z-[105] flex flex-col pt-32 px-8 overflow-y-auto transition-transform duration-300 ease-in-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <nav className="flex flex-col gap-6 text-xl">
+            <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Home</a>
+            <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">About</a>
+            <div className="font-barlow tracking-widest uppercase text-gray-400">Programs</div>
+            <div className="flex flex-col gap-4 pl-4 border-l border-gray-700">
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Term Program</a>
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Individual Sessions</a>
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Primary School Program</a>
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Preschool Program</a>
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Holiday Clinic</a>
+              <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">OSH/Vacation Care</a>
+            </div>
+            <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Contact</a>
+            <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Apparel</a>
+          </nav>
+          <div className="flex items-center justify-start gap-6 mt-8 mb-12">
+            <Facebook className="w-6 h-6 cursor-pointer hover:text-orange-500 transition-colors" />
+            <Twitter className="w-6 h-6 cursor-pointer hover:text-orange-500 transition-colors" />
+            <Instagram className="w-6 h-6 cursor-pointer hover:text-orange-500 transition-colors" />
+            <Youtube className="w-6 h-6 cursor-pointer hover:text-orange-500 transition-colors" />
+          </div>
         </div>
       </header>
 
@@ -55,16 +95,16 @@ export default function App() {
         </div>
 
         {/* Navigation arrows */}
-        <button className="absolute left-8 top-[37.5vh] -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors z-50">
-          <ChevronLeft className="w-6 h-6" />
+        <button className="absolute left-4 sm:left-8 top-[37.5vh] -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors z-50">
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
-        <button className="absolute right-8 top-[37.5vh] -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors z-50">
-          <ChevronRight className="w-6 h-6" />
+        <button className="absolute right-4 sm:right-8 top-[37.5vh] -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-colors z-50">
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Back Text Layer (Bottom layer - shows ICA) */}
-        <div className="absolute top-0 inset-x-0 h-[75vh] z-20 flex items-center justify-center translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-40 pointer-events-none">
-          <h1 className="text-[150px] sm:text-[220px] md:text-[300px] lg:text-[450px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
+        <div className="absolute top-0 inset-x-0 h-[75vh] z-20 flex items-center justify-center translate-x-0 sm:translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-20 sm:-translate-y-40 pointer-events-none">
+          <h1 className="text-[12vw] sm:text-[180px] md:text-[300px] lg:text-[450px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
             <span className="text-transparent">TECHN</span><span>ICA</span>
           </h1>
         </div>
@@ -74,15 +114,15 @@ export default function App() {
           <img
             src="/PERSON.png"
             alt="Hero Person"
-            className="w-auto object-contain object-bottom translate-y-[22%] translate-x-[30%]"
+            className="w-auto object-contain object-bottom translate-y-[15%] sm:translate-y-[22%] translate-x-[15%] sm:translate-x-[20%] md:translate-x-[30%]"
             style={{ height: '135%' }}
             draggable="false"
           />
         </div>
 
         {/* Front Text Layer (Top layer - shows TECHN) */}
-        <div className="absolute top-0 inset-x-0 h-[75vh] z-50 flex items-center justify-center translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-40 pointer-events-none">
-          <h1 className="text-[150px] sm:text-[220px] md:text-[300px] lg:text-[450px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
+        <div className="absolute top-0 inset-x-0 h-[75vh] z-50 flex items-center justify-center translate-x-0 sm:translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-20 sm:-translate-y-40 pointer-events-none">
+          <h1 className="text-[12vw] sm:text-[180px] md:text-[300px] lg:text-[450px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
             <span>TECHN</span><span className="text-transparent">ICA</span>
           </h1>
         </div>
