@@ -13,7 +13,7 @@ export default function App() {
         <nav className="flex items-center gap-8 text-sm uppercase tracking-wide">
           <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">Home</a>
           <a href="#" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg">About</a>
-          
+
           {/* Programs Dropdown */}
           <div className="relative group py-2">
             <button className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-lg uppercase flex items-center gap-1 focus:outline-none cursor-pointer">
@@ -123,7 +123,7 @@ export default function App() {
             <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-24 md:h-28 w-auto object-contain" />
             <p className="font-bold text-xl md:text-2xl font-barlow uppercase tracking-wider">"Voted 'Best New Business 2024'"</p>
           </div>
-          
+
           <div className="flex items-center gap-6">
             <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-24 md:h-28 w-auto object-contain" />
             <p className="font-semibold text-gray-600 font-barlow uppercase text-xl md:text-2xl tracking-wide">We accept Active Kids vouchers</p>
@@ -240,75 +240,75 @@ export default function App() {
 
         {/* Top Training Kit Logo */}
         <img src="/Training Kit.png" alt="Training Kit Logo" className="relative z-30 h-32 md:h-48 lg:h-64 w-auto mb-16 object-contain drop-shadow-lg" />
-        
+
         <div className="relative w-full max-w-[1800px] mx-auto text-center transition-colors duration-500 rounded-xl overflow-hidden shadow-2xl group border-[8px] border-[#f0722b]">
-          <img src="/my-project-page-1.png" alt="Official Training Kit" className="w-full h-auto object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
-          
+          <img src="/hf_20260326_025351_984450de-0fd3-4c6d-aa27-e0f859f76c78.jpeg" alt="Official Training Kit" className="w-full h-auto object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+
           {/* Overlay container for the 4 interactive cards */}
           <div className="absolute inset-0 flex items-center justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-16 px-4 md:px-12 w-full h-full">
             <div className="w-1/4 max-w-[280px] aspect-[4/5] flex items-center justify-center drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              <TiltedCard 
-                imageSrc="/JEARSY.webp" 
-                altText="Jersey" 
-                containerHeight="100%" 
-                containerWidth="100%" 
-                imageHeight="100%" 
-                imageWidth="100%" 
-                rotateAmplitude={12} 
-                scaleOnHover={1.05} 
-                showMobileWarning={false} 
-                showTooltip={false} 
-                displayOverlayContent={false} 
+              <TiltedCard
+                imageSrc="/JEARSY.webp"
+                altText="Jersey"
+                containerHeight="100%"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={12}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={false}
               />
             </div>
             <div className="w-1/4 max-w-[280px] aspect-[4/5] flex items-center justify-center drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              <TiltedCard 
-                imageSrc="/SHORTS (1).webp" 
-                altText="Shorts" 
-                containerHeight="100%" 
-                containerWidth="100%" 
-                imageHeight="100%" 
-                imageWidth="100%" 
-                rotateAmplitude={12} 
-                scaleOnHover={1.05} 
-                showMobileWarning={false} 
-                showTooltip={false} 
-                displayOverlayContent={false} 
+              <TiltedCard
+                imageSrc="/SHORTS (1).webp"
+                altText="Shorts"
+                containerHeight="100%"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={12}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={false}
               />
             </div>
             <div className="w-1/4 max-w-[280px] aspect-[4/5] flex items-center justify-center drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              <TiltedCard 
-                imageSrc="/LONGSLEEVE (1).webp" 
-                altText="Long Sleeve" 
-                containerHeight="100%" 
-                containerWidth="100%" 
-                imageHeight="100%" 
-                imageWidth="100%" 
-                rotateAmplitude={12} 
-                scaleOnHover={1.05} 
-                showMobileWarning={false} 
-                showTooltip={false} 
-                displayOverlayContent={false} 
+              <TiltedCard
+                imageSrc="/LONGSLEEVE (1).webp"
+                altText="Long Sleeve"
+                containerHeight="100%"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={12}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={false}
               />
             </div>
             <div className="w-1/4 max-w-[280px] aspect-[4/5] flex items-center justify-center drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              <TiltedCard 
-                imageSrc="/PANTS.png" 
-                altText="Pants" 
-                containerHeight="100%" 
-                containerWidth="100%" 
-                imageHeight="100%" 
-                imageWidth="100%" 
-                rotateAmplitude={12} 
-                scaleOnHover={1.05} 
-                showMobileWarning={false} 
-                showTooltip={false} 
-                displayOverlayContent={false} 
+              <TiltedCard
+                imageSrc="/PANTS.png"
+                altText="Pants"
+                containerHeight="100%"
+                containerWidth="100%"
+                imageHeight="100%"
+                imageWidth="100%"
+                rotateAmplitude={12}
+                scaleOnHover={1.05}
+                showMobileWarning={false}
+                showTooltip={false}
+                displayOverlayContent={false}
               />
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Semantic Header */}
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-bold mt-20 uppercase tracking-widest text-center">
           <span className="text-white">Official</span>{" "}
