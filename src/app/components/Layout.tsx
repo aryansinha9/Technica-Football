@@ -14,7 +14,7 @@ export default function Layout() {
       <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-4 bg-[#21211f]">
         <div className="flex items-center z-50">
           <Link to="/" onClick={closeMenu}>
-            <img src="/Header.png" alt="Technica Football" className="h-28 sm:h-32 md:h-40 lg:h-40 w-auto object-contain" />
+            <img src="/HEADER.png" alt="Technica Football" className="h-28 sm:h-32 md:h-40 lg:h-40 w-auto object-contain" />
           </Link>
         </div>
 
