@@ -81,6 +81,8 @@ export default function CMSCoaches() {
               <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0], 'new')} className="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#0A1F44] file:text-white file:text-xs file:font-bold file:cursor-pointer" />
               {uploading && <p className="text-xs text-gray-400 mt-1">Uploading...</p>}
               {newData.image_url && <img src={newData.image_url} alt="preview" className="mt-2 h-16 rounded-lg object-cover" />}
+              <p className="text-xs text-gray-400 mt-2">Or enter URL manually:</p>
+              <input className={`${inputCls} mt-1`} value={newData.image_url || ''} onChange={e => setNewData(d => ({ ...d, image_url: e.target.value }))} placeholder="/filename.png or https://..." />
             </div>
           </div>
           <div><label className={labelCls}>Bio *</label><textarea className={`${inputCls} min-h-[80px]`} value={newData.bio} onChange={e => setNewData(d => ({ ...d, bio: e.target.value }))} placeholder="Coach biography" /></div>
@@ -122,6 +124,7 @@ export default function CMSCoaches() {
                   {editData.image_url && <img src={editData.image_url} alt="current" className="h-14 rounded-lg object-cover mb-2" />}
                   <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0], 'edit')} className="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#0A1F44] file:text-white file:text-xs file:font-bold file:cursor-pointer" />
                   {uploading && <p className="text-xs text-gray-400 mt-1">Uploading...</p>}
+                  <input className={`${inputCls} mt-2`} value={editData.image_url || ''} onChange={e => setEditData(d => ({ ...d, image_url: e.target.value }))} placeholder="Or paste URL" />
                 </div>
               </div>
               <div><label className={labelCls}>Bio</label><textarea className={`${inputCls} min-h-[80px]`} value={editData.bio} onChange={e => setEditData(d => ({ ...d, bio: e.target.value }))} /></div>
