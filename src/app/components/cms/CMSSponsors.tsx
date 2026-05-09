@@ -70,8 +70,6 @@ export default function CMSSponsors() {
             <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleLogoUpload(e.target.files[0], 'new')} className="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#0A1F44] file:text-white file:text-xs file:font-bold file:cursor-pointer" />
             {uploading && <p className="text-xs text-gray-400 mt-1">Uploading...</p>}
             {newData.logo_url && <img src={newData.logo_url} alt="preview" className="mt-2 h-12 object-contain" />}
-            <p className="text-xs text-gray-400 mt-2">Or enter URL manually:</p>
-            <input className={`${inputCls} mt-1`} value={newData.logo_url} onChange={e => setNewData(d => ({ ...d, logo_url: e.target.value }))} placeholder="/filename.png or https://..." />
           </div>
           <div className="flex gap-3">
             <button onClick={handleAdd} disabled={saving || uploading} className="flex items-center gap-2 bg-[#0A1F44] text-white text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl hover:bg-[#f0722b] transition-colors disabled:opacity-50">
@@ -106,7 +104,6 @@ export default function CMSSponsors() {
                 <label className={labelCls}>Logo</label>
                 {editData.logo_url && <img src={editData.logo_url} alt="current" className="h-12 object-contain mb-2" />}
                 <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleLogoUpload(e.target.files[0], 'edit')} className="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#0A1F44] file:text-white file:text-xs file:font-bold file:cursor-pointer" />
-                <input className={`${inputCls} mt-2`} value={editData.logo_url} onChange={e => setEditData(d => ({ ...d, logo_url: e.target.value }))} placeholder="Or paste URL" />
               </div>
               <div className="flex gap-3">
                 <button onClick={() => handleSaveEdit(s.id)} disabled={saving || uploading} className="flex items-center gap-2 bg-[#0A1F44] text-white text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl hover:bg-[#f0722b] transition-colors disabled:opacity-50">
