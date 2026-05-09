@@ -4,23 +4,12 @@ import { Link } from 'react-router';
 import TiltedCard from '../../components/TiltedCard';
 import ExploreButton from '../components/ExploreButton';
 import FillSweepButton from '../components/FillSweepButton';
-
-const testimonials = [
-  {
-    quote:
-      "Thanks Mckenzie you are the best. When we first came to him my son (who is Autistic) can't even reciprocate anything and even didn't have any concept of soccer. With Mckenzie's amazing patience and commendable coaching after 1 year now he knows dribble, pass, touch, kick and goal. Mckenzie is great.",
-    name: 'Attrayee',
-    location: 'NSW',
-  },
-  {
-    quote:
-      "Great investment in the lives of these young lives! Technica Football what you are doing in a world that is challenging ALL of us! Feel proud.",
-    name: 'Vera',
-    location: 'NSW',
-  },
-];
+import { useTestimonials, usePrograms, useSponsors } from '../lib/useSiteContent';
 
 export default function HomePage() {
+  const { testimonials } = useTestimonials();
+  const { programs } = usePrograms(true);
+  const { sponsors } = useSponsors();
   const [_activeSlide, setActiveSlide] = useState(0);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [fading, setFading] = useState(false);
@@ -208,15 +197,8 @@ export default function HomePage() {
             className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {[
-              { label: 'Seasonal', ages: 'Ages 4–12', title: 'Term Program', desc: 'An 8-week structured seasonal program running throughout the school term. Weekly sessions built around technical skill development, game intelligence, and teamwork.', to: '/programs/term-program' },
-              { label: 'Personalised', ages: 'All Ages', title: 'Private Sessions', desc: 'One-on-one coaching tailored specifically to your player\'s unique needs and goals. Perfect for targeted skill development, confidence building, and rapid improvement.', to: '/programs/private-sessions' },
-              { label: 'Community', ages: 'Ages 5–15', title: 'Club Technica Training', desc: 'Train with the Technica Football community. Group sessions focused on technical development, teamwork, and building the club culture that drives players to excel.', to: '/programs' },
-              { label: 'Elite Pathway', ages: 'Ages 8–16', title: 'Academy Development Squad', desc: 'An elite development pathway for players serious about reaching the next level. High-performance sessions covering advanced technique, tactical intelligence, and conditioning.', to: '/programs' },
-              { label: 'Holiday', ages: 'Ages 5–15', title: 'Holiday Clinic', desc: 'Intensive multi-day camps during school holidays. A fantastic opportunity for players to develop skills, build new friendships, and keep active throughout the break.', to: '/programs/holiday-clinic' },
-              { label: 'Care Programs', ages: 'K–6', title: 'Vacation Care', desc: 'Structured, high-energy incursions for vacation care centres. Focused on developing core football skills in a safe, supportive environment. All abilities welcome.', to: '/programs/vacation-care' },
-            ].map(program => (
-              <div key={program.title} className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer border border-gray-100">
+            {programs.map(program => (
+              <div key={program.id} className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer border border-gray-100">
                 <div className="h-56 bg-gray-200 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#013068] to-[#0A1F44] opacity-10 group-hover:opacity-20 transition-opacity" />
                   <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-base tracking-widest uppercase font-barlow">Photo Coming Soon</div>
@@ -225,8 +207,8 @@ export default function HomePage() {
                   <div className="text-sm uppercase text-orange-500 font-bold mb-1 tracking-widest font-barlow">{program.label}</div>
                   <div className="text-xs uppercase text-gray-400 font-barlow tracking-widest mb-3">{program.ages}</div>
                   <h3 className="text-2xl font-bold mb-4 text-[#0A1F44]">{program.title}</h3>
-                  <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{program.desc}</p>
-                  <Link to={program.to} className="text-orange-500 font-bold flex items-center gap-2 group-hover:gap-4 transition-all font-barlow tracking-widest text-lg">
+                  <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{program.description}</p>
+                  <Link to={program.href} className="text-orange-500 font-bold flex items-center gap-2 group-hover:gap-4 transition-all font-barlow tracking-widest text-lg">
                     LEARN MORE <ChevronRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -235,7 +217,7 @@ export default function HomePage() {
           </div>
           {/* Pagination dots */}
           <div className="flex justify-center gap-3 mt-8">
-            {[...Array(6)].map((_, i) => (
+            {programs.map((_, i) => (
               <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i === activeProgramIndex ? 'w-10 bg-orange-500' : 'w-4 bg-gray-500/50'}`} />
             ))}
           </div>
@@ -283,17 +265,21 @@ export default function HomePage() {
               className="transition-opacity duration-[250ms] ease-in-out w-full"
               style={{ opacity: fading ? 0 : 1 }}
             >
-              <p className="text-lg md:text-xl text-white/95 leading-relaxed font-light mb-8 max-w-3xl mx-auto">
-                "{testimonials[testimonialIndex].quote}"
-              </p>
-              <div>
-                <p className="font-black text-2xl md:text-3xl tracking-wide text-white mb-1">
-                  {testimonials[testimonialIndex].name}
-                </p>
-                <p className="font-barlow font-bold tracking-widest uppercase text-white/70 text-sm">
-                  {testimonials[testimonialIndex].location}
-                </p>
-              </div>
+              {testimonials.length > 0 && (
+                <>
+                  <p className="text-lg md:text-xl text-white/95 leading-relaxed font-light mb-8 max-w-3xl mx-auto">
+                    "{testimonials[testimonialIndex]?.quote}"
+                  </p>
+                  <div>
+                    <p className="font-black text-2xl md:text-3xl tracking-wide text-white mb-1">
+                      {testimonials[testimonialIndex]?.name}
+                    </p>
+                    <p className="font-barlow font-bold tracking-widest uppercase text-white/70 text-sm">
+                      {testimonials[testimonialIndex]?.location}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -463,20 +449,16 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-5xl font-black mb-24 tracking-wider">OUR PARTNERS</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 lg:gap-20 items-center justify-items-center opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-            {[
-              { src: '/greg-the-jeweller.png', alt: 'Greg the Jeweller', href: 'https://www.facebook.com/profile.php?id=100057316867195' },
-              { src: '/freshpromotions.png', alt: 'Fresh Promotions', href: 'https://www.freshpromotions.com.au/' },
-              { src: '/grilld.png', alt: "Grill'd", href: 'https://grilld.com.au/' },
-            ].map(sponsor => (
+            {sponsors.map(sponsor => (
               <a
-                key={sponsor.alt}
-                href={sponsor.href}
+                key={sponsor.id}
+                href={sponsor.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={sponsor.alt}
+                aria-label={sponsor.name}
                 className="flex items-center justify-center w-72 h-36 hover:scale-105 transition-transform duration-300"
               >
-                <img src={sponsor.src} alt={sponsor.alt} className="max-h-28 max-w-[260px] w-auto h-auto object-contain" />
+                <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-28 max-w-[260px] w-auto h-auto object-contain" />
               </a>
             ))}
           </div>

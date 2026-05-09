@@ -1,8 +1,10 @@
 import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
+import { useProgramPage } from '../lib/useSiteContent';
 
 export default function ClubTechnikaTrainingPage() {
+  const { page, loading } = useProgramPage('club-technica-training');
   return (
     <>
       <PageHero title="Club Technica Training" subtitle="Community Training Sessions" bottomColor="#f3f4f6" />
@@ -23,8 +25,8 @@ export default function ClubTechnikaTrainingPage() {
           </p>
           <div className="h-1 bg-[#f0722b] rounded-full w-24 mx-auto mb-10" />
 
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-4">
-            Club Technica Training is a community group training program focused on technical development, teamwork, and building the Technica Football culture.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-4 whitespace-pre-wrap">
+            {page?.about_text || `Club Technica Training is a community group training program focused on technical development, teamwork, and building the Technica Football culture.`}
           </p>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-12">
             Program details, session schedules, and online bookings will be available very soon. In the meantime, reach out to us directly with any questions.

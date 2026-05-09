@@ -1,31 +1,9 @@
 import { ShieldCheck, Camera } from 'lucide-react';
 import PageHero from '../components/PageHero';
-
-const coaches = [
-  {
-    name: 'Mackenzie Dunn',
-    role: 'Director & Head Coach',
-    bio: 'Started Technica Football in 2022 with the vision of developing respectful, technical, and resilient players. 7+ years coaching experience. Represented U18 AC Milan Academy and played competitive football.',
-    team: 'Manchester United',
-    initials: 'MD',
-  },
-  {
-    name: 'Najeeb Farooqi',
-    role: 'Co-Director & Coach',
-    bio: 'Primary school PE teacher with a passion for youth development through sport. Brings structured, engaging training methods that make football both fun and purposeful.',
-    team: 'Liverpool',
-    initials: 'NF',
-  },
-  {
-    name: 'Daniel Walsh',
-    role: 'Coach',
-    bio: 'Part of the Technica family since 2023. Works in before and after school care, specialising in primary school and holiday programs. Passionate about creating positive early experiences with the game.',
-    team: 'Chelsea',
-    initials: 'DW',
-  },
-];
+import { useCoaches } from '../lib/useSiteContent';
 
 export default function AboutPage() {
+  const { coaches } = useCoaches();
   return (
     <>
       <PageHero title="About Us" subtitle="Our Story & Team" bottomColor="#f3f4f6" />
@@ -65,23 +43,31 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {coaches.map((coach) => (
               <div
-                key={coach.name}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 group"
+                key={coach.id}
+                className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:bg-white/10 hover:border-orange-500/30 transition-all duration-300 group flex flex-col"
               >
-                {/* Photo placeholder */}
-                <div className="w-full aspect-square bg-white/5 flex flex-col items-center justify-center border-b border-white/10 group-hover:bg-white/10 transition-colors">
-                  <Camera className="w-14 h-14 text-white/20 mb-3" />
-                  <span className="font-barlow text-xs tracking-widest uppercase text-white/25">Photo Coming Soon</span>
+                {/* Photo area */}
+                <div className="w-full aspect-square bg-white/5 flex flex-col items-center justify-center border-b border-white/10 group-hover:bg-white/10 transition-colors overflow-hidden shrink-0">
+                  {coach.image_url ? (
+                    <img src={coach.image_url} alt={coach.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <Camera className="w-14 h-14 text-white/20 mb-3" />
+                      <span className="font-barlow text-xs tracking-widest uppercase text-white/25">Photo Coming Soon</span>
+                    </>
+                  )}
                 </div>
                 {/* Content */}
-                <div className="p-6 md:p-8">
+                <div className="p-6 md:p-8 flex-1 flex flex-col">
                   <div className="text-orange-500 font-barlow font-bold text-sm tracking-widest uppercase mb-1">{coach.role}</div>
                   <h3 className="text-2xl font-black mb-3 text-white">{coach.name}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed mb-5">{coach.bio}</p>
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-white/40 font-barlow tracking-widest uppercase text-xs">Favourite Team:</span>
-                    <span className="text-white/80 font-semibold">{coach.team}</span>
-                  </div>
+                  <p className="text-white/70 text-sm leading-relaxed mb-5 flex-1">{coach.bio}</p>
+                  {coach.team && (
+                    <div className="flex items-center gap-2 text-sm mt-auto pt-4 border-t border-white/10">
+                      <span className="text-white/40 font-barlow tracking-widest uppercase text-xs">Favourite Team:</span>
+                      <span className="text-white/80 font-semibold">{coach.team}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

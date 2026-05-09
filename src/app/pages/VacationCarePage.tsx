@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ChevronRight, Send, Target, Shield, Clock, MapPin, Users } from 'lucide-react';
+import { ChevronRight, Send, Target, Shield, Clock, MapPin, Users, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
+import { useProgramPage } from '../lib/useSiteContent';
 
 const sessionStructure = [
   'Introduction + Warm-Up Games',
@@ -11,6 +12,7 @@ const sessionStructure = [
 ];
 
 export default function VacationCarePage() {
+  const { page, loading } = useProgramPage('vacation-care');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -61,12 +63,8 @@ export default function VacationCarePage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">ABOUT THE PROGRAM</h2>
           <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-8" />
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
-            Our Vacation Care program offers a structured, high-energy incursion for K–6. This program is an excellent
-            opportunity for students to keep active, develop their skills and have fun. Our program includes individual
-            and group activities that focus on developing the core skills of football (dribbling, passing and touch).
-            Delivered in a safe and supportive sporting environment where children can develop physically, socially and
-            mentally. Available for all ages and abilities with no prior experience required.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light whitespace-pre-wrap">
+            {page?.about_text || `Our Vacation Care program offers a structured, high-energy incursion for K–6. This program is an excellent opportunity for students to keep active, develop their skills and have fun. Our program includes individual and group activities that focus on developing the core skills of football (dribbling, passing and touch). Delivered in a safe and supportive sporting environment where children can develop physically, socially and mentally. Available for all ages and abilities with no prior experience required.`}
           </p>
         </div>
       </section>
@@ -86,10 +84,9 @@ export default function VacationCarePage() {
               <Target className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-black mb-3 text-white">Technical Development</h3>
-              <p className="text-white/85 leading-relaxed">
-                We focus on developing the key football skills that create a technical player — passing, dribbling,
-                touch, defending and shooting through individual and group activities.
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Technical Development'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
+                {page?.card1_text || 'We focus on developing the key football skills that create a technical player — passing, dribbling, touch, defending and shooting through individual and group activities.'}
               </p>
             </div>
           </div>
@@ -101,10 +98,9 @@ export default function VacationCarePage() {
               <Shield className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-black mb-3 text-white">Supportive Environment</h3>
-              <p className="text-white/85 leading-relaxed">
-                Experienced coaches trained to provide positive reinforcement and encouragement — ensuring everyone is
-                comfortable and having fun throughout every session.
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Supportive Environment'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
+                {page?.card2_text || 'Experienced coaches trained to provide positive reinforcement and encouragement — ensuring everyone is comfortable and having fun throughout every session.'}
               </p>
             </div>
           </div>
@@ -130,32 +126,32 @@ export default function VacationCarePage() {
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Program Duration</p>
-                  <p className="text-white/80">Once-off incursions for Vacation Care centres during school holidays.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[0]?.label || 'Program Duration'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[0]?.value || 'Once-off incursions for Vacation Care centres during school holidays.'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Session Length</p>
-                  <p className="text-white/80">1.5 – 2 hours.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[1]?.label || 'Session Length'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[1]?.value || '1.5 – 2 hours.'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Location</p>
-                  <p className="text-white/80">On school / centre grounds.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Location'}</p>
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || 'On school / centre grounds.' }} />
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <Users className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Cost</p>
-                  <p className="text-white/80">Determined based on number of participants and program type.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[3]?.label || 'Cost'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[3]?.value || 'Determined based on number of participants and program type.'}</p>
                 </div>
               </div>
             </div>

@@ -1,9 +1,10 @@
-import { ChevronRight, Clock, MapPin, DollarSign, Target, Zap, CalendarCheck, Users } from 'lucide-react';
+import { ChevronRight, Clock, MapPin, DollarSign, Target, Zap, CalendarCheck, Users, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
 import { termClasses } from '../data/termClasses';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { useProgramPage } from '../lib/useSiteContent';
 
 const enrollSteps = [
   'Choose a class/day from the schedule below.',
@@ -13,6 +14,7 @@ const enrollSteps = [
 ];
 
 export default function TermProgramPage() {
+  const { page, loading } = useProgramPage('term-program');
   const [spots, setSpots] = useState<Record<string, number>>({});
 
   useEffect(() => {
@@ -33,8 +35,8 @@ export default function TermProgramPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">ABOUT THE PROGRAM</h2>
           <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-8" />
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
-            Our Term Program offers weekly training sessions in an 8-week program designed for ages 4–12 years. This program is designed to develop players' technical abilities, game sense and overall fitness. We aim for players to develop key skills of dribbling, first touch and passing through various individual, group and game-realistic scenarios. It follows a similar structure to the NSW school timetable dates. Available for all ages and abilities with no prior experience required.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light whitespace-pre-wrap">
+            {page?.about_text || `Our Term Program offers weekly training sessions in an 8-week program designed for ages 4–12 years. This program is designed to develop players' technical abilities, game sense and overall fitness. We aim for players to develop key skills of dribbling, first touch and passing through various individual, group and game-realistic scenarios. It follows a similar structure to the NSW school timetable dates. Available for all ages and abilities with no prior experience required.`}
           </p>
         </div>
       </section>
@@ -54,8 +56,8 @@ export default function TermProgramPage() {
             </div>
             <div className="p-8">
               <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 4–8</div>
-              <h3 className="text-2xl font-black mb-3 text-white">Foundation Class</h3>
-              <p className="text-white/85 leading-relaxed">Our foundation classes are designed for players aged 4–8 years. Developing gross motor skills and the fundamental skills of football in a non-competitive, supportive environment.</p>
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Foundation Class'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card1_text || 'Our foundation classes are designed for players aged 4–8 years. Developing gross motor skills and the fundamental skills of football in a non-competitive, supportive environment.'}</p>
             </div>
           </div>
           <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
@@ -64,9 +66,9 @@ export default function TermProgramPage() {
               <Zap className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
             </div>
             <div className="p-8">
-              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 8–12</div>
-              <h3 className="text-2xl font-black mb-3 text-white">Elite Class</h3>
-              <p className="text-white/85 leading-relaxed">Our elite classes are designed for players aged 8–12 years. Focused on progressing fundamental skills in game-realistic scenarios with more advanced technical and tactical drills.</p>
+              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 9–12</div>
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Elite Class'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card2_text || 'Designed for players aged 9–12 years. Enhancing the player\'s knowledge of the game whilst refining their core skills (dribbling, first touch, passing and shooting).'}</p>
             </div>
           </div>
         </div>
@@ -87,30 +89,26 @@ export default function TermProgramPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Program Duration</p>
-                  <p className="text-white/80">8 weeks per term.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[0]?.label || 'Program Duration'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[0]?.value || '8 weeks per term (aligned with NSW school terms).'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Session Length</p>
-                  <ul className="text-white/80 space-y-1"><li>Foundation — 45 minutes</li><li>Elite — 1 hour</li></ul>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[1]?.label || 'Session Length'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[1]?.value || '1 hour per session.'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Locations</p>
-                  <ul className="text-white/80 space-y-1">
-                    <li>The Ponds (Fyfe Rd &amp; Carindale St)</li>
-                    <li className="text-white/40 text-sm italic">*Sessions will NOT be at Peel Reserve</li>
-                    <li>Marsden Park (Term 3)</li>
-                  </ul>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• Wright Reserve, Quakers Hill' }} />
                 </div>
               </div>
             </div>
@@ -118,11 +116,8 @@ export default function TermProgramPage() {
               <div className="flex items-start gap-4">
                 <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div className="w-full">
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">Cost</p>
-                  <ul className="text-white/80 space-y-2">
-                    <li className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-[#f0722b] shrink-0" /><span><span className="font-bold text-white">$189</span> — Foundation <span className="text-white/50 text-sm">(Active Kids Accepted)</span></span></li>
-                    <li className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-[#f0722b] shrink-0" /><span><span className="font-bold text-white">$209</span> — Elite <span className="text-white/50 text-sm">(Active Kids Accepted)</span></span></li>
-                  </ul>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Cost'}</p>
+                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• $135 — Full 8-Week Term<br/>• $20 — Single Trial Session' }} />
                 </div>
               </div>
               <div className="border-t border-white/10" />

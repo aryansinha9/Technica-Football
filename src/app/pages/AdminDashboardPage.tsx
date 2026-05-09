@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { LogOut, Download, Loader2, Save, ChevronDown, ChevronUp, Trash2, AlertTriangle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -263,7 +263,7 @@ export default function AdminDashboardPage() {
                   <tr><td colSpan={9} className="px-4 py-12 text-center text-gray-400">No bookings found.</td></tr>
                 )}
                 {filtered.map((b, i) => (
-                  <>
+                  <React.Fragment key={b.id}>
                     {/* ── Summary Row ── */}
                     <tr
                       key={b.id}
@@ -356,7 +356,7 @@ export default function AdminDashboardPage() {
                         </td>
                       </tr>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>

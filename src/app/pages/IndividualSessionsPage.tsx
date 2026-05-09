@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { ChevronRight, Send, Target, Sliders, Clock, MapPin, DollarSign } from 'lucide-react';
+import { ChevronRight, Send, Target, Sliders, Clock, MapPin, DollarSign, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
+import { useProgramPage } from '../lib/useSiteContent';
 
 export default function IndividualSessionsPage() {
+  const { page, loading } = useProgramPage('individual-sessions');
   const [formData, setFormData] = useState({
     playerFirstName: '',
     playerLastName: '',
@@ -56,12 +58,8 @@ export default function IndividualSessionsPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">ABOUT THE PROGRAM</h2>
           <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-8" />
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
-            Our individual sessions are primarily focused on the player — we work directly on what the player wants to
-            achieve. We discuss areas that challenge the player and where they want to improve in the game. All our
-            sessions involve ball mastery, perfecting the fundamental skills of the game (first touch, dribbling and
-            passing) assisted with strength and conditioning training. Specialised training for all positions including
-            wingers, strikers, defenders and mid-fielders, with drills and activities to accompany their position.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light whitespace-pre-wrap">
+            {page?.about_text || `Our individual sessions are primarily focused on the player — we work directly on what the player wants to achieve. We discuss areas that challenge the player and where they want to improve in the game. All our sessions involve ball mastery, perfecting the fundamental skills of the game (first touch, dribbling and passing) assisted with strength and conditioning training. Specialised training for all positions including wingers, strikers, defenders and mid-fielders, with drills and activities to accompany their position.`}
           </p>
         </div>
       </section>
@@ -80,10 +78,9 @@ export default function IndividualSessionsPage() {
               <Target className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-black mb-3 text-white">Technical Development</h3>
-              <p className="text-white/85 leading-relaxed">
-                Sessions focused on developing the key football skills that create a technical player — passing,
-                dribbling and first touch used in game-realistic scenarios.
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Technical Development'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
+                {page?.card1_text || 'Sessions focused on developing the key football skills that create a technical player — passing, dribbling and first touch used in game-realistic scenarios.'}
               </p>
             </div>
           </div>
@@ -93,10 +90,9 @@ export default function IndividualSessionsPage() {
               <Sliders className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
             </div>
             <div className="p-8">
-              <h3 className="text-2xl font-black mb-3 text-white">Tailored Sessions</h3>
-              <p className="text-white/85 leading-relaxed">
-                Each session is tailored towards the player — aimed to focus on what they want to achieve, areas of
-                struggle and position-specific drills that replicate real game scenarios.
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Tailored Sessions'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
+                {page?.card2_text || 'Each session is tailored towards the player — aimed to focus on what they want to achieve, areas of struggle and position-specific drills that replicate real game scenarios.'}
               </p>
             </div>
           </div>
@@ -120,28 +116,24 @@ export default function IndividualSessionsPage() {
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Program Duration</p>
-                  <p className="text-white/80">Sessions can be scheduled on a weekly basis.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[0]?.label || 'Program Duration'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[0]?.value || 'Sessions can be scheduled on a weekly basis.'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Session Length</p>
-                  <p className="text-white/80">45 minutes or 1 hour per session.</p>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[1]?.label || 'Session Length'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[1]?.value || '45 minutes or 1 hour per session.'}</p>
                 </div>
               </div>
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">Locations</p>
-                  <ul className="text-white/80 space-y-1">
-                    <li>The Ponds (Fyfe Rd)</li>
-                    <li>Russell Reserve</li>
-                    <li>Hills Centenary</li>
-                  </ul>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• The Ponds (Fyfe Rd)<br/>• Russell Reserve<br/>• Hills Centenary' }} />
                 </div>
               </div>
             </div>
@@ -149,21 +141,8 @@ export default function IndividualSessionsPage() {
               <div className="flex items-start gap-4">
                 <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div className="w-full">
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">Cost</p>
-                  <ul className="text-white/80 space-y-2">
-                    <li className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#f0722b] shrink-0" />
-                      <span><span className="font-bold text-white">$60</span> — 45-minute session (1 player)</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#f0722b] shrink-0" />
-                      <span><span className="font-bold text-white">$75</span> — 1-hour session (1 player)</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#f0722b] shrink-0" />
-                      <span>Bundles for <span className="font-bold text-white">3 or 5 sessions</span> with discounts available</span>
-                    </li>
-                  </ul>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Cost'}</p>
+                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• $60 — 45-minute session (1 player)<br/>• $75 — 1-hour session (1 player)<br/>• Bundles for 3 or 5 sessions with discounts available' }} />
                 </div>
               </div>
               <div className="border-t border-white/10" />

@@ -1,65 +1,20 @@
-import { ChevronRight, Clock, User, Users, Trophy, Sun, Building } from 'lucide-react';
+import { ChevronRight, Clock, User, Users, Trophy, Sun, Building, LucideIcon } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
+import { usePrograms } from '../lib/useSiteContent';
 
-const programs = [
-  {
-    icon: Clock,
-    label: 'Seasonal',
-    title: 'Term Program',
-    ages: 'Ages 5–15',
-    href: '/programs/term-program',
-    description:
-      'Our flagship structured seasonal program runs throughout the school term, providing consistent weekly sessions built around technical skill development, game intelligence, and teamwork.',
-  },
-  {
-    icon: User,
-    label: 'Personalised',
-    title: 'Individual Sessions',
-    ages: 'All Ages',
-    href: '/programs/individual-sessions',
-    description:
-      "One-on-one coaching tailored specifically to your player's unique needs and goals. Perfect for targeted skill development, confidence building, and rapid improvement.",
-  },
-  {
-    icon: Users,
-    label: 'Community',
-    title: 'Club Technica Training',
-    ages: 'Ages 5–15',
-    href: '/programs/club-technica-training',
-    description:
-      'Train with the Technica Football community. Group sessions focused on technical development, teamwork, and building the club culture that drives players to excel.',
-  },
-  {
-    icon: Trophy,
-    label: 'Elite Pathway',
-    title: 'Academy Development Squad',
-    ages: 'Ages 8–16',
-    href: '/programs/academy-development-squad',
-    description:
-      'An elite development pathway for players who are serious about reaching the next level. High-performance sessions covering advanced technique, tactical intelligence, and physical conditioning.',
-  },
-  {
-    icon: Sun,
-    label: 'Holiday',
-    title: 'Holiday Clinic',
-    ages: 'Ages 5–15',
-    href: '/programs/holiday-clinic',
-    description:
-      'Intensive multi-day camps during school holidays. A fantastic opportunity for players to develop skills, build new friendships, and keep active throughout the break.',
-  },
-  {
-    icon: Building,
-    label: 'Care Programs',
-    title: 'OSH/Vacation Care',
-    ages: 'Ages 5–12',
-    href: '/programs/vacation-care',
-    description:
-      'Quality football coaching delivered through before-school care, after-school care, and vacation care programs. We come to you — bringing the game directly to your community.',
-  },
-];
+const IconMap: Record<string, LucideIcon> = {
+  Clock,
+  User,
+  Users,
+  Trophy,
+  Sun,
+  Building,
+};
 
 export default function ProgramsPage() {
+  const { programs } = usePrograms(true);
+
   return (
     <>
       <PageHero title="Programs" subtitle="Find Your Fit" bottomColor="#f3f4f6" />
@@ -77,7 +32,7 @@ export default function ProgramsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {programs.map((program) => {
-              const Icon = program.icon;
+              const Icon = IconMap[program.icon] || Clock;
               return (
                 <div
                   key={program.title}

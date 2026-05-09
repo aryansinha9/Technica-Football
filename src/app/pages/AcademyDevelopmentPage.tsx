@@ -1,8 +1,10 @@
 import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Loader2 } from 'lucide-react';
+import { useProgramPage } from '../lib/useSiteContent';
 
 export default function AcademyDevelopmentPage() {
+  const { page, loading } = useProgramPage('academy-development-squad');
   return (
     <>
       <PageHero title="Academy Development Squad" subtitle="Elite Pathway Program" bottomColor="#f3f4f6" />
@@ -23,8 +25,8 @@ export default function AcademyDevelopmentPage() {
           </p>
           <div className="h-1 bg-[#f0722b] rounded-full w-24 mx-auto mb-10" />
 
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-4">
-            The Academy Development Squad is an elite pathway program for serious players aged 8–16 who are committed to reaching the next level of the game.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-4 whitespace-pre-wrap">
+            {page?.about_text || `The Academy Development Squad is an elite pathway program for serious players aged 8–16 who are committed to reaching the next level of the game.`}
           </p>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light mb-12">
             High-performance session details, selection criteria, and booking information will be available soon. Stay tuned — or get in touch to express your interest early.

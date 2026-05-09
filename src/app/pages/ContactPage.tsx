@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Phone, Mail, Facebook, Instagram, Send, ChevronRight } from 'lucide-react';
 import PageHero from '../components/PageHero';
+import { useSponsors } from '../lib/useSiteContent';
 
 const programOptions = [
   'Term Program',
@@ -13,6 +14,7 @@ const programOptions = [
 ];
 
 export default function ContactPage() {
+  const { sponsors } = useSponsors();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -269,20 +271,16 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-12 items-center justify-items-center mb-16 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-            {[
-              { src: '/greg-the-jeweller.png', alt: 'Greg the Jeweller', href: 'https://www.facebook.com/profile.php?id=100057316867195' },
-              { src: '/freshpromotions.png', alt: 'Fresh Promotions', href: 'https://www.freshpromotions.com.au/' },
-              { src: '/grilld.png', alt: "Grill'd", href: 'https://grilld.com.au/' },
-            ].map(sponsor => (
+            {sponsors.map(sponsor => (
               <a
-                key={sponsor.alt}
-                href={sponsor.href}
+                key={sponsor.id}
+                href={sponsor.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={sponsor.alt}
+                aria-label={sponsor.name}
                 className="flex items-center justify-center w-48 h-24 hover:scale-105 transition-transform duration-300"
               >
-                <img src={sponsor.src} alt={sponsor.alt} className="max-h-20 max-w-[180px] w-auto h-auto object-contain" />
+                <img src={sponsor.logo_url} alt={sponsor.name} className="max-h-20 max-w-[180px] w-auto h-auto object-contain" />
               </a>
             ))}
           </div>
