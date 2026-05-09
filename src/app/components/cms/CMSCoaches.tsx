@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2, Save, AlertTriangle, Loader2, Camera } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useCoaches, uploadImage, type Coach } from '../lib/useSiteContent';
+import { supabase } from '../../lib/supabase';
+import { useCoaches, uploadImage, type Coach } from '../../lib/useSiteContent';
 
 const empty: Omit<Coach, 'id' | 'sort_order'> = { name: '', role: '', bio: '', team: '', image_url: null };
 

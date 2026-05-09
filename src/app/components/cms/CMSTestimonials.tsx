@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2, Save, AlertTriangle, Loader2 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useTestimonials, type Testimonial } from '../lib/useSiteContent';
+import { supabase } from '../../lib/supabase';
+import { useTestimonials, type Testimonial } from '../../lib/useSiteContent';
 
 const empty: Omit<Testimonial, 'id' | 'sort_order'> = { quote: '', name: '', location: 'NSW' };
 

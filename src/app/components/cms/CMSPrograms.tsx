@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Trash2, Save, AlertTriangle, Loader2, Eye, EyeOff } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { usePrograms, type Program } from '../lib/useSiteContent';
+import { supabase } from '../../lib/supabase';
+import { usePrograms, type Program } from '../../lib/useSiteContent';
 
 export default function CMSPrograms() {
   const { programs, setPrograms } = usePrograms(false);

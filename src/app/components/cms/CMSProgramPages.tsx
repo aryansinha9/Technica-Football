@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Save, Loader2 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { type ProgramPage } from '../lib/useSiteContent';
+import { supabase } from '../../lib/supabase';
+import { type ProgramPage } from '../../lib/useSiteContent';
 
 const PROGRAM_SLUGS = [
   { id: 'term-program', label: 'Term Program' },

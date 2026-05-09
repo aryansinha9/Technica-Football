@@ -5,6 +5,13 @@ import { supabase } from '../lib/supabase';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
+import CMSCoaches from '../components/cms/CMSCoaches';
+import CMSProgramPages from '../components/cms/CMSProgramPages';
+import CMSPrograms from '../components/cms/CMSPrograms';
+import CMSSponsors from '../components/cms/CMSSponsors';
+import CMSTestimonials from '../components/cms/CMSTestimonials';
+
+type MainTab = 'registrations' | 'programs' | 'program-pages' | 'coaches' | 'sponsors' | 'testimonials';
 type FilterTab = 'all' | 'foundation-sun-10am' | 'elite-sun-11am' | 'elite-thu-430pm';
 
 interface Booking {
@@ -49,6 +56,7 @@ interface ClassSpots {
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
+  const [mainTab, setMainTab] = useState<MainTab>('registrations');
   const [loading, setLoading] = useState(true);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [classes, setClasses] = useState<ClassSpots[]>([]);
@@ -188,7 +196,60 @@ export default function AdminDashboardPage() {
         </button>
       </div>
 
+      <div className="bg-white border-b border-gray-200 px-8">
+        <div className="max-w-7xl mx-auto flex overflow-x-auto">
+          {([
+            { key: 'registrations', label: 'Registrations' },
+            { key: 'programs', label: 'Programs' },
+            { key: 'program-pages', label: 'Program Pages' },
+            { key: 'coaches', label: 'Coaches' },
+            { key: 'sponsors', label: 'Sponsors' },
+            { key: 'testimonials', label: 'Testimonials' },
+          ] as { key: MainTab; label: string }[]).map(t => (
+            <button key={t.key} onClick={() => setMainTab(t.key)}
+              className={`shrink-0 px-5 py-4 text-xs font-barlow font-bold tracking-widest uppercase border-b-2 transition-colors ${
+                mainTab === t.key ? 'border-[#f0722b] text-[#f0722b]' : 'border-transparent text-gray-400 hover:text-[#0A1F44]'
+              }`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-8 py-8 space-y-8">
+        {/* CMS Tabs */}
+        {mainTab === 'coaches' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Coaches — Meet the Team</h2>
+            <CMSCoaches />
+          </div>
+        )}
+        {mainTab === 'sponsors' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Partners & Sponsors</h2>
+            <CMSSponsors />
+          </div>
+        )}
+        {mainTab === 'testimonials' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Testimonials</h2>
+            <CMSTestimonials />
+          </div>
+        )}
+        {mainTab === 'programs' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Program Cards</h2>
+            <CMSPrograms />
+          </div>
+        )}
+        {mainTab === 'program-pages' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Program Page Content</h2>
+            <CMSProgramPages />
+          </div>
+        )}
+
+        {mainTab === 'registrations' && (<>
         {/* Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <SummaryCard label="Total Bookings" value={bookings.filter(b => b.payment_status === 'paid').length} />
@@ -362,6 +423,8 @@ export default function AdminDashboardPage() {
             </table>
           </div>
         </div>
+      </>
+      )}
       </div>
     </section>
   );

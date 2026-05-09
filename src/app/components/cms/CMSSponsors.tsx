@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2, Save, AlertTriangle, Loader2 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useSponsors, uploadImage, type Sponsor } from '../lib/useSiteContent';
+import { supabase } from '../../lib/supabase';
+import { useSponsors, uploadImage, type Sponsor } from '../../lib/useSiteContent';
 
 const empty: Omit<Sponsor, 'id' | 'sort_order'> = { name: '', logo_url: '', link: '' };
 
