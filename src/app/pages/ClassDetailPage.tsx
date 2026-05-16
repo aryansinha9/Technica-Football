@@ -2,20 +2,20 @@ import { useParams, Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import { ChevronRight, MapPin, Phone, Mail, Clock, AlertTriangle, CalendarDays, Users } from 'lucide-react';
 import PageHero from '../components/PageHero';
-import { getClassBySlug, type TermClass } from '../data/termClasses';
 import { supabase } from '../lib/supabase';
+import { useTermClasses, type TermClass } from '../lib/useSiteContent';
 
 export default function ClassDetailPage() {
   const { slug } = useParams<{ slug: string }>();
+  const { classes: termClasses, loading } = useTermClasses();
   const [classData, setClassData] = useState<TermClass | undefined>(undefined);
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null);
 
   useEffect(() => {
-    if (slug) {
-      const data = getClassBySlug(slug);
+    if (slug && termClasses.length > 0) {
+      const data = termClasses.find(c => c.slug === slug);
       setClassData(data);
 
-      // Fetch live spots from Supabase
       if (data) {
         supabase
           .from('classes')
@@ -27,7 +27,15 @@ export default function ClassDetailPage() {
           });
       }
     }
-  }, [slug]);
+  }, [slug, termClasses]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0A1F44] flex flex-col items-center justify-center text-white">
+        <h2 className="text-xl font-barlow tracking-widest uppercase">Loading Class...</h2>
+      </div>
+    );
+  }
 
   if (!classData) {
     return (

@@ -6,12 +6,19 @@ import { useSponsors } from '../lib/useSiteContent';
 const programOptions = [
   'Term Program',
   'Individual Sessions',
-  'Club Technica Training',
   'Academy Development Squad',
   'Holiday Clinic',
+  'Club Technica Training',
   'OSH/Vacation Care',
   'General Inquiry',
 ];
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length <= 4) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+  return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7, 10)}`;
+}
 
 export default function ContactPage() {
   const { sponsors } = useSponsors();
@@ -26,6 +33,30 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 10);
+    const formatted = formatPhone(raw);
+    setFormData(prev => ({ ...prev, phone: formatted }));
+    if (raw.length > 0 && raw.length < 10) {
+      setPhoneError('Please enter a valid 10-digit Australian number (e.g. 0400 123 456)');
+    } else {
+      setPhoneError('');
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setFormData(prev => ({ ...prev, email: val }));
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (val && !emailRegex.test(val)) {
+      setEmailError('Please enter a valid email address');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -174,10 +205,11 @@ export default function ContactPage() {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0A1F44] focus:ring-2 focus:ring-[#0A1F44]/10 outline-none transition-all text-[#0A1F44]"
+                    onChange={handleEmailChange}
+                    className={`w-full px-4 py-3 rounded-xl border focus:ring-2 outline-none transition-all text-[#0A1F44] ${emailError ? 'border-red-400 focus:border-red-400 focus:ring-red-400/10' : 'border-gray-200 focus:border-[#0A1F44] focus:ring-[#0A1F44]/10'}`}
                     placeholder="john@example.com"
                   />
+                  {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1.5 font-barlow tracking-wide uppercase">Phone Number *</label>
@@ -187,10 +219,12 @@ export default function ContactPage() {
                     type="tel"
                     required
                     value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0A1F44] focus:ring-2 focus:ring-[#0A1F44]/10 outline-none transition-all text-[#0A1F44]"
-                    placeholder="04xx xxx xxx"
+                    onChange={handlePhoneChange}
+                    className={`w-full px-4 py-3 rounded-xl border focus:ring-2 outline-none transition-all text-[#0A1F44] ${phoneError ? 'border-red-400 focus:border-red-400 focus:ring-red-400/10' : 'border-gray-200 focus:border-[#0A1F44] focus:ring-[#0A1F44]/10'}`}
+                    placeholder="0400 000 000"
+                    maxLength={12}
                   />
+                  {phoneError && <p className="text-red-500 text-xs mt-1">{phoneError}</p>}
                 </div>
                 <div>
                   <label htmlFor="programInterest" className="block text-sm font-semibold text-gray-700 mb-1.5 font-barlow tracking-wide uppercase">Program Interest <span className="text-gray-400 normal-case font-normal">(optional)</span></label>
@@ -232,33 +266,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="relative bg-[#0A1F44] pt-10 pb-38 px-8 md:px-16">
-        {/* Navy wave jutting UP into grey/white form section */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
-            <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto">
-          <div className="relative w-full h-[350px] md:h-[440px] rounded-2xl overflow-hidden border-4 border-[#f0722b] shadow-2xl">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
-              width="100%"
-              height="100%"
-              style={{ border: 0, filter: 'grayscale(30%) contrast(1.05) brightness(0.85)' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Technica Football Location"
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Sponsors Section */}
-      <section className="relative bg-[#f9fafb] text-[#0A1F44] pt-20 pb-32 px-8 md:px-16">
-        {/* Wave up into white */}
+      <section className="relative bg-[#f9fafb] text-[#0A1F44] pt-20 pb-30 px-8 md:px-16">
+        {/* Wave up into grey form section */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f9fafb" fillOpacity="1" d="M0,255L480,240L960,265L1440,248L1440,320L960,320L480,320L0,320Z" />
@@ -285,7 +295,7 @@ export default function ContactPage() {
             ))}
           </div>
 
-          {/* Sponsorship CTA — no card, clean on grey */}
+          {/* Sponsorship CTA */}
           <div className="text-center pt-4 border-t border-[#0A1F44]/10 mt-4">
             <p className="text-orange-500 font-barlow font-bold tracking-[0.3em] uppercase text-sm mb-4">Partnership Opportunities</p>
             <h3 className="text-3xl md:text-4xl font-black mb-4 text-[#0A1F44]">Become a Sponsor</h3>
@@ -298,6 +308,30 @@ export default function ContactPage() {
             >
               Enquire About Sponsorship <ChevronRight className="w-5 h-5" />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="relative bg-[#0A1F44] pt-10 pb-20 px-8 md:px-16">
+        {/* Navy wave jutting UP into sponsors section */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
+            <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
+          </svg>
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <div className="relative w-full h-[250px] md:h-[300px] rounded-2xl overflow-hidden border-4 border-[#f0722b] shadow-2xl">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'grayscale(30%) contrast(1.05) brightness(0.85)' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Technica Football Location"
+            />
           </div>
         </div>
       </section>

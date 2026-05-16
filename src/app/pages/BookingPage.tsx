@@ -2,11 +2,18 @@ import { useParams, Link, useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 import { ChevronRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
-import { getClassBySlug, type TermClass } from '../data/termClasses';
 import { supabase } from '../lib/supabase';
+import { useTermClasses, type TermClass } from '../lib/useSiteContent';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+  if (digits.length <= 4) return digits;
+  if (digits.length <= 7) return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+  return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7, 10)}`;
+}
 
 type Tab = 'register' | 'returning';
 
@@ -38,7 +45,9 @@ const emptyRegistration: RegistrationData = {
 export default function BookingPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [classData, setClassData] = useState<TermClass | undefined>();
+  const { classes: termClasses, loading } = useTermClasses();
+  
+  const [classData, setClassData] = useState<TermClass | undefined>(undefined);
   const [spotsRemaining, setSpotsRemaining] = useState<number | null>(null);
   const [tab, setTab] = useState<Tab>('register');
 
@@ -70,16 +79,59 @@ export default function BookingPage() {
   const [bookingLoading, setBookingLoading] = useState(false);
   const [bookingError, setBookingError] = useState('');
 
+  // Validation
+  const [regPhoneError, setRegPhoneError] = useState('');
+  const [regEmailError, setRegEmailError] = useState('');
+  const [bookPhoneError, setBookPhoneError] = useState('');
+  const [bookEmailError, setBookEmailError] = useState('');
+
+  const handleRegPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 10);
+    const formatted = formatPhone(raw);
+    setReg(prev => ({ ...prev, parent_phone: formatted }));
+    setRegPhoneError(raw.length > 0 && raw.length < 10 ? 'Please enter a valid 10-digit Australian number' : '');
+  };
+
+  const handleRegEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setReg(prev => ({ ...prev, parent_email: val }));
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setRegEmailError(val && !emailRegex.test(val) ? 'Please enter a valid email address' : '');
+  };
+
+  const handleBookPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 10);
+    const formatted = formatPhone(raw);
+    setBookPhone(formatted);
+    setBookPhoneError(raw.length > 0 && raw.length < 10 ? 'Please enter a valid 10-digit Australian number' : '');
+  };
+
+  const handleBookEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setBookEmail(val);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setBookEmailError(val && !emailRegex.test(val) ? 'Please enter a valid email address' : '');
+  };
+
   useEffect(() => {
-    if (slug) {
-      const data = getClassBySlug(slug);
+    if (slug && termClasses.length > 0) {
+      const data = termClasses.find(c => c.slug === slug);
       setClassData(data);
       if (data) {
         supabase.from('classes').select('spots_remaining').eq('id', data.id).single()
           .then(({ data: row }) => { if (row) setSpotsRemaining(row.spots_remaining); });
       }
     }
-  }, [slug]);
+  }, [slug, termClasses]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0A1F44] flex flex-col items-center justify-center text-white">
+        <Loader2 className="w-10 h-10 animate-spin text-[#f0722b] mb-4" />
+        <h2 className="text-xl font-barlow tracking-widest uppercase">Loading Booking...</h2>
+      </div>
+    );
+  }
 
   if (!classData) {
     return (
@@ -293,8 +345,16 @@ export default function BookingPage() {
                   </div>
                   <div className="mt-4"><label className={labelClass}>Relationship to Player *</label><input required className={inputClass} value={reg.emergency_relationship} onChange={e => setReg({...reg, emergency_relationship: e.target.value})} /></div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                    <div><label className={labelClass}>Email *</label><input type="email" required className={inputClass} value={reg.parent_email} onChange={e => setReg({...reg, parent_email: e.target.value})} /></div>
-                    <div><label className={labelClass}>Phone *</label><input type="tel" required className={inputClass} value={reg.parent_phone} onChange={e => setReg({...reg, parent_phone: e.target.value})} /></div>
+                    <div>
+                      <label className={labelClass}>Email *</label>
+                      <input type="email" required className={`${inputClass} ${regEmailError ? 'border-red-400 focus:border-red-400' : ''}`} value={reg.parent_email} onChange={handleRegEmailChange} placeholder="you@example.com" />
+                      {regEmailError && <p className="text-red-500 text-xs mt-1">{regEmailError}</p>}
+                    </div>
+                    <div>
+                      <label className={labelClass}>Phone *</label>
+                      <input type="tel" required className={`${inputClass} ${regPhoneError ? 'border-red-400 focus:border-red-400' : ''}`} value={reg.parent_phone} onChange={handleRegPhoneChange} placeholder="0400 000 000" maxLength={12} />
+                      {regPhoneError && <p className="text-red-500 text-xs mt-1">{regPhoneError}</p>}
+                    </div>
                   </div>
                 </div>
 
@@ -343,8 +403,16 @@ export default function BookingPage() {
                     <div><label className={labelClass}>Parent Last Name *</label><input required className={inputClass} value={parentLast} onChange={e => setParentLast(e.target.value)} /></div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div><label className={labelClass}>Email *</label><input type="email" required className={inputClass} value={bookEmail} onChange={e => setBookEmail(e.target.value)} /></div>
-                    <div><label className={labelClass}>Phone Number *</label><input type="tel" required className={inputClass} value={bookPhone} onChange={e => setBookPhone(e.target.value)} /></div>
+                    <div>
+                      <label className={labelClass}>Email *</label>
+                      <input type="email" required className={`${inputClass} ${bookEmailError ? 'border-red-400 focus:border-red-400' : ''}`} value={bookEmail} onChange={handleBookEmailChange} placeholder="you@example.com" />
+                      {bookEmailError && <p className="text-red-500 text-xs mt-1">{bookEmailError}</p>}
+                    </div>
+                    <div>
+                      <label className={labelClass}>Phone Number *</label>
+                      <input type="tel" required className={`${inputClass} ${bookPhoneError ? 'border-red-400 focus:border-red-400' : ''}`} value={bookPhone} onChange={handleBookPhoneChange} placeholder="0400 000 000" maxLength={12} />
+                      {bookPhoneError && <p className="text-red-500 text-xs mt-1">{bookPhoneError}</p>}
+                    </div>
                   </div>
                   <div><label className={labelClass}>Player's First and Last Name *</label><input required className={inputClass} value={playerName} onChange={e => setPlayerName(e.target.value)} /></div>
                   <label className="flex items-start gap-3 cursor-pointer">

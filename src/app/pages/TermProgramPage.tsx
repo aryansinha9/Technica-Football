@@ -1,10 +1,9 @@
 import { ChevronRight, Clock, MapPin, DollarSign, Target, Zap, CalendarCheck, Users, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
-import { termClasses } from '../data/termClasses';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { useProgramPage } from '../lib/useSiteContent';
+import { useProgramPage, useTermClasses } from '../lib/useSiteContent';
 
 const enrollSteps = [
   'Choose a class/day from the schedule below.',
@@ -14,7 +13,11 @@ const enrollSteps = [
 ];
 
 export default function TermProgramPage() {
-  const { page, loading } = useProgramPage('term-program');
+  const { page, loading: pageLoading } = useProgramPage('term-program');
+  const { classes: termClasses, loading: classesLoading } = useTermClasses();
+  
+  // Create a combined loading state if you want to delay render
+  // const loading = pageLoading || classesLoading;
   const [spots, setSpots] = useState<Record<string, number>>({});
 
   useEffect(() => {

@@ -14,7 +14,7 @@ export default function Layout() {
       <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-4 bg-[#21211f]">
         <div className="flex items-center z-50">
           <Link to="/" onClick={closeMenu}>
-            <img src="/HEADER.png" alt="Technica Football" className="h-28 sm:h-32 md:h-40 lg:h-40 w-auto object-contain" />
+            <img src="/Header.png" alt="Technica Football" className="h-28 sm:h-32 md:h-40 lg:h-44 w-auto object-contain" />
           </Link>
         </div>
 
@@ -31,9 +31,9 @@ export default function Layout() {
             <div className="absolute top-full left-0 mt-0 bg-[#21211f] border border-gray-700/50 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 py-3 px-2 flex flex-col gap-3">
               <Link to="/programs/term-program" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Term Program</Link>
               <Link to="/programs/individual-sessions" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Individual Sessions</Link>
-              <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Club Technica Training</Link>
               <Link to="/programs/academy-development-squad" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Holiday Clinic</Link>
+              <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Club Technica Training</Link>
               <Link to="/programs/vacation-care" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">OSH/Vacation Care</Link>
             </div>
           </div>
@@ -78,9 +78,9 @@ export default function Layout() {
             <div className="flex flex-col gap-4 pl-4 border-l border-gray-700">
               <Link to="/programs/term-program" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Term Program</Link>
               <Link to="/programs/individual-sessions" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Individual Sessions</Link>
-              <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technica Training</Link>
               <Link to="/programs/academy-development-squad" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Holiday Clinic</Link>
+              <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technica Training</Link>
               <Link to="/programs/vacation-care" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">OSH/Vacation Care</Link>
             </div>
             <Link to="/faq" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">FAQ</Link>
@@ -110,7 +110,7 @@ export default function Layout() {
       <Outlet />
 
       {/* Footer */}
-      <footer className="relative bg-[#071630] pt-32 pb-16 px-8 md:px-16 z-[80]">
+      <footer className="relative bg-[#071630] pt-16 pb-10 px-8 md:px-16 z-[80]">
         {/* Footer wave jutting UP */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 150 1440 170" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[50px] lg:h-[70px]">

@@ -10,9 +10,10 @@ import CMSProgramPages from '../components/cms/CMSProgramPages';
 import CMSPrograms from '../components/cms/CMSPrograms';
 import CMSSponsors from '../components/cms/CMSSponsors';
 import CMSTestimonials from '../components/cms/CMSTestimonials';
+import CMSTermClasses from '../components/cms/CMSTermClasses';
 
-type MainTab = 'registrations' | 'programs' | 'program-pages' | 'coaches' | 'sponsors' | 'testimonials';
-type FilterTab = 'all' | 'foundation-sun-10am' | 'elite-sun-11am' | 'elite-thu-430pm';
+type MainTab = 'registrations' | 'programs' | 'program-pages' | 'coaches' | 'sponsors' | 'testimonials' | 'term-classes';
+type FilterTab = string;
 
 interface Booking {
   id: string;
@@ -50,6 +51,8 @@ interface Booking {
 interface ClassSpots {
   id: string;
   label: string;
+  title?: string;
+  subtitle?: string;
   spots_remaining: number;
   max_capacity: number;
 }
@@ -175,9 +178,7 @@ export default function AdminDashboardPage() {
 
   const tabs: { key: FilterTab; label: string }[] = [
     { key: 'all', label: 'All' },
-    { key: 'foundation-sun-10am', label: 'Foundation (Sun)' },
-    { key: 'elite-sun-11am', label: 'Elite (Sun)' },
-    { key: 'elite-thu-430pm', label: 'Elite (Thu)' },
+    ...classes.map(c => ({ key: c.id, label: c.subtitle || c.title || c.label.split(' / ')[0] }))
   ];
 
   if (loading) return (
@@ -200,6 +201,7 @@ export default function AdminDashboardPage() {
         <div className="max-w-7xl mx-auto flex overflow-x-auto">
           {([
             { key: 'registrations', label: 'Registrations' },
+            { key: 'term-classes', label: 'Term Classes' },
             { key: 'programs', label: 'Programs' },
             { key: 'program-pages', label: 'Program Pages' },
             { key: 'coaches', label: 'Coaches' },
@@ -218,6 +220,12 @@ export default function AdminDashboardPage() {
 
       <div className="max-w-7xl mx-auto px-8 py-8 space-y-8">
         {/* CMS Tabs */}
+        {mainTab === 'term-classes' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Term Classes & Schedule</h2>
+            <CMSTermClasses />
+          </div>
+        )}
         {mainTab === 'coaches' && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h2 className="font-black text-[#0A1F44] text-lg mb-6">Coaches — Meet the Team</h2>
@@ -253,9 +261,9 @@ export default function AdminDashboardPage() {
         {/* Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <SummaryCard label="Total Bookings" value={bookings.filter(b => b.payment_status === 'paid').length} />
-          <SummaryCard label="Foundation (Sun)" value={countByClass('foundation-sun-10am')} />
-          <SummaryCard label="Elite (Sun)" value={countByClass('elite-sun-11am')} />
-          <SummaryCard label="Elite (Thu)" value={countByClass('elite-thu-430pm')} />
+          {classes.map(c => (
+            <SummaryCard key={c.id} label={c.subtitle || c.title || c.label.split(' / ')[0]} value={countByClass(c.id)} />
+          ))}
         </div>
 
         {/* Spots Management */}
@@ -264,7 +272,7 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {classes.map(c => (
               <div key={c.id} className="border border-gray-200 rounded-xl p-4">
-                <p className="text-xs text-gray-400 font-barlow tracking-widest uppercase mb-2">{c.label}</p>
+                <p className="text-xs text-gray-400 font-barlow tracking-widest uppercase mb-2">{c.subtitle || c.title || c.label}</p>
                 <div className="flex items-center gap-3">
                   <label className="text-sm text-gray-600 shrink-0">Spots:</label>
                   <input
@@ -304,8 +312,8 @@ export default function AdminDashboardPage() {
 
         {/* Table */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-sm min-w-[900px]">
               <thead>
                 <tr className="bg-[#0A1F44] text-white text-left">
                   <th className="px-4 py-3 font-barlow tracking-widest uppercase text-xs">#</th>

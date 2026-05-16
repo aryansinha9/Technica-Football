@@ -36,7 +36,7 @@ export default function ProgramsPage() {
               return (
                 <div
                   key={program.title}
-                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                  className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"
                 >
                   {/* Card image area */}
                   <div className="relative h-48 bg-gradient-to-br from-[#0A1F44] to-[#021d40] flex items-center justify-center overflow-hidden">
@@ -49,13 +49,13 @@ export default function ProgramsPage() {
                     </div>
                   </div>
                   {/* Card content */}
-                  <div className="p-8">
+                  <div className="p-8 flex flex-col flex-1">
                     <div className="text-orange-500 font-barlow font-bold text-sm tracking-widest uppercase mb-2">{program.ages}</div>
                     <h3 className="text-2xl font-black mb-3 text-[#0A1F44] group-hover:text-[#f0722b] transition-colors">{program.title}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-6 text-sm">{program.description}</p>
+                    <p className="text-gray-600 leading-relaxed mb-6 text-sm flex-1">{program.description}</p>
               <Link
                 to={program.href}
-                className="w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors duration-300 flex items-center justify-center gap-2 text-sm"
+                className="mt-auto w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors duration-300 flex items-center justify-center gap-2 text-sm"
               >
                 Learn More <ChevronRight className="w-4 h-4" />
               </Link>

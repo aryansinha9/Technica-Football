@@ -27,6 +27,7 @@ export default function FillSweepButton({ to = '/programs', label = 'View Progra
           user-select: none;
           transition: color 0.3s;
           white-space: nowrap;
+          border-radius: 9999px;
         }
         .fill-sweep-btn > .sweep-span {
           position: absolute;
@@ -38,6 +39,7 @@ export default function FillSweepButton({ to = '/programs', label = 'View Progra
           z-index: -1;
           border: 3px solid #9ca3af;
           transition: border-color 0.3s;
+          border-radius: 9999px;
         }
         .fill-sweep-btn > .sweep-span::before {
           content: "";
@@ -45,7 +47,7 @@ export default function FillSweepButton({ to = '/programs', label = 'View Progra
           position: absolute;
           width: 8%;
           height: 2000%;
-          background: #f3f4f6;
+          background: #21211f;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) rotate(-60deg);
@@ -66,10 +68,17 @@ export default function FillSweepButton({ to = '/programs', label = 'View Progra
           background: #d4611f;
         }
       `}</style>
-      <Link to={to} className="fill-sweep-btn" aria-label={label}>
-        {label}
-        <span className="sweep-span" />
-      </Link>
+      {to.startsWith('http') ? (
+        <a href={to} className="fill-sweep-btn" aria-label={label} target="_blank" rel="noopener noreferrer">
+          {label}
+          <span className="sweep-span" />
+        </a>
+      ) : (
+        <Link to={to} className="fill-sweep-btn" aria-label={label}>
+          {label}
+          <span className="sweep-span" />
+        </Link>
+      )}
     </>
   );
 }

@@ -40,7 +40,7 @@ export default function AboutPage() {
             <h2 className="text-4xl md:text-5xl font-black tracking-wider mb-3 text-white">MEET THE TEAM</h2>
             <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 justify-items-center">
             {coaches.map((coach) => (
               <div
                 key={coach.id}
@@ -61,7 +61,7 @@ export default function AboutPage() {
                 <div className="p-6 md:p-8 flex-1 flex flex-col">
                   <div className="text-orange-500 font-barlow font-bold text-sm tracking-widest uppercase mb-1">{coach.role}</div>
                   <h3 className="text-2xl font-black mb-3 text-white">{coach.name}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed mb-5 flex-1">{coach.bio}</p>
+                  <p className="text-white/70 text-sm leading-relaxed mb-5 flex-1 tracking-normal">{coach.bio}</p>
                   {coach.team && (
                     <div className="flex items-center gap-2 text-sm mt-auto pt-4 border-t border-white/10">
                       <span className="text-white/40 font-barlow tracking-widest uppercase text-xs">Favourite Team:</span>

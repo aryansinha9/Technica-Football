@@ -100,23 +100,23 @@ export default function HomePage() {
           </h1>
         </div>
 
-        {/* Explore Programs CTA Button — near the CA of TECHNICA */}
-        <div className="absolute z-[60] pointer-events-auto hidden sm:block" style={{ top: '6%', right: '15%' }}>
-          <ExploreButton href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football" />
+        {/* Explore Programs CTA Button — top-right, near CA of TECHNICA */}
+        <div className="absolute z-[60] pointer-events-auto hidden sm:block" style={{ top: '4%', right: '12%' }}>
+          <FillSweepButton to="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football" label="View Training Kit" />
         </div>
 
-        {/* Fill-sweep CTA — bottom-left of hero, fades on scroll */}
+        {/* View Training Kit — bottom-left of hero, fades on scroll */}
         <div
           className="absolute z-[60] hidden sm:block"
           style={{
-            bottom: '140px',
-            left: '100px',
+            bottom: '160px',
+            left: '220px',
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
           }}
         >
-          <FillSweepButton to="/programs" label="Explore Programs" />
+          <ExploreButton href="/programs" label="Explore Programs" isExternal={false} />
         </div>
 
         {/* Solid Gray Background (Behind ICA text) */}
@@ -297,75 +297,128 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── 5. Our Core Focus ─── */}
-      <section className="relative z-50 bg-[#f3f4f6] text-[#0A1F44] pt-28 pb-40 px-8 md:px-16 text-center">
-        {/* Grey wave jutting UP into Orange */}
+      {/* ─── 5. Core Focus ─── */}
+      <section className="relative z-50 bg-[#0A1F44] text-white pt-24 pb-32">
+        {/* Grey wave jutting UP into Navy */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
-            <path fill="#f3f4f6" fillOpacity="1" d="M0,240 L300,300 L700,220 L1100,280 L1440,260 L1440,320 L0,320 Z" />
+            <path fill="#0A1F44" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-16 tracking-wider text-[#0A1F44]">OUR CORE FOCUS</h2>
-          
-          {/* Top Row: Core Focus */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-8 mb-24">
-            <div className="flex flex-col items-center">
-              <div className="w-40 h-40 mb-2 flex items-center justify-center">
-                <img src="/icons/touch.svg" alt="Touch" className="w-full h-full scale-[1.3]" />
-              </div>
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Touch</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Mastering the first contact of the ball with confidence helping players stay composed and sharp
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img src="/icons/Dribble.svg" alt="Dribbling" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Dribbling</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Allowing players to manipulate the ball in all directions and speeds to maintain possession and create space
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img src="/icons/Passing.svg" alt="Passing" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Passing</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Building accurate and consistent short, medium and long-range passes to create opportunities and create space
-              </p>
-            </div>
-          </div>
 
-          <h2 className="text-3xl md:text-4xl font-black tracking-widest uppercase text-[#0A1F44] mb-16">SUPPORTING FACTORS</h2>
-          
-          {/* Bottom Row: Supporting Factors */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div className="flex flex-col items-center">
-              <img src="/icons/Communication.svg" alt="Communication" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Communication</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Constant verbal and non-verbal talk between players
-              </p>
+        <style>{`
+          .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+          }
+          .tactical-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 40px 40px;
+          }
+          .pitch-line {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            height: 1px;
+            width: 100%;
+          }
+          .focus-cards:hover .focus-card:not(:hover) {
+            filter: blur(5px);
+            transform: scale(0.95);
+          }
+          .focus-card {
+            transition: all 400ms ease;
+            cursor: pointer;
+          }
+          .focus-card:hover {
+            transform: scale(1.05);
+          }
+        `}</style>
+        
+        {/* Background Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute inset-0 tactical-bg opacity-30"></div>
+          <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+            <svg className="w-full h-full" fill="none" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 100L400 300M400 500L100 750M50 50L350 50" stroke="white" strokeWidth="0.5"></path>
+              <circle cx="200" cy="400" r="150" stroke="white" strokeWidth="0.5"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-8 md:px-16 relative z-10">
+          <div className="focus-cards">
+            {/* CORE FOCUS SECTION */}
+            <div className="mb-24">
+              <div className="flex items-center gap-4 mb-12">
+                <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">OUR CORE FOCUS</h2>
+                <div className="pitch-line"></div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Touch */}
+                <div className="focus-card bg-white/5 border border-white/10 p-8 flex flex-col items-center text-center group hover:border-[#f0722b]/50 hover:bg-white/10 transition-all duration-300 rounded-lg">
+                  <div className="mb-6 flex justify-center items-center h-[100px]">
+                    <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>sports_soccer</span>
+                  </div>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">TOUCH</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">Mastering the initial contact to kill momentum and prepare the next tactical move instantly.</p>
+                </div>
+                {/* Dribbling */}
+                <div className="focus-card bg-white/5 border border-white/10 p-8 flex flex-col items-center text-center group hover:border-[#f0722b]/50 hover:bg-white/10 transition-all duration-300 rounded-lg">
+                  <div className="mb-6 flex justify-center items-center h-[100px]">
+                    <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>conversion_path</span>
+                  </div>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">DRIBBLING</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">Technical ball mastery combined with explosive changes of direction to bypass defensive lines.</p>
+                </div>
+                {/* Passing */}
+                <div className="focus-card bg-white/5 border border-white/10 p-8 flex flex-col items-center text-center group hover:border-[#f0722b]/50 hover:bg-white/10 transition-all duration-300 rounded-lg">
+                  <div className="mb-6 flex justify-center items-center h-[100px]">
+                    <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>trending_flat</span>
+                  </div>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">PASSING</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">Weight, timing, and trajectory. Developing the ability to break lines with surgical precision.</p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col items-center">
-              <img src="/icons/Scanning.svg" alt="Scanning" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Scanning</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Checking their surrounding at all times during play
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img src="/icons/Movement.svg" alt="Movement" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Movement</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                On and off the ball movement, finding the space
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <img src="/icons/Effort.svg" alt="Effort" className="w-40 h-40 mb-2" />
-              <h3 className="text-[28px] md:text-[32px] font-bold font-barlow tracking-wider mt-2 mb-3 text-[#0A1F44]">Effort</h3>
-              <p className="text-gray-600 text-sm leading-relaxed max-w-xs mx-auto">
-                Giving 100% in all aspects of training and games
-              </p>
+
+            {/* SUPPORTING FACTORS SECTION */}
+            <div>
+              <div className="flex items-center gap-4 mb-12">
+                <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">SUPPORTING FACTORS</h2>
+                <div className="pitch-line"></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Communication */}
+                <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
+                  <div className="mb-4 flex justify-center items-center h-[70px]">
+                    <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>record_voice_over</span>
+                  </div>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">COMMUNICATION</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">Verbal and non-verbal cues that sync the unit during high-intensity transition phases.</p>
+                </div>
+                {/* Scanning */}
+                <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
+                  <div className="mb-4 flex justify-center items-center h-[70px]">
+                    <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>visibility</span>
+                  </div>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">SCANNING</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">Constant environmental awareness to build a mental map of the pitch before the ball arrives.</p>
+                </div>
+                {/* Movement */}
+                <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
+                  <div className="mb-4 flex justify-center items-center h-[70px]">
+                    <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>directions_run</span>
+                  </div>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">MOVEMENT</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">Intelligent spacing and decoy runs designed to manipulate opponent structure and create gaps.</p>
+                </div>
+                {/* Effort */}
+                <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
+                  <div className="mb-4 flex justify-center items-center h-[70px]">
+                    <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>bolt</span>
+                  </div>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">EFFORT</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">The non-negotiable standard of work rate required to execute high-press and recovery tactics.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -464,7 +517,7 @@ export default function HomePage() {
           </div>
           <p className="text-center text-sm text-[#0A1F44]/40 mt-14 font-barlow tracking-wide">
             Want to work with us?{' '}
-            <a href="mailto:info@technicafootballnsw.com.au" className="underline hover:text-[#0A1F44]/70 transition-colors">Send us an email</a>{' '}
+            <a href="mailto:info@technicafootball.com.au" className="underline hover:text-[#0A1F44]/70 transition-colors">Send us an email</a>{' '}
             to express your interest.
           </p>
         </div>
