@@ -11,10 +11,10 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-[#0A1F44] text-white overflow-x-hidden font-sans">
       {/* Header */}
-      <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-4 bg-[#21211f]">
+      <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-2 bg-[#21211f]">
         <div className="flex items-center z-50">
           <Link to="/" onClick={closeMenu}>
-            <img src="/Header.png" alt="Technica Football" className="h-28 sm:h-32 md:h-40 lg:h-44 w-auto object-contain" />
+            <img src="/Header.png" alt="Technica Football" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain" />
           </Link>
         </div>
 
@@ -38,7 +38,6 @@ export default function Layout() {
             </div>
           </div>
 
-          <Link to="/faq" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">FAQ</Link>
           <Link to="/contact" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">Contact</Link>
           <a
             href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
@@ -83,7 +82,6 @@ export default function Layout() {
               <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technica Training</Link>
               <Link to="/programs/vacation-care" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">OSH/Vacation Care</Link>
             </div>
-            <Link to="/faq" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">FAQ</Link>
             <Link to="/contact" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Contact</Link>
             <a
               href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
@@ -130,10 +128,12 @@ export default function Layout() {
             </div>
 
             {/* Nav Links */}
-            <nav className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm uppercase">
+            <nav className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm uppercase">
               <Link to="/" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Home</Link>
               <Link to="/about" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">About</Link>
               <Link to="/programs" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Programs</Link>
+              <Link to="/programs/term-program" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Term Program</Link>
+              <Link to="/programs/individual-sessions" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Individual Sessions</Link>
               <Link to="/faq" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">FAQ</Link>
               <Link to="/contact" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Contact</Link>
               <a

@@ -146,6 +146,20 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
+
+            {/* Map — directly under contact details, matching form height */}
+            <div className="relative w-full rounded-2xl overflow-hidden border-2 border-[#f0722b] shadow-md mt-6" style={{ minHeight: '280px', flex: 1 }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(20%) contrast(1.05)', position: 'absolute', inset: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Technica Football Location"
+              />
+            </div>
           </div>
 
           {/* Right: Inquiry Form */}
@@ -312,29 +326,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="relative bg-[#0A1F44] pt-10 pb-20 px-8 md:px-16">
-        {/* Navy wave jutting UP into sponsors section */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
-            <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
-          </svg>
-        </div>
-        <div className="max-w-7xl mx-auto">
-          <div className="relative w-full h-[250px] md:h-[300px] rounded-2xl overflow-hidden border-4 border-[#f0722b] shadow-2xl">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
-              width="100%"
-              height="100%"
-              style={{ border: 0, filter: 'grayscale(30%) contrast(1.05) brightness(0.85)' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Technica Football Location"
-            />
-          </div>
-        </div>
-      </section>
     </>
   );
 }

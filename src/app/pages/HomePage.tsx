@@ -63,54 +63,38 @@ export default function HomePage() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      {/* Downscaled from 100vh → 85vh; TECHNICA text ~55% of original fixed px values */}
-      <section className="relative h-[95vh] bg-gradient-to-br from-[#021d40] from-30% via-[#021d40] via-50% to-[#f38221] to-70%">
-        {/* Charcoal Top Half Layer */}
-        <div className="absolute top-0 inset-x-0 h-[180px] md:h-[250px] bg-[#21211f] z-10">
-          {/* Middle Wave Border */}
+      <section className="relative h-[85vh] overflow-hidden">
+        {/* Session photo background — replace /PERSON.png with session shot when available */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#010f22] via-[#021d40]/90 to-[#0d2a55]/80 z-10" />
+          <div className="absolute inset-0 bg-[#021d40] z-0" />
+        </div>
+
+        {/* Charcoal Top Bar */}
+        <div className="absolute top-0 inset-x-0 h-[140px] md:h-[180px] bg-[#21211f] z-20">
           <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[99%] pointer-events-none z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 220 1440 70" preserveAspectRatio="none" className="block w-full h-[30px] md:h-[45px] lg:h-[60px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 220 1440 70" preserveAspectRatio="none" className="block w-full h-[25px] md:h-[40px] lg:h-[55px]">
               <path fill="#21211f" fillOpacity="1" d="M0,224L480,288L960,224L1440,288L1440,0L0,0Z" />
             </svg>
           </div>
         </div>
 
-        {/* Back Text Layer (shows ICA) — downscaled from 180/300/450px → 100/190/280px */}
-        <div className="absolute top-0 inset-x-0 h-[75vh] z-20 flex items-center justify-center translate-x-0 sm:translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-12 sm:-translate-y-24 pointer-events-none">
-          <h1 className="text-[12vw] sm:text-[100px] md:text-[190px] lg:text-[280px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
-            <span className="text-transparent">TECHN</span><span> CA</span>
+        {/* Full TECHNICA text — centred, no split trick */}
+        <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+          <h1 className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none -mt-16 md:-mt-24">
+            TECHNICA
           </h1>
         </div>
 
-        {/* Person Image Layer — reduced from 135% height → 105% */}
-        <div className="absolute top-0 inset-x-0 z-30 flex justify-center items-end pointer-events-none h-[80vh]">
-          <img
-            src="/PERSON.png"
-            alt="Hero Person"
-            className="w-auto object-contain object-bottom translate-y-[10%] sm:translate-y-[8%] translate-x-[10%] sm:translate-x-[15%] md:translate-x-[32%]"
-            style={{ height: '105%' }}
-            draggable="false"
-          />
-        </div>
+        {/* Orange accent gradient bottom-right */}
+        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#f38221]/40 to-transparent z-10 pointer-events-none" />
 
-        {/* Front Text Layer (shows TECHN) */}
-        <div className="absolute top-0 inset-x-0 h-[75vh] z-50 flex items-center justify-center translate-x-0 sm:translate-x-12 md:translate-x-24 lg:-translate-x-1 -translate-y-12 sm:-translate-y-24 pointer-events-none">
-          <h1 className="text-[12vw] sm:text-[100px] md:text-[190px] lg:text-[280px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none">
-            <span>TECHN</span><span className="text-transparent"> CA</span>
-          </h1>
-        </div>
-
-        {/* Explore Programs CTA Button — top-right, near CA of TECHNICA */}
-        <div className="absolute z-[60] pointer-events-auto hidden sm:block" style={{ top: '4%', right: '12%' }}>
-          <FillSweepButton to="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football" label="View Training Kit" />
-        </div>
-
-        {/* View Training Kit — bottom-left of hero, fades on scroll */}
+        {/* Explore Programs CTA — bottom-left, fades on scroll */}
         <div
           className="absolute z-[60] hidden sm:block"
           style={{
-            bottom: '160px',
-            left: '220px',
+            bottom: '140px',
+            left: '60px',
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
@@ -119,21 +103,19 @@ export default function HomePage() {
           <ExploreButton href="/programs" label="Explore Programs" isExternal={false} />
         </div>
 
-        {/* Solid Gray Background (Behind ICA text) */}
-        <div className="absolute bottom-0 left-0 w-full h-[80px] md:h-[150px] bg-[#f3f4f6] z-[45] pointer-events-none" />
-
-        {/* Gray SVG Wave */}
-        <div className="absolute bottom-[79px] md:bottom-[149px] left-0 w-full z-[45] pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 130 1440 190" preserveAspectRatio="none" className="block w-full h-[50px] md:h-[80px] lg:h-[110px]">
+        {/* Gray bottom band + wave */}
+        <div className="absolute bottom-0 left-0 w-full h-[60px] md:h-[100px] bg-[#f3f4f6] z-[45] pointer-events-none" />
+        <div className="absolute bottom-[59px] md:bottom-[99px] left-0 w-full z-[45] pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 130 1440 190" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[65px] lg:h-[90px]">
             <path fill="#f3f4f6" fillOpacity="1" d="M0,160L470,130L960,160L1440,224L1440,320L960,320L480,320L0,320Z" />
           </svg>
         </div>
       </section>
 
       {/* ─── 1. Leading the Development Section ─── */}
-      <section className="relative z-[45] bg-[#f3f4f6] pt-0 pb-36 px-8 md:px-16 text-center text-[#0A1F44]">
-        <div className="max-w-4xl mx-auto transform -translate-y-[20px] md:-translate-y-[40px]">
-          <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight tracking-wide text-[#0A1F44]">
+      <section className="relative z-[45] bg-[#f3f4f6] pt-0 pb-20 px-8 md:px-16 text-center text-[#0A1F44]">
+        <div className="max-w-4xl mx-auto transform -translate-y-[10px] md:-translate-y-[20px]">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-wide text-[#0A1F44]">
             LEADING THE DEVELOPMENT IN FORMING TECHNICAL FOOTBALL PLAYERS
           </h2>
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
@@ -143,7 +125,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 2. Slim Highlight Bar ─── */}
-      <section className="relative z-[45] bg-white text-black pt-16 pb-16 px-8 md:px-16">
+      <section className="relative z-[45] bg-white text-black pt-10 pb-10 px-8 md:px-16">
         {/* White wave jutting UP into Gray */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
@@ -163,7 +145,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 3. Our Programs ─── */}
-      <section className="relative z-30 bg-[#21211f] text-white pt-35 pb-36 px-8 md:px-16">
+      <section className="relative z-30 bg-[#21211f] text-white pt-20 pb-24 px-8 md:px-16">
         {/* Top Wave (White dripping into Charcoal) */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 320 1440 110" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -226,7 +208,7 @@ export default function HomePage() {
 
       {/* ─── 4. Testimonials ─── */}
       {/* Section itself uses fixed padding — content area has min-h to prevent height shifts */}
-      <section className="relative z-40 bg-[#f0722b] text-white pt-32 pb-36 px-16 md:px-24 lg:px-32 text-center">
+      <section className="relative z-40 bg-[#f0722b] text-white pt-20 pb-24 px-16 md:px-24 lg:px-32 text-center">
         {/* Orange wave jutting UP into Charcoal (Zigzag) */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -298,7 +280,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 5. Core Focus ─── */}
-      <section className="relative z-50 bg-[#0A1F44] text-white pt-24 pb-32">
+      <section className="relative z-50 bg-[#0A1F44] text-white pt-16 pb-20">
         {/* Grey wave jutting UP into Navy */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -319,32 +301,30 @@ export default function HomePage() {
             height: 1px;
             width: 100%;
           }
-          .focus-cards:hover .focus-card:not(:hover) {
-            filter: blur(5px);
-            transform: scale(0.95);
-          }
           .focus-card {
             transition: all 400ms ease;
             cursor: pointer;
           }
           .focus-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            border-color: rgba(240,114,43,0.5) !important;
+            background-color: rgba(255,255,255,0.1) !important;
           }
         `}</style>
         
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute inset-0 tactical-bg opacity-30"></div>
-          <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
+          <div className="absolute top-0 right-0 w-1/2 h-full opacity-20">
             <svg className="w-full h-full" fill="none" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 100L400 300M400 500L100 750M50 50L350 50" stroke="white" strokeWidth="0.5"></path>
-              <circle cx="200" cy="400" r="150" stroke="white" strokeWidth="0.5"></circle>
+              <path d="M0 100L400 300M400 500L100 750M50 50L350 50" stroke="#3b6cb5" strokeWidth="0.8"></path>
+              <circle cx="200" cy="400" r="150" stroke="#3b6cb5" strokeWidth="0.8"></circle>
             </svg>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-8 md:px-16 relative z-10">
-          <div className="focus-cards">
+          <div>
             {/* CORE FOCUS SECTION */}
             <div className="mb-24">
               <div className="flex items-center gap-4 mb-12">
@@ -425,7 +405,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 6. Official Training Kit ─── */}
-      <section className="relative z-[60] bg-[#21211f] w-full pt-24 pb-32 px-8 md:px-16 flex flex-col items-center">
+      <section className="relative z-[60] bg-[#21211f] w-full pt-16 pb-20 px-8 md:px-16 flex flex-col items-center">
         {/* Charcoal wave jutting UP into Blue */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -492,7 +472,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 7. Our Partners ─── */}
-      <section className="relative z-[70] bg-[#f9fafb] text-[#0A1F44] pt-28 pb-36 px-8 md:px-16 text-center">
+      <section className="relative z-[70] bg-[#f9fafb] text-[#0A1F44] pt-16 pb-20 px-8 md:px-16 text-center">
         {/* Light Grey wave jutting UP into Charcoal */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">

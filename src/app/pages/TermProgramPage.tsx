@@ -174,7 +174,7 @@ export default function TermProgramPage() {
                         </span>
                       )}
                     </div>
-                    <div className="text-3xl font-black text-[#0A1F44]">${tc.price}</div>
+                    <div className="text-3xl font-black text-[#0A1F44]">{tc.price ? `$${tc.price}` : 'Contact Us'}</div>
                     <div className="mt-auto pt-3">
                       <Link
                         to={`/programs/term-program/class/${tc.slug}`}

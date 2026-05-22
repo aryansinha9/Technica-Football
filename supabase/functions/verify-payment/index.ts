@@ -53,6 +53,16 @@ Deno.serve(async (req) => {
       try {
         const resendApiKey = Deno.env.get('RESEND_API_KEY');
         if (resendApiKey) {
+          // Extract class + session details for email
+          const classData = booking.classes;
+          const sessions = Array.isArray(classData?.sessions) ? classData.sessions : [];
+          const firstSession = sessions[0] ?? null;
+          const coachName = firstSession?.coach || 'Your Coach';
+          const sessionDay = firstSession?.date?.split(' ')[0] || '';
+          const sessionTime = firstSession?.time || '';
+          const mapsQuery = encodeURIComponent(classData?.full_address || classData?.location || 'Technica Football, The Ponds NSW');
+          const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
           const emailHtml = `
             <div style="font-family: Arial, sans-serif; color: #0A1F44; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
               <div style="background-color: #0A1F44; padding: 24px; text-align: center;">
@@ -62,17 +72,23 @@ Deno.serve(async (req) => {
                 <h2 style="margin-top: 0; font-size: 20px;">Welcome to the Program!</h2>
                 <p>Hi ${booking.parent_first_name},</p>
                 <p>Your payment has been successfully received, and <strong>${booking.player_name}</strong> is officially registered for the upcoming term.</p>
-                
+
                 <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin: 24px 0;">
                   <h3 style="margin-top: 0; font-size: 16px; color: #f0722b;">PROGRAM DETAILS</h3>
-                  <p style="margin: 8px 0;"><strong>Class:</strong> ${booking.classes?.title || booking.class_label}</p>
-                  <p style="margin: 8px 0;"><strong>Start Date:</strong> ${booking.classes?.started_date || 'Check Website'}</p>
-                  <p style="margin: 8px 0;"><strong>Location:</strong> ${booking.classes?.full_address || booking.classes?.location || 'The Ponds'}</p>
+                  <p style="margin: 8px 0;"><strong>Class:</strong> ${classData?.title || booking.class_label}</p>
+                  <p style="margin: 8px 0;"><strong>Coach:</strong> ${coachName}</p>
+                  <p style="margin: 8px 0;"><strong>Day:</strong> ${sessionDay}</p>
+                  <p style="margin: 8px 0;"><strong>Session Time:</strong> ${sessionTime}</p>
+                  <p style="margin: 8px 0;"><strong>Start Date:</strong> ${classData?.started_date || 'Check Website'}</p>
+                  <p style="margin: 8px 0;"><strong>Location:</strong> ${classData?.full_address || classData?.location || 'The Ponds'}</p>
+                  <p style="margin: 16px 0 4px 0;">
+                    <a href="${mapsLink}" style="display: inline-block; background-color: #0A1F44; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">&#128205; View Location on Google Maps</a>
+                  </p>
                 </div>
 
                 <h3 style="font-size: 16px;">What to Bring:</h3>
                 <ul style="padding-left: 20px;">
-                  <li>Football boots & shin guards (Mandatory)</li>
+                  <li>Football boots &amp; shin guards (Mandatory)</li>
                   <li>Water bottle</li>
                   <li>Comfortable training attire</li>
                 </ul>
@@ -93,7 +109,7 @@ Deno.serve(async (req) => {
             body: JSON.stringify({
               from: 'Technica Football <onboarding@resend.dev>',
               to: booking.parent_email,
-              subject: `Registration Confirmed: ${booking.classes?.title || booking.class_label}`,
+              subject: `Registration Confirmed: ${classData?.title || booking.class_label}`,
               html: emailHtml
             })
           });
