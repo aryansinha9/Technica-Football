@@ -33,15 +33,28 @@ export default function ProgramsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {programs.map((program) => {
               const Icon = IconMap[program.icon] || Clock;
+              const programImages: Record<string, string> = {
+                'term-program': '/Term-Program.JPG',
+                'holiday-clinic': '/Holiday.JPG',
+                'individual-sessions': '/INdividual.JPG',
+                'academy-development-squad': '/AcademyDev.JPG',
+                'club-technica-training': '/ClubTech.JPG',
+                'vacation-care': '/vacationCare.JPG',
+              };
+              const imgSrc = programImages[program.id];
               return (
                 <div
                   key={program.title}
                   className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col"
                 >
                   {/* Card image area */}
-                  <div className="relative h-48 bg-gradient-to-br from-[#0A1F44] to-[#021d40] flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#f0722b]/20 to-transparent" />
-                    <Icon className="w-16 h-16 text-white/20 group-hover:text-white/30 transition-colors duration-300" />
+                  <div className="relative h-48 bg-[#0A1F44] flex items-center justify-center overflow-hidden">
+                    {imgSrc ? (
+                      <img src={imgSrc} alt={program.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <Icon className="w-16 h-16 text-white/20 group-hover:text-white/30 transition-colors duration-300" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent group-hover:from-black/40 transition-all duration-300" />
                     <div className="absolute bottom-4 left-4">
                       <span className="bg-[#f0722b] text-white font-barlow font-bold text-xs tracking-widest uppercase px-3 py-1.5 rounded-lg">
                         {program.label}

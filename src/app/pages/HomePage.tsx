@@ -81,7 +81,7 @@ export default function HomePage() {
 
         {/* Full TECHNICA text — centred, no split trick */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-          <h1 className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none -mt-16 md:-mt-24">
+          <h1 className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44">
             TECHNICA
           </h1>
         </div>
@@ -93,8 +93,8 @@ export default function HomePage() {
         <div
           className="absolute z-[60] hidden sm:block"
           style={{
-            bottom: '140px',
-            left: '60px',
+            bottom: '100px',
+            left: '120px',
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
