@@ -64,10 +64,10 @@ export default function HomePage() {
     <>
       {/* ─── Hero Section ─── */}
       <section className="relative h-[85vh] overflow-hidden">
-        {/* Session photo background — replace /PERSON.png with session shot when available */}
+        {/* Session photo background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#010f22] via-[#021d40]/90 to-[#0d2a55]/80 z-10" />
-          <div className="absolute inset-0 bg-[#021d40] z-0" />
+          <img src="/Term-Program.JPG" alt="Training session" className="w-full h-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#010f22]/85 via-[#021d40]/75 to-[#0d2a55]/60" />
         </div>
 
         {/* Charcoal Top Bar */}
@@ -179,11 +179,24 @@ export default function HomePage() {
             className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {programs.map(program => (
+            {programs.map(program => {
+              const programImages: Record<string, string> = {
+                'term-program': '/Term-Program.JPG',
+                'holiday-clinic': '/Holiday.JPG',
+                'individual-sessions': '/INdividual.JPG',
+                'academy-development-squad': '/AcademyDev.JPG',
+                'club-technica-training': '/ClubTech.JPG',
+              };
+              const imgSrc = programImages[program.id];
+              return (
               <div key={program.id} className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer border border-gray-100">
                 <div className="h-56 bg-gray-200 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#013068] to-[#0A1F44] opacity-10 group-hover:opacity-20 transition-opacity" />
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-base tracking-widest uppercase font-barlow">Photo Coming Soon</div>
+                  {imgSrc ? (
+                    <img src={imgSrc} alt={program.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-base tracking-widest uppercase font-barlow">Photo Coming Soon</div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/30 transition-all duration-300" />
                 </div>
                 <div className="p-8">
                   <div className="text-sm uppercase text-orange-500 font-bold mb-1 tracking-widest font-barlow">{program.label}</div>
@@ -195,7 +208,8 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
           {/* Pagination dots */}
           <div className="flex justify-center gap-3 mt-8">
@@ -459,7 +473,7 @@ export default function HomePage() {
           rel="noopener noreferrer"
           className="relative z-30 mt-16"
         >
-          <img src="/Training Kit.png" alt="Training Kit Logo" className="h-32 md:h-48 lg:h-64 w-auto object-contain drop-shadow-lg hover:opacity-80 transition-opacity duration-300" />
+          <img src="/Kit.png" alt="Training Kit Logo" className="h-32 md:h-48 lg:h-64 w-auto object-contain drop-shadow-lg hover:opacity-80 transition-opacity duration-300" />
         </a>
         <a
           href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
