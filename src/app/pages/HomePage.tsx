@@ -79,9 +79,12 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Full TECHNICA text — centred, no split trick */}
+        {/* Full TECHNICA text — centred, even letter spacing */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-          <h1 className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none tracking-tighter text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44">
+          <h1
+            className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
+            style={{ letterSpacing: '0.02em', fontKerning: 'none' }}
+          >
             TECHNICA
           </h1>
         </div>

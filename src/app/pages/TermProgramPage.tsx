@@ -52,24 +52,26 @@ export default function TermProgramPage() {
           </svg>
         </div>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-            <div className="relative h-48 bg-gradient-to-br from-[#e8621e] to-[#c95315] flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-transparent" />
-              <Target className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
+          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase">Ages 4–8</div>
             </div>
             <div className="p-8">
-              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 4–8</div>
               <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Foundation Class'}</h3>
               <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card1_text || 'Our foundation classes are designed for players aged 4–8 years. Developing gross motor skills and the fundamental skills of football in a non-competitive, supportive environment.'}</p>
             </div>
           </div>
-          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-            <div className="relative h-48 bg-gradient-to-br from-[#e8621e] to-[#c95315] flex items-center justify-center overflow-hidden">
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-transparent" />
-              <Zap className="w-20 h-20 text-white/25 group-hover:text-white/40 transition-colors duration-300" />
+          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                <Zap className="w-6 h-6 text-white" />
+              </div>
+              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase">Ages 9–12</div>
             </div>
             <div className="p-8">
-              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 9–12</div>
               <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Elite Class'}</h3>
               <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card2_text || 'Designed for players aged 9–12 years. Enhancing the player\'s knowledge of the game whilst refining their core skills (dribbling, first touch, passing and shooting).'}</p>
             </div>
