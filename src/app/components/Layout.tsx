@@ -156,15 +156,16 @@ export default function Layout() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col items-center gap-4 text-xs text-white/40">
-            <div className="flex flex-wrap justify-center gap-6">
+          <div className="mt-8 pt-8 border-t border-white/10 flex flex-row items-center justify-between text-xs text-white/40">
+            {/* Left — nav links */}
+            <div className="flex flex-wrap gap-6 flex-1">
               <Link to="/privacy" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Terms &amp; Conditions</Link>
               <Link to="/contact" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Contact</Link>
               <Link to="/admin" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Admin</Link>
             </div>
 
-            {/* Ananta Systems attribution */}
+            {/* Centre — Ananta Systems attribution */}
             <a
               href="https://www.anantasystems.com.au/"
               target="_blank"
@@ -188,7 +189,8 @@ export default function Layout() {
               </svg>
             </a>
 
-            <span className="font-barlow tracking-widest">© {new Date().getFullYear()} Technica Football. All Rights Reserved.</span>
+            {/* Right — copyright */}
+            <span className="font-barlow tracking-widest flex-1 text-right">© {new Date().getFullYear()} Technica Football. All Rights Reserved.</span>
           </div>
         </div>
       </footer>
