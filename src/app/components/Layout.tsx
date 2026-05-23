@@ -108,7 +108,7 @@ export default function Layout() {
       <Outlet />
 
       {/* Footer */}
-      <footer className="relative bg-[#071630] pt-16 pb-10 px-8 md:px-16 z-[80]">
+      <footer className="relative bg-[#071630] pt-10 pb-10 px-8 md:px-16 z-[80]">
         {/* Footer wave jutting UP */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 150 1440 170" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[50px] lg:h-[70px]">
@@ -119,7 +119,7 @@ export default function Layout() {
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-10 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-10 mt-4">
             {/* Business Info */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left shrink-0">
               <img src="/TFLOGO.png" alt="Technica Football" className="h-24 md:h-40 w-auto object-contain mb-4 -ml-8" />

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, Send, Target, Sliders, Clock, MapPin, DollarSign } from 'lucide-react';
+import { ChevronRight, Send, Clock, MapPin, DollarSign } from 'lucide-react';
 import PageHero from '../components/PageHero';
 
 export default function PrivateSessionsPage() {
@@ -54,12 +54,6 @@ export default function PrivateSessionsPage() {
         </div>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#0A1F44] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#f0722b]/20 flex items-center justify-center shrink-0">
-                <Target className="w-6 h-6 text-[#f0722b]" />
-              </div>
-              <span className="bg-[#f0722b] text-white font-barlow font-bold text-xs tracking-widest uppercase px-3 py-1.5 rounded-lg">Technical Development</span>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">Technical Development</h3>
               <p className="text-white/70 leading-relaxed">
@@ -69,12 +63,6 @@ export default function PrivateSessionsPage() {
             </div>
           </div>
           <div className="bg-[#0A1F44] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#f0722b]/20 flex items-center justify-center shrink-0">
-                <Sliders className="w-6 h-6 text-[#f0722b]" />
-              </div>
-              <span className="bg-[#f0722b] text-white font-barlow font-bold text-xs tracking-widest uppercase px-3 py-1.5 rounded-lg">Tailored Sessions</span>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">Tailored Sessions</h3>
               <p className="text-white/70 leading-relaxed">

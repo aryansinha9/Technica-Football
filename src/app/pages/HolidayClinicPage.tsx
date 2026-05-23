@@ -1,4 +1,4 @@
-import { ChevronRight, Clock, MapPin, DollarSign, Target, Shield, CalendarCheck, CalendarX } from 'lucide-react';
+import { ChevronRight, Clock, MapPin, DollarSign, CalendarCheck, CalendarX } from 'lucide-react';
 import PageHero from '../components/PageHero';
 
 const enrollSteps = [
@@ -33,22 +33,12 @@ export default function HolidayClinicPage() {
         </div>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">Technical Development</h3>
               <p className="text-white/85 leading-relaxed">We focus on developing the key football skills that create a technical player — passing, dribbling, touch, defending and shooting through individual and group activities.</p>
             </div>
           </div>
           <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Shield className="w-6 h-6 text-white" />
-              </div>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">Supportive Environment</h3>
               <p className="text-white/85 leading-relaxed">Experienced coaches trained to provide positive reinforcement and encouragement — ensuring everyone is comfortable and having fun throughout every session.</p>

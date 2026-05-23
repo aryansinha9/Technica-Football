@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronRight, Send, Target, Sliders, Clock, MapPin, DollarSign, Loader2 } from 'lucide-react';
+import { ChevronRight, Send, Clock, MapPin, DollarSign, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { useProgramPage } from '../lib/useSiteContent';
 
@@ -73,11 +73,6 @@ export default function IndividualSessionsPage() {
         </div>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Technical Development'}</h3>
               <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
@@ -86,11 +81,6 @@ export default function IndividualSessionsPage() {
             </div>
           </div>
           <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="px-8 pt-8 pb-0 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <Sliders className="w-6 h-6 text-white" />
-              </div>
-            </div>
             <div className="p-8">
               <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Tailored Sessions'}</h3>
               <p className="text-white/85 leading-relaxed whitespace-pre-wrap">
