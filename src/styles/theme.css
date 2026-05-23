@@ -181,3 +181,76 @@
     line-height: 1.5;
   }
 }
+
+/* ===========================
+   Infinity Symbol Button
+   (Ananta Systems attribution)
+=========================== */
+
+.infinity-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  color: #888888;
+  background-color: transparent;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.infinity-icon {
+  width: 60px;
+  height: 60px;
+  transition: all 0.4s ease;
+}
+
+/* Hover — glow + lift + glass bg */
+.infinity-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.15) translateY(-2px);
+  box-shadow:
+    0 10px 20px -5px rgba(0, 0, 0, 0.3),
+    0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.infinity-link:hover .infinity-icon {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  animation: float 2.5s ease-in-out infinite;
+}
+
+/* Active — press feedback */
+.infinity-link:active {
+  transform: scale(0.95);
+}
+
+/* Float keyframes */
+@keyframes float {
+  0%   { transform: translateY(0px) scale(1); }
+  50%  { transform: translateY(-1.5px) scale(1.02); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+/* Light-mode override */
+@media (prefers-color-scheme: light) {
+  .infinity-link {
+    color: #a0a0a0;
+  }
+
+  .infinity-link:hover {
+    color: #222222;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 10px 20px -5px rgba(0, 0, 0, 0.1),
+      0 0 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .infinity-link:hover .infinity-icon {
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
+  }
+}

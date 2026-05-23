@@ -156,13 +156,38 @@ export default function Layout() {
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-xs text-white/40">
+          <div className="mt-8 pt-8 border-t border-white/10 flex flex-col items-center gap-4 text-xs text-white/40">
             <div className="flex flex-wrap justify-center gap-6">
               <Link to="/privacy" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Terms &amp; Conditions</Link>
               <Link to="/contact" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Contact</Link>
               <Link to="/admin" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Admin</Link>
             </div>
+
+            {/* Ananta Systems attribution */}
+            <a
+              href="https://www.anantasystems.com.au/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="infinity-link"
+              aria-label="Created by Ananta Systems, opens in a new tab"
+            >
+              <svg
+                className="infinity-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 1 0 0-8c-2 0-4 1.33-6 4Z" />
+              </svg>
+            </a>
+
             <span className="font-barlow tracking-widest">© {new Date().getFullYear()} Technica Football. All Rights Reserved.</span>
           </div>
         </div>
