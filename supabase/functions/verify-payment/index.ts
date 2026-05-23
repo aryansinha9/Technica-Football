@@ -9,6 +9,40 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/**
+ * Extract the weekday from a session date string like "Sunday 26 Apr" → "Sunday"
+ * Falls back to parsing the class subtitle like "Term 2 - Sunday 10:00am" → "Sunday"
+ */
+function extractDay(sessions: Record<string, string>[], subtitle: string): string {
+  // Primary: use the first session's date field
+  if (sessions.length > 0 && sessions[0].date) {
+    return sessions[0].date.split(' ')[0]; // "Sunday 26 Apr" → "Sunday"
+  }
+  // Fallback: parse subtitle "Term 2 - Sunday 10:00am"
+  const match = subtitle?.match(/[-–]\s*([A-Za-z]+)\s+\d/);
+  if (match) return match[1];
+  return '';
+}
+
+/**
+ * Extract the time from session data.
+ * Falls back to parsing the class subtitle like "Term 2 - Sunday 10:00am" → "10:00am"
+ */
+function extractTime(sessions: Record<string, string>[], subtitle: string): string {
+  // Primary: use the first session's time field
+  if (sessions.length > 0 && sessions[0].time) {
+    return sessions[0].time; // e.g. "10:00 am"
+  }
+  // Fallback: parse subtitle "Term 2 - Sunday 10:00am"
+  const match = subtitle?.match(/(\d{1,2}:\d{2}\s*(?:am|pm))/i);
+  if (match) return match[1];
+  return '';
+}
+
+// ── Main handler ──────────────────────────────────────────────────────────────
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -45,7 +79,7 @@ Deno.serve(async (req) => {
       console.error('Error updating booking:', bookingError);
     }
 
-    // 3. Decrement spots if booking was just marked paid and send email
+    // 3. Decrement spots and send confirmation email
     if (booking) {
       await supabase.rpc('decrement_spots', { p_class_id: booking.class_id });
 
@@ -53,69 +87,146 @@ Deno.serve(async (req) => {
       try {
         const resendApiKey = Deno.env.get('RESEND_API_KEY');
         if (resendApiKey) {
-          // Extract class + session details for email
-          const classData = booking.classes;
-          const sessions = Array.isArray(classData?.sessions) ? classData.sessions : [];
-          const firstSession = sessions[0] ?? null;
-          const coachName = firstSession?.coach || 'Your Coach';
-          const sessionDay = firstSession?.date?.split(' ')[0] || '';
-          const sessionTime = firstSession?.time || '';
-          const mapsQuery = encodeURIComponent(classData?.full_address || classData?.location || 'Technica Football, The Ponds NSW');
-          const mapsLink = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+          // ── Extract class & session details ──────────────────────────────
+          const classData = booking.classes ?? {};
+          const sessions: Record<string, string>[] = Array.isArray(classData.sessions)
+            ? classData.sessions
+            : [];
+          const firstSession = sessions[0] ?? {};
 
+          const coachName    = firstSession.coach        || 'Your Coach';
+          const sessionDay   = extractDay(sessions, classData.subtitle  || '');
+          const sessionTime  = extractTime(sessions, classData.subtitle || '');
+          const sessionDuration = firstSession.durationLabel
+            || classData.session_duration
+            || '';
+          const className    = classData.title       || booking.class_label || 'Term Program';
+          const startDate    = classData.started_date || 'Check Website';
+          const dateRange    = classData.date_range   || '';
+          const fullAddress  = classData.full_address || classData.location || 'The Ponds';
+
+          // Google Maps deep-link
+          const mapsQuery = encodeURIComponent(fullAddress);
+          const mapsLink  = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+          // ── Build attachments array (add public PDF URLs here when ready) ─
+          // Format: { filename: "Info Sheet.pdf", path: "https://..." }
+          // Documents should be uploaded to Supabase Storage → site-assets/documents/
+          const attachments: { filename: string; path: string }[] = [];
+
+          // Example (uncomment and populate when client provides documents):
+          // const docBase = 'https://dbidrdfaaznhomyeobnj.supabase.co/storage/v1/object/public/site-assets/documents';
+          // attachments.push({ filename: 'Session Information Sheet.pdf', path: `${docBase}/session-info.pdf` });
+
+          // ── Email HTML ──────────────────────────────────────────────────
           const emailHtml = `
             <div style="font-family: Arial, sans-serif; color: #0A1F44; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-              <div style="background-color: #0A1F44; padding: 24px; text-align: center;">
-                <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px;">TECHNICA FOOTBALL</h1>
-              </div>
-              <div style="padding: 32px;">
-                <h2 style="margin-top: 0; font-size: 20px;">Welcome to the Program!</h2>
-                <p>Hi ${booking.parent_first_name},</p>
-                <p>Your payment has been successfully received, and <strong>${booking.player_name}</strong> is officially registered for the upcoming term.</p>
 
-                <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin: 24px 0;">
-                  <h3 style="margin-top: 0; font-size: 16px; color: #f0722b;">PROGRAM DETAILS</h3>
-                  <p style="margin: 8px 0;"><strong>Class:</strong> ${classData?.title || booking.class_label}</p>
-                  <p style="margin: 8px 0;"><strong>Coach:</strong> ${coachName}</p>
-                  <p style="margin: 8px 0;"><strong>Day:</strong> ${sessionDay}</p>
-                  <p style="margin: 8px 0;"><strong>Session Time:</strong> ${sessionTime}</p>
-                  <p style="margin: 8px 0;"><strong>Start Date:</strong> ${classData?.started_date || 'Check Website'}</p>
-                  <p style="margin: 8px 0;"><strong>Location:</strong> ${classData?.full_address || classData?.location || 'The Ponds'}</p>
-                  <p style="margin: 16px 0 4px 0;">
-                    <a href="${mapsLink}" style="display: inline-block; background-color: #0A1F44; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">&#128205; View Location on Google Maps</a>
-                  </p>
+              <!-- Header -->
+              <div style="background-color: #0A1F44; padding: 28px; text-align: center;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 26px; letter-spacing: 3px; font-weight: 900;">TECHNICA FOOTBALL</h1>
+                <p style="color: #f0722b; margin: 6px 0 0; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">Registration Confirmed</p>
+              </div>
+
+              <!-- Body -->
+              <div style="padding: 32px;">
+                <h2 style="margin-top: 0; font-size: 22px; color: #0A1F44;">Welcome to the Program! ⚽</h2>
+                <p style="color: #374151;">Hi <strong>${booking.parent_first_name}</strong>,</p>
+                <p style="color: #374151;">
+                  Your payment has been successfully received, and
+                  <strong>${booking.player_name}</strong> is officially registered for the upcoming term.
+                  We're excited to have them join us!
+                </p>
+
+                <!-- Program Details Box -->
+                <div style="background-color: #f9fafb; border-left: 4px solid #f0722b; padding: 20px 24px; border-radius: 6px; margin: 24px 0;">
+                  <h3 style="margin: 0 0 16px; font-size: 13px; color: #f0722b; letter-spacing: 2px; text-transform: uppercase;">Program Details</h3>
+                  <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; width: 140px; vertical-align: top;">Class</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${className}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Coach</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${coachName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Day</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${sessionDay}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Session Time</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${sessionTime}${sessionDuration ? ' (' + sessionDuration + ')' : ''}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Program Dates</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${dateRange || startDate}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 6px 0; color: #6b7280; font-size: 14px; vertical-align: top;">Location</td>
+                      <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${fullAddress}</td>
+                    </tr>
+                  </table>
+
+                  <!-- Maps Button -->
+                  <div style="margin-top: 20px;">
+                    <a href="${mapsLink}"
+                       style="display: inline-block; background-color: #f0722b; color: #ffffff; padding: 12px 24px;
+                              border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
+                      &#128205; View Location on Google Maps
+                    </a>
+                  </div>
                 </div>
 
-                <h3 style="font-size: 16px;">What to Bring:</h3>
-                <ul style="padding-left: 20px;">
-                  <li>Football boots &amp; shin guards (Mandatory)</li>
+                <!-- What to Bring -->
+                <h3 style="font-size: 15px; color: #0A1F44; margin-bottom: 8px;">What to Bring</h3>
+                <ul style="padding-left: 20px; color: #374151; line-height: 1.8;">
+                  <li>Football boots &amp; shin guards <strong>(mandatory)</strong></li>
                   <li>Water bottle</li>
                   <li>Comfortable training attire</li>
                 </ul>
 
-                <p style="margin-top: 24px;">If you have any questions before the first session, feel free to reply to this email.</p>
-                <p>See you on the pitch!</p>
-                <p><strong>- The Technica Football Team</strong></p>
+                <p style="margin-top: 24px; color: #374151;">
+                  If you have any questions before the first session, please don't hesitate to reply to this email or
+                  contact us at <a href="mailto:info@technicafootball.com.au" style="color: #f0722b;">info@technicafootball.com.au</a>.
+                </p>
+                <p style="color: #374151;">See you on the pitch!</p>
+                <p style="color: #0A1F44;"><strong>— The Technica Football Team</strong></p>
+              </div>
+
+              <!-- Footer -->
+              <div style="background-color: #f3f4f6; padding: 16px 32px; text-align: center; border-top: 1px solid #e5e7eb;">
+                <p style="margin: 0; font-size: 12px; color: #9ca3af;">Technica Football | The Ponds, NSW 2769 | ABN: 93 433 558 169</p>
               </div>
             </div>
           `;
+
+          // ── Send via Resend ─────────────────────────────────────────────
+          const emailPayload: Record<string, unknown> = {
+            from: 'Technica Football <onboarding@resend.dev>',
+            to: booking.parent_email,
+            subject: `Registration Confirmed — ${className}`,
+            html: emailHtml,
+          };
+
+          // Only include attachments array if there are documents to send
+          if (attachments.length > 0) {
+            emailPayload.attachments = attachments;
+          }
 
           const emailRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${resendApiKey}`,
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              from: 'Technica Football <onboarding@resend.dev>',
-              to: booking.parent_email,
-              subject: `Registration Confirmed: ${classData?.title || booking.class_label}`,
-              html: emailHtml
-            })
+            body: JSON.stringify(emailPayload),
           });
 
           if (!emailRes.ok) {
             console.error('Failed to send email:', await emailRes.text());
+          } else {
+            console.log('Confirmation email sent to:', booking.parent_email);
           }
         }
       } catch (err) {
