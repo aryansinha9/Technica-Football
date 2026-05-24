@@ -63,7 +63,7 @@ export default function HomePage() {
   return (
     <>
       {/* ─── Hero Section ─── */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative h-[90vh] overflow-hidden">
         {/* Session photo background */}
         <div className="absolute inset-0 z-0">
           <img src="/Term-Program.JPG" alt="Training session" className="w-full h-full object-cover object-center" />
@@ -71,7 +71,7 @@ export default function HomePage() {
         </div>
 
         {/* Charcoal Top Bar */}
-        <div className="absolute top-0 inset-x-0 h-[140px] md:h-[180px] bg-[#21211f] z-20">
+        <div className="absolute top-0 inset-x-0 h-[140px] md:h-[130px] bg-[#21211f] z-20">
           <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[99%] pointer-events-none z-10">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 220 1440 70" preserveAspectRatio="none" className="block w-full h-[25px] md:h-[40px] lg:h-[55px]">
               <path fill="#21211f" fillOpacity="1" d="M0,224L480,288L960,224L1440,288L1440,0L0,0Z" />
@@ -83,7 +83,7 @@ export default function HomePage() {
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
           <h1
             className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
-            style={{ letterSpacing: '0.02em', fontKerning: 'none' }}
+            style={{ letterSpacing: '0.001em', fontKerning: 'none' }}
           >
             TECHNICA
           </h1>
@@ -96,8 +96,8 @@ export default function HomePage() {
         <div
           className="absolute z-[60] hidden sm:block"
           style={{
-            bottom: '100px',
-            left: '120px',
+            bottom: '80px',
+            left: '180px',
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
@@ -192,25 +192,25 @@ export default function HomePage() {
               };
               const imgSrc = programImages[program.id];
               return (
-              <div key={program.id} className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer border border-gray-100">
-                <div className="h-56 bg-gray-200 relative overflow-hidden">
-                  {imgSrc ? (
-                    <img src={imgSrc} alt={program.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-base tracking-widest uppercase font-barlow">Photo Coming Soon</div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/30 transition-all duration-300" />
+                <div key={program.id} className="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer border border-gray-100">
+                  <div className="h-56 bg-gray-200 relative overflow-hidden">
+                    {imgSrc ? (
+                      <img src={imgSrc} alt={program.title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-base tracking-widest uppercase font-barlow">Photo Coming Soon</div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/30 transition-all duration-300" />
+                  </div>
+                  <div className="p-8">
+                    <div className="text-sm uppercase text-orange-500 font-bold mb-1 tracking-widest font-barlow">{program.label}</div>
+                    <div className="text-xs uppercase text-gray-400 font-barlow tracking-widest mb-3">{program.ages}</div>
+                    <h3 className="text-2xl font-bold mb-4 text-[#0A1F44]">{program.title}</h3>
+                    <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{program.description}</p>
+                    <Link to={program.href} className="text-orange-500 font-bold flex items-center gap-2 group-hover:gap-4 transition-all font-barlow tracking-widest text-lg">
+                      LEARN MORE <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </div>
                 </div>
-                <div className="p-8">
-                  <div className="text-sm uppercase text-orange-500 font-bold mb-1 tracking-widest font-barlow">{program.label}</div>
-                  <div className="text-xs uppercase text-gray-400 font-barlow tracking-widest mb-3">{program.ages}</div>
-                  <h3 className="text-2xl font-bold mb-4 text-[#0A1F44]">{program.title}</h3>
-                  <p className="text-gray-600 mb-6 line-clamp-3 leading-relaxed">{program.description}</p>
-                  <Link to={program.href} className="text-orange-500 font-bold flex items-center gap-2 group-hover:gap-4 transition-all font-barlow tracking-widest text-lg">
-                    LEARN MORE <ChevronRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
               );
             })}
           </div>
@@ -328,7 +328,7 @@ export default function HomePage() {
             background-color: rgba(255,255,255,0.1) !important;
           }
         `}</style>
-        
+
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div className="absolute inset-0 tactical-bg opacity-30"></div>
