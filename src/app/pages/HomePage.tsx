@@ -223,10 +223,220 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── 3b. Player Progression Pathway ─── */}
+      <section className="relative z-[35] bg-[#f9fafb] text-[#0A1F44] pt-20 pb-24 px-8 md:px-16" aria-labelledby="pw-title">
+        {/* Wave transition from charcoal programs section */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
+            <path fill="#f9fafb" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
+          </svg>
+        </div>
+
+        <style>{`
+          .pw-card-tf {
+            transition: transform 0.35s cubic-bezier(0.2,0.7,0.2,1), box-shadow 0.35s ease, border-color 0.35s ease;
+          }
+          .pw-card-tf:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 26px 50px -28px rgba(0,0,0,0.15);
+          }
+          .pw-list-tf li {
+            transition: transform 0.2s ease;
+          }
+          .pw-list-tf li:hover {
+            transform: translateX(3px);
+          }
+          .pw-goal-tf {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+          }
+          .pw-goal-tf:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -26px rgba(0,0,0,0.15);
+          }
+          .pw-anim-tf {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2,0.7,0.2,1);
+          }
+          .pw-anim-tf.pw-in-tf {
+            opacity: 1;
+            transform: none;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .pw-anim-tf { opacity: 1; transform: none; }
+          }
+        `}</style>
+
+        <div className="max-w-[1320px] mx-auto" ref={(el) => {
+          if (!el || el.dataset.pwInit) return;
+          el.dataset.pwInit = 'true';
+          const items = el.querySelectorAll('.pw-anim-tf');
+          if (!('IntersectionObserver' in window)) {
+            items.forEach(e => e.classList.add('pw-in-tf'));
+            return;
+          }
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+              if (e.isIntersecting) {
+                const el = e.target as HTMLElement;
+                const idx = Array.from(items).indexOf(el);
+                el.style.transitionDelay = `${Math.min(idx, 8) * 70}ms`;
+                el.classList.add('pw-in-tf');
+                io.unobserve(el);
+              }
+            });
+          }, { threshold: 0.15 });
+          items.forEach(e => io.observe(e));
+        }}>
+
+          {/* Header */}
+          <div className="flex items-center justify-center gap-[clamp(12px,2vw,24px)] mb-1.5 pw-anim-tf">
+            <span className="h-[2px] flex-[0_1_150px] min-w-[24px] bg-[#f0722b] opacity-85" />
+            <span className="font-barlow font-semibold text-[#f0722b] text-[clamp(15px,2.3vw,28px)] tracking-[0.4em] uppercase pl-[0.4em] whitespace-nowrap text-center">
+              Technica Football
+            </span>
+            <span className="h-[2px] flex-[0_1_150px] min-w-[24px] bg-[#f0722b] opacity-85" />
+          </div>
+          <h2 id="pw-title" className="font-barlow font-bold text-[clamp(42px,8.5vw,92px)] leading-[0.98] tracking-[0.02em] text-center uppercase text-[#0A1F44] m-0 pw-anim-tf">
+            Player Pathway
+          </h2>
+          <p className="font-barlow font-medium text-[clamp(14px,2.1vw,25px)] tracking-[0.1em] uppercase text-center text-[#0A1F44]/70 mt-2.5 pw-anim-tf" style={{ textWrap: 'balance' }}>
+            A Clear Path. Purposeful Development. Higher Standards.
+          </p>
+
+          {/* Card Row */}
+          <div className="flex items-stretch justify-center mt-[clamp(38px,5vw,60px)] max-[900px]:flex-col max-[900px]:items-stretch max-[900px]:gap-12">
+
+            {/* Card 1 — Term Program */}
+            <article className="pw-card-tf pw-anim-tf relative flex-[1_1_0] min-w-0 bg-[#0A1F44] border-[1.5px] border-[#f0722b] rounded-[18px] p-[clamp(40px,3.4vw,52px)_clamp(22px,2vw,32px)_clamp(24px,2vw,30px)] flex flex-col items-center max-[900px]:pt-12 hover:border-[#f0722b]">
+              {/* Badge */}
+              <div className="absolute -top-[30px] left-1/2 -translate-x-1/2 w-16 h-[70px] flex items-start justify-center pt-2.5 font-barlow font-bold text-[38px] text-white shadow-[0_8px_18px_-8px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(180deg, #f0722b, #c85a1a)', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%)' }}>
+                1
+              </div>
+              {/* Icon */}
+              <div className="h-[74px] flex items-center justify-center mb-1.5">
+                <svg width="74" height="74" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle cx="50" cy="50" r="44" fill="#fff"/>
+                  <polygon points="50,35 64,45.5 58.5,62 41.5,62 36,45.5" fill="#0A1F44"/>
+                  <g stroke="#0A1F44" strokeWidth="3.4" fill="none" strokeLinejoin="round">
+                    <line x1="50" y1="35" x2="50" y2="13"/><line x1="64" y1="45.5" x2="85" y2="40"/>
+                    <line x1="58.5" y1="62" x2="72" y2="83"/><line x1="41.5" y1="62" x2="28" y2="83"/><line x1="36" y1="45.5" x2="15" y2="40"/>
+                  </g>
+                  <g fill="#0A1F44">
+                    <path d="M50 9 L61 17 L57 30 L43 30 L39 17 Z"/><path d="M90 35 L96 47 L86 56 L75 49 L78 36 Z"/>
+                    <path d="M77 86 L66 94 L56 86 L61 74 L74 76 Z"/><path d="M44 86 L34 94 L23 86 L26 76 L39 74 Z"/><path d="M10 35 L22 36 L25 49 L14 56 L4 47 Z"/>
+                  </g>
+                </svg>
+              </div>
+              <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Term Program</h3>
+              <div className="font-barlow font-semibold text-[clamp(14px,1.3vw,18px)] tracking-[0.12em] uppercase text-[#f0722b] text-center mb-3.5">Foundation Stage</div>
+              <div className="h-[1.5px] w-full bg-[#f0722b] opacity-60 mb-4" />
+              <p className="self-stretch text-[clamp(15px,1.15vw,16.5px)] leading-relaxed text-white/80 mb-3.5">The entry point into Technica Football. Players develop core skills, confidence and a love for the game.</p>
+              <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
+                {['Ball mastery & technique', 'Game confidence', 'Decision making', 'Love for the game', 'Weekly term-based training', 'Coaches observe and support ongoing development'].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            {/* Arrow 1 */}
+            <div className="flex-[0_0_clamp(40px,4vw,68px)] flex items-center justify-center self-center max-[900px]:rotate-90 max-[900px]:flex-[0_0_auto] pw-anim-tf">
+              <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true">
+                <defs><linearGradient id="pwArrowG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#f0722b"/><stop offset="1" stopColor="#c85a1a"/></linearGradient></defs>
+                <path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)"/>
+              </svg>
+            </div>
+
+            {/* Card 2 — Selection Process */}
+            <article className="pw-card-tf pw-anim-tf relative flex-[1_1_0] min-w-0 bg-[#0A1F44] border-[1.5px] border-white/50 rounded-[18px] p-[clamp(40px,3.4vw,52px)_clamp(22px,2vw,32px)_clamp(24px,2vw,30px)] flex flex-col items-center max-[900px]:pt-12 hover:border-white">
+              <div className="absolute -top-[30px] left-1/2 -translate-x-1/2 w-16 h-[70px] flex items-start justify-center pt-2.5 font-barlow font-bold text-[38px] text-[#0A1F44] shadow-[0_8px_18px_-8px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(180deg, #fff, #d7d9dc)', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%)' }}>
+                2
+              </div>
+              <div className="h-[74px] flex items-center justify-center mb-1.5">
+                <svg width="78" height="84" viewBox="0 0 86 92" fill="none" stroke="#fff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="12" y="12" width="50" height="64" rx="6"/>
+                  <rect x="29" y="6" width="16" height="11" rx="3" fill="#0A1F44"/>
+                  <path d="M23 30 l4 4 l7 -8" strokeWidth="3"/><line x1="40" y1="32" x2="54" y2="32" strokeWidth="2.8"/>
+                  <path d="M23 45 l4 4 l7 -8" strokeWidth="3"/><line x1="40" y1="47" x2="54" y2="47" strokeWidth="2.8"/>
+                  <path d="M23 60 l4 4 l7 -8" strokeWidth="3"/>
+                  <circle cx="60" cy="62" r="15" fill="#0A1F44"/><circle cx="60" cy="62" r="13"/><line x1="70" y1="72" x2="80" y2="83"/>
+                </svg>
+              </div>
+              <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Selection Process</h3>
+              <div className="font-barlow font-semibold text-[clamp(14px,1.3vw,18px)] tracking-[0.12em] uppercase text-[#f0722b] text-center mb-3.5">Talent Identification Stage</div>
+              <div className="h-[1.5px] w-full bg-white/45 mb-4" />
+              <p className="self-stretch text-[clamp(15px,1.15vw,16.5px)] leading-relaxed text-white/80 mb-3.5">Coaches identify players who demonstrate strong potential, attitude and commitment.</p>
+              <p className="self-stretch font-barlow font-semibold text-[#f0722b] text-[clamp(16px,1.4vw,19px)] mb-3">Players may be invited to:</p>
+              <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
+                {[
+                  { icon: <><rect x="3" y="5" width="18" height="16" rx="2.5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></>, label: 'Assessment Sessions' },
+                  { icon: <><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19 a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.4 a4.6 4.6 0 0 1 5 4.6"/></>, label: 'Trial Nights' },
+                  { icon: <><circle cx="12" cy="7" r="3"/><path d="M6.5 18 a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M2 19 a3.6 3.6 0 0 1 4.5-3.4"/><path d="M22 19 a3.6 3.6 0 0 0 -4.5-3.4"/></>, label: 'Small Group Evaluations' },
+                  { icon: <><circle cx="12" cy="8" r="3.6"/><path d="M5 20 a7 7 0 0 1 14 0"/></>, label: 'Individual Recommendation' },
+                ].map(item => (
+                  <li key={item.label} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px">{item.icon}</svg>
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            {/* Arrow 2 */}
+            <div className="flex-[0_0_clamp(40px,4vw,68px)] flex items-center justify-center self-center max-[900px]:rotate-90 max-[900px]:flex-[0_0_auto] pw-anim-tf">
+              <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)"/></svg>
+            </div>
+
+            {/* Card 3 — Academy Development Squad */}
+            <article className="pw-card-tf pw-anim-tf relative flex-[1_1_0] min-w-0 bg-[#0A1F44] border-[1.5px] border-[#f0722b] rounded-[18px] p-[clamp(40px,3.4vw,52px)_clamp(22px,2vw,32px)_clamp(24px,2vw,30px)] flex flex-col items-center max-[900px]:pt-12 hover:border-[#f0722b]">
+              <div className="absolute -top-[30px] left-1/2 -translate-x-1/2 w-16 h-[70px] flex items-start justify-center pt-2.5 font-barlow font-bold text-[38px] text-white shadow-[0_8px_18px_-8px_rgba(0,0,0,0.3)]" style={{ background: 'linear-gradient(180deg, #f0722b, #c85a1a)', clipPath: 'polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%)' }}>
+                3
+              </div>
+              <div className="h-[74px] flex items-center justify-center mb-1.5">
+                <svg width="72" height="82" viewBox="0 0 84 96" fill="none" aria-hidden="true">
+                  <path d="M42 6 L74 16 V44 C74 68 60 82 42 90 C24 82 10 68 10 44 V16 Z" fill="#0A1F44" stroke="#e9e9ea" strokeWidth="3"/>
+                  <path d="M42 22 l2.6 5.6 6 .7 -4.5 4.2 1.2 6 -5.3-3 -5.3 3 1.2-6 -4.5-4.2 6-.7 Z" fill="#f0722b"/>
+                  <path d="M26 42 H58 V50 H47 V72 H37 V50 H26 Z" fill="#fff"/>
+                  <rect x="46" y="50" width="11" height="6" fill="#fff"/>
+                </svg>
+              </div>
+              <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Academy Development Squad</h3>
+              <div className="font-barlow font-semibold text-[clamp(14px,1.3vw,18px)] tracking-[0.12em] uppercase text-[#f0722b] text-center mb-3.5">Performance Stage</div>
+              <div className="h-[1.5px] w-full bg-[#f0722b] opacity-60 mb-4" />
+              <p className="self-stretch text-[clamp(15px,1.15vw,16.5px)] leading-relaxed text-white/80 mb-3.5">Invitation or selection based. A higher-performance environment for dedicated players.</p>
+              <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
+                {['Advanced technical training', 'Position-specific development', 'Game understanding & scenarios', 'Performance reviews', 'Squad culture & standards', 'Long-term player development'].map(item => (
+                  <li key={item} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+          </div>
+
+          {/* Goal Bar */}
+          <div className="pw-goal-tf pw-anim-tf mt-[clamp(26px,3vw,40px)] border-[1.5px] border-[#f0722b] rounded-2xl p-[clamp(18px,2vw,26px)_clamp(24px,3vw,40px)] flex items-center gap-[clamp(18px,2.5vw,32px)] bg-[#0A1F44] max-[620px]:flex-col max-[620px]:items-start max-[620px]:gap-3.5">
+            <svg width="56" height="56" viewBox="0 0 58 58" fill="none" stroke="#f0722b" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="flex-none">
+              <circle cx="27" cy="31" r="20"/><circle cx="27" cy="31" r="12"/><circle cx="27" cy="31" r="4" fill="#f0722b"/>
+              <line x1="33" y1="25" x2="50" y2="8"/><path d="M44 8 L50 8 L50 14"/>
+            </svg>
+            <div className="font-barlow font-bold text-[clamp(24px,2.6vw,34px)] tracking-[0.04em] uppercase whitespace-nowrap text-white">Our Goal</div>
+            <div className="w-[2px] self-stretch min-h-[46px] bg-white/14 max-[620px]:hidden" />
+            <div className="text-[clamp(15px,1.5vw,21px)] leading-relaxed text-white/80 max-[620px]:text-base">To develop confident, skilled and resilient players who love the game and strive for excellence.</div>
+          </div>
+
+        </div>
+      </section>
+
       {/* ─── 4. Testimonials ─── */}
       {/* Section itself uses fixed padding — content area has min-h to prevent height shifts */}
       <section className="relative z-40 bg-[#f0722b] text-white pt-20 pb-24 px-16 md:px-24 lg:px-32 text-center">
-        {/* Orange wave jutting UP into Charcoal (Zigzag) */}
+        {/* Orange wave jutting UP into pathway section */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f0722b" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
