@@ -82,15 +82,15 @@ export default function HomePage() {
         {/* Full TECHNICA text — centred, even letter spacing */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
           <h1
-            className="text-[13vw] sm:text-[110px] md:text-[200px] lg:text-[290px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
+            className="text-[12vw] sm:text-[100px] md:text-[170px] lg:text-[250px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
             style={{ letterSpacing: '0.001em', fontKerning: 'none' }}
           >
             TECHNICA
           </h1>
         </div>
 
-        {/* Orange accent gradient bottom-right */}
-        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#f38221]/40 to-transparent z-10 pointer-events-none" />
+        {/* Blue accent gradient bottom-right */}
+        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#0A1F44]/50 to-transparent z-10 pointer-events-none" />
 
         {/* Explore Programs CTA — bottom-left, fades on scroll */}
         <div
@@ -128,27 +128,27 @@ export default function HomePage() {
       </section>
 
       {/* ─── 2. Slim Highlight Bar ─── */}
-      <section className="relative z-[45] bg-white text-black pt-10 pb-10 px-8 md:px-16">
+      <section className="relative z-[45] bg-white text-black pt-0 pb-0 px-8 md:px-16">
         {/* White wave jutting UP into Gray */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
             <path fill="#ffffff" fillOpacity="1" d="M0,235L480,270L960,250L1440,288L1440,320L960,320L480,320L0,320Z" />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 transform translate-y-4">
-          <div className="flex items-center gap-6">
-            <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-24 md:h-28 w-auto object-contain" />
-            <p className="font-bold text-xl md:text-2xl font-barlow uppercase tracking-wider">"Voted 'Best New Business 2024'"</p>
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 pb-6 pt-2">
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
+            <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-12 md:h-16 w-auto object-contain" />
+            <p className="font-bold text-base md:text-lg font-barlow uppercase tracking-wider">"Awarded 'Best New Business 2024'"</p>
           </div>
-          <div className="flex items-center gap-6">
-            <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-24 md:h-28 w-auto object-contain" />
-            <p className="font-semibold text-gray-600 font-barlow uppercase text-xl md:text-2xl tracking-wide">We accept Active Kids vouchers</p>
+          <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
+            <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-12 md:h-16 w-auto object-contain" />
+            <p className="font-semibold text-gray-600 font-barlow uppercase text-base md:text-lg tracking-wide">We accept Active Kids vouchers</p>
           </div>
         </div>
       </section>
 
       {/* ─── 3. Our Programs ─── */}
-      <section className="relative z-30 bg-[#21211f] text-white pt-20 pb-24 px-8 md:px-16">
+      <section className="relative z-30 bg-[#21211f] text-white pt-27 pb-24 px-8 md:px-16">
         {/* Top Wave (White dripping into Charcoal) */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 320 1440 110" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -189,6 +189,7 @@ export default function HomePage() {
                 'individual-sessions': '/INdividual.JPG',
                 'academy-development-squad': '/AcademyDev.JPG',
                 'club-technica-training': '/ClubTech.JPG',
+                'vacation-care': '/vacationCare.JPG'
               };
               const imgSrc = programImages[program.id];
               return (
@@ -224,7 +225,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 3b. Player Progression Pathway ─── */}
-      <section className="relative z-[35] bg-[#f9fafb] text-[#0A1F44] pt-20 pb-24 px-8 md:px-16" aria-labelledby="pw-title">
+      <section className="relative z-[35] bg-[#f9fafb] text-[#0A1F44] pt-11 pb-24 px-8 md:px-16" aria-labelledby="pw-title">
         {/* Wave transition from charcoal programs section */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -316,15 +317,15 @@ export default function HomePage() {
               {/* Icon */}
               <div className="h-[74px] flex items-center justify-center mb-1.5">
                 <svg width="74" height="74" viewBox="0 0 100 100" aria-hidden="true">
-                  <circle cx="50" cy="50" r="44" fill="#fff"/>
-                  <polygon points="50,35 64,45.5 58.5,62 41.5,62 36,45.5" fill="#0A1F44"/>
+                  <circle cx="50" cy="50" r="44" fill="#fff" />
+                  <polygon points="50,35 64,45.5 58.5,62 41.5,62 36,45.5" fill="#0A1F44" />
                   <g stroke="#0A1F44" strokeWidth="3.4" fill="none" strokeLinejoin="round">
-                    <line x1="50" y1="35" x2="50" y2="13"/><line x1="64" y1="45.5" x2="85" y2="40"/>
-                    <line x1="58.5" y1="62" x2="72" y2="83"/><line x1="41.5" y1="62" x2="28" y2="83"/><line x1="36" y1="45.5" x2="15" y2="40"/>
+                    <line x1="50" y1="35" x2="50" y2="13" /><line x1="64" y1="45.5" x2="85" y2="40" />
+                    <line x1="58.5" y1="62" x2="72" y2="83" /><line x1="41.5" y1="62" x2="28" y2="83" /><line x1="36" y1="45.5" x2="15" y2="40" />
                   </g>
                   <g fill="#0A1F44">
-                    <path d="M50 9 L61 17 L57 30 L43 30 L39 17 Z"/><path d="M90 35 L96 47 L86 56 L75 49 L78 36 Z"/>
-                    <path d="M77 86 L66 94 L56 86 L61 74 L74 76 Z"/><path d="M44 86 L34 94 L23 86 L26 76 L39 74 Z"/><path d="M10 35 L22 36 L25 49 L14 56 L4 47 Z"/>
+                    <path d="M50 9 L61 17 L57 30 L43 30 L39 17 Z" /><path d="M90 35 L96 47 L86 56 L75 49 L78 36 Z" />
+                    <path d="M77 86 L66 94 L56 86 L61 74 L74 76 Z" /><path d="M44 86 L34 94 L23 86 L26 76 L39 74 Z" /><path d="M10 35 L22 36 L25 49 L14 56 L4 47 Z" />
                   </g>
                 </svg>
               </div>
@@ -335,7 +336,7 @@ export default function HomePage() {
               <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
                 {['Ball mastery & technique', 'Game confidence', 'Decision making', 'Love for the game', 'Weekly term-based training', 'Coaches observe and support ongoing development'].map(item => (
                   <li key={item} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9" /><path d="M8 12.3 l2.6 2.6 L16 9" /></svg>
                     {item}
                   </li>
                 ))}
@@ -345,8 +346,8 @@ export default function HomePage() {
             {/* Arrow 1 */}
             <div className="flex-[0_0_clamp(40px,4vw,68px)] flex items-center justify-center self-center max-[900px]:rotate-90 max-[900px]:flex-[0_0_auto] pw-anim-tf">
               <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true">
-                <defs><linearGradient id="pwArrowG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#f0722b"/><stop offset="1" stopColor="#c85a1a"/></linearGradient></defs>
-                <path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)"/>
+                <defs><linearGradient id="pwArrowG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#f0722b" /><stop offset="1" stopColor="#c85a1a" /></linearGradient></defs>
+                <path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)" />
               </svg>
             </div>
 
@@ -357,12 +358,12 @@ export default function HomePage() {
               </div>
               <div className="h-[74px] flex items-center justify-center mb-1.5">
                 <svg width="78" height="84" viewBox="0 0 86 92" fill="none" stroke="#fff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="12" y="12" width="50" height="64" rx="6"/>
-                  <rect x="29" y="6" width="16" height="11" rx="3" fill="#0A1F44"/>
-                  <path d="M23 30 l4 4 l7 -8" strokeWidth="3"/><line x1="40" y1="32" x2="54" y2="32" strokeWidth="2.8"/>
-                  <path d="M23 45 l4 4 l7 -8" strokeWidth="3"/><line x1="40" y1="47" x2="54" y2="47" strokeWidth="2.8"/>
-                  <path d="M23 60 l4 4 l7 -8" strokeWidth="3"/>
-                  <circle cx="60" cy="62" r="15" fill="#0A1F44"/><circle cx="60" cy="62" r="13"/><line x1="70" y1="72" x2="80" y2="83"/>
+                  <rect x="12" y="12" width="50" height="64" rx="6" />
+                  <rect x="29" y="6" width="16" height="11" rx="3" fill="#0A1F44" />
+                  <path d="M23 30 l4 4 l7 -8" strokeWidth="3" /><line x1="40" y1="32" x2="54" y2="32" strokeWidth="2.8" />
+                  <path d="M23 45 l4 4 l7 -8" strokeWidth="3" /><line x1="40" y1="47" x2="54" y2="47" strokeWidth="2.8" />
+                  <path d="M23 60 l4 4 l7 -8" strokeWidth="3" />
+                  <circle cx="60" cy="62" r="15" fill="#0A1F44" /><circle cx="60" cy="62" r="13" /><line x1="70" y1="72" x2="80" y2="83" />
                 </svg>
               </div>
               <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Selection Process</h3>
@@ -372,10 +373,10 @@ export default function HomePage() {
               <p className="self-stretch font-barlow font-semibold text-[#f0722b] text-[clamp(16px,1.4vw,19px)] mb-3">Players may be invited to:</p>
               <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
                 {[
-                  { icon: <><rect x="3" y="5" width="18" height="16" rx="2.5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></>, label: 'Assessment Sessions' },
-                  { icon: <><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19 a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.4 a4.6 4.6 0 0 1 5 4.6"/></>, label: 'Trial Nights' },
-                  { icon: <><circle cx="12" cy="7" r="3"/><path d="M6.5 18 a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M2 19 a3.6 3.6 0 0 1 4.5-3.4"/><path d="M22 19 a3.6 3.6 0 0 0 -4.5-3.4"/></>, label: 'Small Group Evaluations' },
-                  { icon: <><circle cx="12" cy="8" r="3.6"/><path d="M5 20 a7 7 0 0 1 14 0"/></>, label: 'Individual Recommendation' },
+                  { icon: <><rect x="3" y="5" width="18" height="16" rx="2.5" /><line x1="3" y1="10" x2="21" y2="10" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="16" y1="3" x2="16" y2="7" /></>, label: 'Assessment Sessions' },
+                  { icon: <><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19 a5.5 5.5 0 0 1 11 0" /><circle cx="17" cy="9" r="2.6" /><path d="M16 14.4 a4.6 4.6 0 0 1 5 4.6" /></>, label: 'Trial Nights' },
+                  { icon: <><circle cx="12" cy="7" r="3" /><path d="M6.5 18 a5.5 5.5 0 0 1 11 0" /><circle cx="5" cy="10" r="2.2" /><circle cx="19" cy="10" r="2.2" /><path d="M2 19 a3.6 3.6 0 0 1 4.5-3.4" /><path d="M22 19 a3.6 3.6 0 0 0 -4.5-3.4" /></>, label: 'Small Group Evaluations' },
+                  { icon: <><circle cx="12" cy="8" r="3.6" /><path d="M5 20 a7 7 0 0 1 14 0" /></>, label: 'Individual Recommendation' },
                 ].map(item => (
                   <li key={item.label} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px">{item.icon}</svg>
@@ -387,7 +388,7 @@ export default function HomePage() {
 
             {/* Arrow 2 */}
             <div className="flex-[0_0_clamp(40px,4vw,68px)] flex items-center justify-center self-center max-[900px]:rotate-90 max-[900px]:flex-[0_0_auto] pw-anim-tf">
-              <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)"/></svg>
+              <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwArrowG)" /></svg>
             </div>
 
             {/* Card 3 — Academy Development Squad */}
@@ -397,10 +398,10 @@ export default function HomePage() {
               </div>
               <div className="h-[74px] flex items-center justify-center mb-1.5">
                 <svg width="72" height="82" viewBox="0 0 84 96" fill="none" aria-hidden="true">
-                  <path d="M42 6 L74 16 V44 C74 68 60 82 42 90 C24 82 10 68 10 44 V16 Z" fill="#0A1F44" stroke="#e9e9ea" strokeWidth="3"/>
-                  <path d="M42 22 l2.6 5.6 6 .7 -4.5 4.2 1.2 6 -5.3-3 -5.3 3 1.2-6 -4.5-4.2 6-.7 Z" fill="#f0722b"/>
-                  <path d="M26 42 H58 V50 H47 V72 H37 V50 H26 Z" fill="#fff"/>
-                  <rect x="46" y="50" width="11" height="6" fill="#fff"/>
+                  <path d="M42 6 L74 16 V44 C74 68 60 82 42 90 C24 82 10 68 10 44 V16 Z" fill="#0A1F44" stroke="#e9e9ea" strokeWidth="3" />
+                  <path d="M42 22 l2.6 5.6 6 .7 -4.5 4.2 1.2 6 -5.3-3 -5.3 3 1.2-6 -4.5-4.2 6-.7 Z" fill="#f0722b" />
+                  <path d="M26 42 H58 V50 H47 V72 H37 V50 H26 Z" fill="#fff" />
+                  <rect x="46" y="50" width="11" height="6" fill="#fff" />
                 </svg>
               </div>
               <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Academy Development Squad</h3>
@@ -410,7 +411,7 @@ export default function HomePage() {
               <ul className="pw-list-tf self-stretch flex flex-col gap-2.5 list-none m-0 p-0">
                 {['Advanced technical training', 'Position-specific development', 'Game understanding & scenarios', 'Performance reviews', 'Squad culture & standards', 'Long-term player development'].map(item => (
                   <li key={item} className="flex items-start gap-3 text-[clamp(14px,1.1vw,16px)] leading-[1.35] text-white/80">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f0722b" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="flex-none mt-px"><circle cx="12" cy="12" r="9" /><path d="M8 12.3 l2.6 2.6 L16 9" /></svg>
                     {item}
                   </li>
                 ))}
@@ -422,8 +423,8 @@ export default function HomePage() {
           {/* Goal Bar */}
           <div className="pw-goal-tf pw-anim-tf mt-[clamp(26px,3vw,40px)] border-[1.5px] border-[#f0722b] rounded-2xl p-[clamp(18px,2vw,26px)_clamp(24px,3vw,40px)] flex items-center gap-[clamp(18px,2.5vw,32px)] bg-[#0A1F44] max-[620px]:flex-col max-[620px]:items-start max-[620px]:gap-3.5">
             <svg width="56" height="56" viewBox="0 0 58 58" fill="none" stroke="#f0722b" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="flex-none">
-              <circle cx="27" cy="31" r="20"/><circle cx="27" cy="31" r="12"/><circle cx="27" cy="31" r="4" fill="#f0722b"/>
-              <line x1="33" y1="25" x2="50" y2="8"/><path d="M44 8 L50 8 L50 14"/>
+              <circle cx="27" cy="31" r="20" /><circle cx="27" cy="31" r="12" /><circle cx="27" cy="31" r="4" fill="#f0722b" />
+              <line x1="33" y1="25" x2="50" y2="8" /><path d="M44 8 L50 8 L50 14" />
             </svg>
             <div className="font-barlow font-bold text-[clamp(24px,2.6vw,34px)] tracking-[0.04em] uppercase whitespace-nowrap text-white">Our Goal</div>
             <div className="w-[2px] self-stretch min-h-[46px] bg-white/14 max-[620px]:hidden" />
@@ -517,6 +518,7 @@ export default function HomePage() {
 
         <style>{`
           .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
             font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
           }
           .tactical-bg {
@@ -554,9 +556,10 @@ export default function HomePage() {
           <div>
             {/* CORE FOCUS SECTION */}
             <div className="mb-24">
-              <div className="flex items-center gap-4 mb-12">
-                <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">OUR CORE FOCUS</h2>
-                <div className="pitch-line"></div>
+              <div className="flex items-center justify-center gap-6 mb-12">
+                <div className="pitch-line hidden md:block"></div>
+                <h2 className="text-4xl md:text-5xl font-barlow font-black tracking-widest uppercase text-white whitespace-nowrap">OUR CORE FOCUS</h2>
+                <div className="pitch-line hidden md:block"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Touch */}
@@ -588,9 +591,10 @@ export default function HomePage() {
 
             {/* SUPPORTING FACTORS SECTION */}
             <div>
-              <div className="flex items-center gap-4 mb-12">
+              <div className="flex items-center justify-center gap-6 mb-12">
+                <div className="pitch-line hidden md:block"></div>
                 <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">SUPPORTING FACTORS</h2>
-                <div className="pitch-line"></div>
+                <div className="pitch-line hidden md:block"></div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Communication */}
@@ -632,7 +636,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 6. Official Training Kit ─── */}
-      <section className="relative z-[60] bg-[#21211f] w-full pt-16 pb-20 px-8 md:px-16 flex flex-col items-center">
+      <section className="relative z-[60] bg-[#21211f] w-full pt-10 pb-27 px-8 md:px-16 flex flex-col items-center">
         {/* Charcoal wave jutting UP into Blue */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -686,20 +690,22 @@ export default function HomePage() {
           rel="noopener noreferrer"
           className="relative z-30 mt-16"
         >
-          <img src="/Kit.png" alt="Training Kit Logo" className="h-32 md:h-48 lg:h-64 w-auto object-contain drop-shadow-lg hover:opacity-80 transition-opacity duration-300" />
+          <img src="/trainingkitlogo.png" alt="Training Kit Logo" className="h-24 md:h-32 lg:h-40 w-auto object-contain drop-shadow-lg hover:opacity-80 transition-opacity duration-300" />
         </a>
-        <a
-          href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center gap-2 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-10 py-4 rounded-xl hover:bg-white hover:text-[#f0722b] transition-colors duration-300 text-base shadow-lg"
-        >
-          See All Options <ChevronRight className="w-5 h-5" />
-        </a>
+        <div className="w-full flex justify-center mt-8">
+          <a
+            href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-10 py-4 rounded-xl hover:bg-white hover:text-[#f0722b] transition-colors duration-300 text-base shadow-lg"
+          >
+            See All Options <ChevronRight className="w-5 h-5" />
+          </a>
+        </div>
       </section>
 
       {/* ─── 7. Our Partners ─── */}
-      <section className="relative z-[70] bg-[#f9fafb] text-[#0A1F44] pt-16 pb-20 px-8 md:px-16 text-center">
+      <section className="relative z-[70] bg-[#f9fafb] text-[#0A1F44] pt-7 pb-20 px-8 md:px-16 text-center">
         {/* Light Grey wave jutting UP into Charcoal */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">

@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Player Pathway — Website Section</title>
+
+<!-- ░░ Fonts (keep this link in your site <head>) ░░ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════════════
+   PLAYER PATHWAY — self-contained website section
+   All rules are scoped under .pw so they won't clash with your site.
+   ════════════════════════════════════════════════════════════ */
+.pw{
+  --pw-bg:#0a0b0d;
+  --pw-card:#0c0d10;
+  --pw-gold:#c6a24c;
+  --pw-gold-bright:#d8b766;
+  --pw-gold-deep:#a8853a;
+  --pw-white:#ffffff;
+  --pw-ink:#e7e8ea;
+  --pw-line:rgba(255,255,255,0.14);
+
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+  color:var(--pw-white);
+  background:
+    radial-gradient(120% 70% at 50% -5%, rgba(198,162,76,0.10), transparent 55%),
+    radial-gradient(90% 55% at 50% 108%, rgba(198,162,76,0.06), transparent 60%),
+    var(--pw-bg);
+  padding:clamp(40px,6vw,80px) clamp(18px,4vw,56px) clamp(44px,6vw,72px);
+  -webkit-font-smoothing:antialiased;
+}
+.pw *{box-sizing:border-box;}
+.pw .pw-inner{max-width:1320px;margin:0 auto;}
+
+/* ── header ─────────────────────────────────────────────── */
+.pw .pw-eyebrow{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(12px,2vw,24px);margin-bottom:6px;flex-wrap:nowrap;
+}
+.pw .pw-eyebrow .pw-rule{height:2px;flex:0 1 150px;min-width:24px;background:var(--pw-gold);opacity:.85;}
+.pw .pw-eyebrow span:not(.pw-rule){
+  font-family:'Oswald',sans-serif;font-weight:600;color:var(--pw-gold);
+  font-size:clamp(15px,2.3vw,28px);letter-spacing:.4em;text-transform:uppercase;
+  padding-left:.4em;white-space:nowrap;text-align:center;
+}
+.pw .pw-title{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(42px,8.5vw,92px);line-height:.98;letter-spacing:.02em;
+  text-align:center;text-transform:uppercase;margin:0;color:var(--pw-white);
+}
+.pw .pw-subtitle{
+  font-family:'Oswald',sans-serif;font-weight:500;
+  font-size:clamp(14px,2.1vw,25px);letter-spacing:.1em;text-transform:uppercase;
+  text-align:center;color:#eef0f2;margin:10px 0 0;text-wrap:balance;
+}
+
+/* ── card row ───────────────────────────────────────────── */
+.pw .pw-row{
+  display:flex;align-items:stretch;justify-content:center;
+  margin-top:clamp(38px,5vw,60px);
+}
+.pw .pw-card{
+  position:relative;flex:1 1 0;min-width:0;
+  background:linear-gradient(180deg,#0e0f13,#090a0c);
+  border:1.5px solid var(--pw-gold);border-radius:18px;
+  padding:clamp(40px,3.4vw,52px) clamp(22px,2vw,32px) clamp(24px,2vw,30px);
+  display:flex;flex-direction:column;align-items:center;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease;
+}
+.pw .pw-card.pw-alt{border-color:rgba(255,255,255,0.5);}
+.pw .pw-card:hover{transform:translateY(-6px);border-color:var(--pw-gold-bright);box-shadow:0 26px 50px -28px rgba(0,0,0,0.85);}
+.pw .pw-card.pw-alt:hover{border-color:#fff;}
+
+/* number pennant */
+.pw .pw-badge{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);
+  width:64px;height:70px;display:flex;align-items:flex-start;justify-content:center;padding-top:10px;
+  background:linear-gradient(180deg,var(--pw-gold-bright),var(--pw-gold-deep));
+  clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:38px;color:#15110a;
+  box-shadow:0 8px 18px -8px rgba(0,0,0,0.7);
+}
+.pw .pw-card.pw-alt .pw-badge{background:linear-gradient(180deg,#fff,#d7d9dc);color:#16181c;}
+
+.pw .pw-icon{height:74px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.pw .pw-icon svg{display:block;}
+
+.pw .pw-card h3{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:clamp(22px,2vw,29px);letter-spacing:.02em;text-transform:uppercase;
+  text-align:center;margin:4px 0 6px;line-height:1.05;color:#fff;
+}
+.pw .pw-stage{
+  font-family:'Oswald',sans-serif;font-weight:600;
+  font-size:clamp(14px,1.3vw,18px);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--pw-gold);text-align:center;margin-bottom:14px;
+}
+.pw .pw-divider{height:1.5px;width:100%;background:var(--pw-gold);opacity:.6;margin-bottom:16px;}
+.pw .pw-card.pw-alt .pw-divider{background:rgba(255,255,255,.45);}
+
+.pw .pw-desc{align-self:stretch;font-size:clamp(15px,1.15vw,16.5px);line-height:1.5;color:var(--pw-ink);margin:0 0 14px;}
+.pw .pw-invite{align-self:stretch;font-family:'Oswald',sans-serif;font-weight:600;color:var(--pw-gold);font-size:clamp(16px,1.4vw,19px);margin:0 0 12px;}
+
+.pw .pw-list{list-style:none;margin:0;padding:0;align-self:stretch;display:flex;flex-direction:column;gap:10px;}
+.pw .pw-list li{display:flex;align-items:flex-start;gap:12px;font-size:clamp(14px,1.1vw,16px);line-height:1.35;color:var(--pw-ink);transition:transform .2s ease;}
+.pw .pw-list li:hover{transform:translateX(3px);}
+.pw .pw-list li svg{flex:0 0 auto;margin-top:1px;}
+
+/* connector arrows */
+.pw .pw-arrow{flex:0 0 clamp(40px,4vw,68px);display:flex;align-items:center;justify-content:center;align-self:center;}
+.pw .pw-arrow svg{display:block;}
+
+/* ── goal bar ───────────────────────────────────────────── */
+.pw .pw-goal{
+  margin-top:clamp(26px,3vw,40px);
+  border:1.5px solid var(--pw-gold);border-radius:16px;
+  padding:clamp(18px,2vw,26px) clamp(24px,3vw,40px);
+  display:flex;align-items:center;gap:clamp(18px,2.5vw,32px);
+  background:linear-gradient(180deg,#0e0f13,#090a0c);
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+.pw .pw-goal:hover{transform:translateY(-3px);box-shadow:0 20px 40px -26px rgba(0,0,0,0.8);}
+.pw .pw-goal svg{flex:0 0 auto;}
+.pw .pw-goal .pw-gtitle{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(24px,2.6vw,34px);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;}
+.pw .pw-goal .pw-vline{width:2px;align-self:stretch;min-height:46px;background:var(--pw-line);}
+.pw .pw-goal .pw-gtext{font-size:clamp(15px,1.5vw,21px);line-height:1.4;color:var(--pw-ink);}
+
+/* ── reveal animation (progressive — content visible without JS) ─ */
+.pw.pw-js .pw-anim{opacity:0;transform:translateY(20px);}
+.pw.pw-js .pw-anim.pw-in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1);}
+
+/* ── responsive ─────────────────────────────────────────── */
+@media (max-width:900px){
+  .pw .pw-row{flex-direction:column;align-items:stretch;gap:46px;}
+  .pw .pw-arrow{transform:rotate(90deg);flex-basis:auto;}
+  .pw .pw-card{padding-top:46px;}
+}
+@media (max-width:620px){
+  .pw .pw-eyebrow .pw-rule{flex-basis:40px;}
+  .pw .pw-goal{flex-direction:column;align-items:flex-start;gap:14px;}
+  .pw .pw-goal .pw-vline{display:none;}
+  .pw .pw-goal .pw-gtext{font-size:16px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .pw.pw-js .pw-anim{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body style="margin:0;background:#000;">
+
+<!-- ════════════ COPY FROM HERE ════════════ -->
+<section class="pw" aria-labelledby="pw-title">
+  <div class="pw-inner">
+
+    <!-- HEADER -->
+    <div class="pw-eyebrow pw-anim"><span class="pw-rule"></span><span>Technica Football</span><span class="pw-rule"></span></div>
+    <h2 class="pw-title pw-anim" id="pw-title">Player Pathway</h2>
+    <p class="pw-subtitle pw-anim">A Clear Path. Purposeful Development. Higher Standards.</p>
+
+    <!-- CARD ROW -->
+    <div class="pw-row">
+
+      <!-- CARD 1 -->
+      <article class="pw-card pw-anim">
+        <div class="pw-badge">1</div>
+        <div class="pw-icon">
+          <svg width="74" height="74" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="44" fill="#fff"/>
+            <polygon points="50,35 64,45.5 58.5,62 41.5,62 36,45.5" fill="#0c0d10"/>
+            <g stroke="#0c0d10" stroke-width="3.4" fill="none" stroke-linejoin="round">
+              <line x1="50" y1="35" x2="50" y2="13"/><line x1="64" y1="45.5" x2="85" y2="40"/>
+              <line x1="58.5" y1="62" x2="72" y2="83"/><line x1="41.5" y1="62" x2="28" y2="83"/><line x1="36" y1="45.5" x2="15" y2="40"/>
+            </g>
+            <g fill="#0c0d10">
+              <path d="M50 9 L61 17 L57 30 L43 30 L39 17 Z"/><path d="M90 35 L96 47 L86 56 L75 49 L78 36 Z"/>
+              <path d="M77 86 L66 94 L56 86 L61 74 L74 76 Z"/><path d="M44 86 L34 94 L23 86 L26 76 L39 74 Z"/><path d="M10 35 L22 36 L25 49 L14 56 L4 47 Z"/>
+            </g>
+          </svg>
+        </div>
+        <h3>Term Program</h3>
+        <div class="pw-stage">Foundation Stage</div>
+        <div class="pw-divider"></div>
+        <p class="pw-desc">The entry point into Technica Football. Players develop core skills, confidence and a love for the game.</p>
+        <ul class="pw-list">
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Ball mastery &amp; technique</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Game confidence</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Decision making</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Love for the game</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Weekly term-based training</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Coaches observe and support ongoing development</li>
+        </ul>
+      </article>
+
+      <div class="pw-arrow pw-anim">
+        <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true">
+          <defs><linearGradient id="pwAg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d8b766"/><stop offset="1" stop-color="#a8853a"/></linearGradient></defs>
+          <path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwAg)"/>
+        </svg>
+      </div>
+
+      <!-- CARD 2 -->
+      <article class="pw-card pw-alt pw-anim">
+        <div class="pw-badge">2</div>
+        <div class="pw-icon">
+          <svg width="78" height="84" viewBox="0 0 86 92" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="12" y="12" width="50" height="64" rx="6"/>
+            <rect x="29" y="6" width="16" height="11" rx="3" fill="#0c0d10"/>
+            <path d="M23 30 l4 4 l7 -8" stroke-width="3"/><line x1="40" y1="32" x2="54" y2="32" stroke-width="2.8"/>
+            <path d="M23 45 l4 4 l7 -8" stroke-width="3"/><line x1="40" y1="47" x2="54" y2="47" stroke-width="2.8"/>
+            <path d="M23 60 l4 4 l7 -8" stroke-width="3"/>
+            <circle cx="60" cy="62" r="15" fill="#0c0d10"/><circle cx="60" cy="62" r="13"/><line x1="70" y1="72" x2="80" y2="83"/>
+          </svg>
+        </div>
+        <h3>Selection Process</h3>
+        <div class="pw-stage">Talent Identification Stage</div>
+        <div class="pw-divider"></div>
+        <p class="pw-desc">Coaches identify players who demonstrate strong potential, attitude and commitment.</p>
+        <p class="pw-invite">Players may be invited to:</p>
+        <ul class="pw-list">
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>Assessment Sessions</li>
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19 a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.4 a4.6 4.6 0 0 1 5 4.6"/></svg>Trial Nights</li>
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M6.5 18 a5.5 5.5 0 0 1 11 0"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M2 19 a3.6 3.6 0 0 1 4.5-3.4"/><path d="M22 19 a3.6 3.6 0 0 0 -4.5-3.4"/></svg>Small Group Evaluations</li>
+          <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20 a7 7 0 0 1 14 0"/></svg>Individual Recommendation</li>
+        </ul>
+      </article>
+
+      <div class="pw-arrow pw-anim">
+        <svg width="48" height="40" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 13 H26 V4 L48 20 L26 36 V27 H0 Z" fill="url(#pwAg)"/></svg>
+      </div>
+
+      <!-- CARD 3 -->
+      <article class="pw-card pw-anim">
+        <div class="pw-badge">3</div>
+        <div class="pw-icon">
+          <svg width="72" height="82" viewBox="0 0 84 96" fill="none" aria-hidden="true">
+            <path d="M42 6 L74 16 V44 C74 68 60 82 42 90 C24 82 10 68 10 44 V16 Z" fill="#0c0d10" stroke="#e9e9ea" stroke-width="3"/>
+            <path d="M42 22 l2.6 5.6 6 .7 -4.5 4.2 1.2 6 -5.3-3 -5.3 3 1.2-6 -4.5-4.2 6-.7 Z" fill="#c6a24c"/>
+            <path d="M26 42 H58 V50 H47 V72 H37 V50 H26 Z" fill="#fff"/>
+            <rect x="46" y="50" width="11" height="6" fill="#fff"/>
+          </svg>
+        </div>
+        <h3>Academy Development Squad</h3>
+        <div class="pw-stage">Performance Stage</div>
+        <div class="pw-divider"></div>
+        <p class="pw-desc">Invitation or selection based. A higher-performance environment for dedicated players.</p>
+        <ul class="pw-list">
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Advanced technical training</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Position-specific development</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Game understanding &amp; scenarios</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Performance reviews</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Squad culture &amp; standards</li>
+          <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c6a24c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.3 l2.6 2.6 L16 9"/></svg>Long-term player development</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <!-- GOAL BAR -->
+    <div class="pw-goal pw-anim">
+      <svg width="56" height="56" viewBox="0 0 58 58" fill="none" stroke="#c6a24c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="27" cy="31" r="20"/><circle cx="27" cy="31" r="12"/><circle cx="27" cy="31" r="4" fill="#c6a24c"/>
+        <line x1="33" y1="25" x2="50" y2="8"/><path d="M44 8 L50 8 L50 14"/>
+      </svg>
+      <div class="pw-gtitle">Our Goal</div>
+      <div class="pw-vline"></div>
+      <div class="pw-gtext">To develop confident, skilled and resilient players who love the game and strive for excellence.</div>
+    </div>
+
+  </div>
+</section>
+<!-- ════════════ COPY TO HERE ════════════ -->
+
+<!-- Optional: on-scroll fade-in. Safe to omit — content shows without it. -->
+<script>
+(function(){
+  var root=document.querySelector('.pw');
+  if(!root) return;
+  root.classList.add('pw-js');
+  var items=[].slice.call(root.querySelectorAll('.pw-anim'));
+  if(!('IntersectionObserver' in window)){ items.forEach(function(el){el.classList.add('pw-in');}); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target, i=items.indexOf(el);
+        el.style.transitionDelay=Math.min(i,8)*70+'ms';
+        el.classList.add('pw-in'); io.unobserve(el);
+      }
+    });
+  },{threshold:.15});
+  items.forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>

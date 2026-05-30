@@ -13,13 +13,17 @@ export default function Layout() {
       {/* Header */}
       <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-2 bg-[#21211f]">
         <div className="flex items-center z-50">
-          <Link to="/" onClick={closeMenu}>
-            <img src="/Header.png" alt="Technica Football" className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto object-contain" />
+          <Link to="/" onClick={closeMenu} className="flex items-center gap-3 sm:gap-4">
+            <img src="/TFLOGO.png" alt="Technica Football Logo" className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain" />
+            <div className="flex flex-col">
+              <span className="font-barlow font-black tracking-[0.1em] text-white text-[15px] sm:text-lg md:text-xl lg:text-2xl uppercase leading-none">Technica</span>
+              <span className="font-barlow font-black tracking-[0.1em] text-[#f0722b] text-[15px] sm:text-lg md:text-xl lg:text-2xl uppercase leading-tight">Football</span>
+            </div>
           </Link>
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm uppercase tracking-wide">
+        <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 xl:gap-8 text-sm uppercase tracking-wide">
           <Link to="/" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">Home</Link>
           <Link to="/about" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base xl:text-lg">About</Link>
 
@@ -34,7 +38,7 @@ export default function Layout() {
               <Link to="/programs/academy-development-squad" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Holiday Clinic</Link>
               <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Club Technica Training</Link>
-              <Link to="/programs/vacation-care" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">OSH/Vacation Care</Link>
+              <Link to="/programs/vacation-care" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Vacation Care</Link>
             </div>
           </div>
 
@@ -80,7 +84,7 @@ export default function Layout() {
               <Link to="/programs/academy-development-squad" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Holiday Clinic</Link>
               <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technica Training</Link>
-              <Link to="/programs/vacation-care" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">OSH/Vacation Care</Link>
+              <Link to="/programs/vacation-care" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Vacation Care</Link>
             </div>
             <Link to="/contact" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Contact</Link>
             <a
@@ -119,46 +123,61 @@ export default function Layout() {
         </div>
 
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-10 mt-4">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mt-2">
             {/* Business Info */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left shrink-0">
-              <img src="/TFLOGO.png" alt="Technica Football" className="h-24 md:h-40 w-auto object-contain mb-4 -ml-8" />
-              <p className="font-barlow tracking-wide text-white/50 text-sm mt-1">ABN: 93 433 558 169</p>
-              <p className="font-barlow tracking-wide text-white/50 text-sm">The Ponds, 2769.</p>
+              <img src="/TFLOGO.png" alt="Technica Football" className="h-20 md:h-32 w-auto object-contain mb-3 -ml-4" />
+              <p className="font-barlow tracking-wide text-white/50 text-xs mt-1">ABN: 93 433 558 169</p>
+              <p className="font-barlow tracking-wide text-white/50 text-xs">The Ponds, 2769.</p>
             </div>
 
-            {/* Nav Links */}
-            <nav className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm uppercase">
-              <Link to="/" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Home</Link>
-              <Link to="/about" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">About</Link>
-              <Link to="/programs" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Programs</Link>
-              <Link to="/programs/term-program" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Term Program</Link>
-              <Link to="/programs/individual-sessions" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Individual Sessions</Link>
-              <Link to="/faq" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">FAQ</Link>
-              <Link to="/contact" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base">Contact</Link>
-              <a
-                href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-base"
-              >
-                Apparel
-              </a>
+            {/* Nav Links - 2 Columns */}
+            <nav className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-3 text-sm uppercase flex-1 max-w-2xl mx-auto lg:mx-0 w-full justify-items-center sm:justify-items-start">
+              <div className="flex flex-col items-center sm:items-start gap-2">
+                <Link to="/" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Home</Link>
+                <Link to="/about" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">About</Link>
+                <Link to="/programs" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Programs</Link>
+                <Link to="/faq" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">FAQ</Link>
+                <Link to="/contact" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Contact</Link>
+                <a
+                  href="https://deployfootball.com/collections/technica-football-official-merchandise-store-deploy-football"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm"
+                >
+                  Apparel
+                </a>
+              </div>
+              <div className="flex flex-col items-center sm:items-start gap-2">
+                <Link to="/programs/term-program" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Term Program</Link>
+                <Link to="/programs/individual-sessions" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Individual Sessions</Link>
+                <Link to="/programs/academy-development-squad" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Academy Dev Squad</Link>
+                <Link to="/programs/holiday-clinic" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Holiday Clinic</Link>
+                <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Club Training</Link>
+                <Link to="/programs/vacation-care" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm">Vacation Care</Link>
+              </div>
             </nav>
 
-            <div className="flex items-center gap-4">
-              <a href="https://www.facebook.com/profile.php?id=100086871345661" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <Facebook className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
-              </a>
-              <a href="https://www.instagram.com/technicafootball/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <Instagram className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
-              </a>
+            {/* Contact Details & Socials */}
+            <div className="flex flex-col items-center lg:items-end gap-3 shrink-0">
+              <div className="text-center lg:text-right font-barlow tracking-widest text-sm text-white/80 flex flex-col gap-1">
+                <a href="mailto:info@technicafootball.com.au" className="hover:text-orange-500 transition-colors">info@technicafootball.com.au</a>
+                <a href="tel:0400422802" className="hover:text-orange-500 transition-colors">0400 422 802</a>
+              </div>
+              <div className="flex items-center gap-4 mt-2">
+                <a href="https://www.facebook.com/profile.php?id=100086871345661" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <Facebook className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
+                </a>
+                <a href="https://www.instagram.com/technicafootball/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <Instagram className="w-5 h-5 cursor-pointer hover:text-orange-500 transition-colors" />
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-white/10 flex flex-row items-center justify-between text-xs text-white/40">
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-row items-center justify-between text-xs text-white/40">
             {/* Left — nav links */}
-            <div className="flex flex-wrap gap-6 flex-1">
+            <div className="flex flex-wrap gap-4 flex-1">
               <Link to="/privacy" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Terms &amp; Conditions</Link>
               <Link to="/contact" className="font-barlow tracking-widest hover:text-white/80 transition-colors">Contact</Link>

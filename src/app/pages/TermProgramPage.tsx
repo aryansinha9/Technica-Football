@@ -15,7 +15,7 @@ const enrollSteps = [
 export default function TermProgramPage() {
   const { page, loading: pageLoading } = useProgramPage('term-program');
   const { classes: termClasses, loading: classesLoading } = useTermClasses();
-  
+
   // Create a combined loading state if you want to delay render
   // const loading = pageLoading || classesLoading;
   const [spots, setSpots] = useState<Record<string, number>>({});
@@ -44,104 +44,8 @@ export default function TermProgramPage() {
         </div>
       </section>
 
-      {/* Feature Cards */}
-      <section className="relative bg-white text-[#0A1F44] pt-20 pb-50 px-8 md:px-16">
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
-            <path fill="#ffffff" fillOpacity="1" d="M0,235L480,270L960,250L1440,288L1440,320L960,320L480,320L0,320Z" />
-          </svg>
-        </div>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="p-8">
-              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 4–8</div>
-              <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Foundation Class'}</h3>
-              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card1_text || 'Our foundation classes are designed for players aged 4–8 years. Developing gross motor skills and the fundamental skills of football in a non-competitive, supportive environment.'}</p>
-            </div>
-          </div>
-          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-            <div className="p-8">
-              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 9–12</div>
-              <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Elite Class'}</h3>
-              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card2_text || 'Designed for players aged 9–12 years. Enhancing the player\'s knowledge of the game whilst refining their core skills (dribbling, first touch, passing and shooting).'}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Program Information */}
-      <section className="relative bg-[#0A1F44] text-white pt-10 pb-50 px-8 md:px-16">
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
-            <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
-          </svg>
-        </div>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black tracking-wide mb-3">PROGRAM INFORMATION</h2>
-            <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[0]?.label || 'Program Duration'}</p>
-                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[0]?.value || '8 weeks per term (aligned with NSW school terms).'}</p>
-                </div>
-              </div>
-              <div className="border-t border-white/10" />
-              <div className="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[1]?.label || 'Session Length'}</p>
-                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[1]?.value || '1 hour per session.'}</p>
-                </div>
-              </div>
-              <div className="border-t border-white/10" />
-              <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
-                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• Wright Reserve, Quakers Hill' }} />
-                </div>
-              </div>
-            </div>
-            <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
-                <div className="w-full">
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Cost'}</p>
-                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• $135 — Full 8-Week Term<br/>• $20 — Single Trial Session' }} />
-                </div>
-              </div>
-              <div className="border-t border-white/10" />
-              <div className="flex items-start gap-4">
-                <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-4">Enrolling Procedure</p>
-                  <ol className="text-white/80 space-y-3">
-                    {enrollSteps.map((step, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="shrink-0 w-6 h-6 rounded-full bg-[#f0722b] text-white text-xs font-black flex items-center justify-center">{i + 1}</span>
-                        <span>{step}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Term 2 Schedule */}
-      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-14 pb-50 px-8 md:px-16">
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
-            <path fill="#f3f4f6" fillOpacity="1" d="M0,255L480,240L960,260L1440,248L1440,320L960,320L480,320L0,320Z" />
-          </svg>
-        </div>
+      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-4 pb-30 px-8 md:px-16">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">TERM 2 PROGRAM SCHEDULE</h2>
@@ -182,6 +86,98 @@ export default function TermProgramPage() {
           </div>
         </div>
       </section>
+
+      {/* Feature Cards */}
+      <section className="relative bg-white text-[#0A1F44] pt-0 pb-32 px-8 md:px-16">
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
+            <path fill="#ffffff" fillOpacity="1" d="M0,235L480,270L960,250L1440,288L1440,320L960,320L480,320L0,320Z" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="p-8">
+              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 4–8</div>
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card1_title || 'Foundation Class'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card1_text || 'Our foundation classes are designed for players aged 4–8 years. Developing gross motor skills and the fundamental skills of football in a non-competitive, supportive environment.'}</p>
+            </div>
+          </div>
+          <div className="bg-[#f0722b] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="p-8">
+              <div className="text-white/70 font-barlow font-bold text-sm tracking-widest uppercase mb-2">Ages 9–12</div>
+              <h3 className="text-2xl font-black mb-3 text-white">{page?.card2_title || 'Elite Class'}</h3>
+              <p className="text-white/85 leading-relaxed whitespace-pre-wrap">{page?.card2_text || 'Designed for players aged 9–12 years. Enhancing the player\'s knowledge of the game whilst refining their core skills (dribbling, first touch, passing and shooting).'}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Program Information */}
+      <section className="relative bg-[#0A1F44] text-white pt-10 pb-32 px-8 md:px-16">
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
+            <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
+          </svg>
+        </div>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black tracking-wide mb-3">PROGRAM INFORMATION</h2>
+            <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[0]?.label || 'Program Duration'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[0]?.value || '8 weeks per term (aligned with NSW school terms).'}</p>
+                </div>
+              </div>
+              <div className="border-t border-white/10" />
+              <div className="flex items-start gap-4">
+                <Clock className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[1]?.label || 'Session Length'}</p>
+                  <p className="text-white/80 whitespace-pre-wrap">{page?.info_sections?.[1]?.value || '• Foundation Class: 45 minutes\n• Elite Class: 1 hour'}</p>
+                </div>
+              </div>
+              <div className="border-t border-white/10" />
+              <div className="flex items-start gap-4">
+                <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• Wright Reserve, Quakers Hill' }} />
+                </div>
+              </div>
+            </div>
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <div className="w-full">
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Program Cost'}</p>
+                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• Foundation Class: $189 — Full 8-Week Term<br/>• Elite Class: $209 — Full 8-Week Term<br/>• $20 — Single Trial Session' }} />
+                </div>
+              </div>
+              <div className="border-t border-white/10" />
+              <div className="flex items-start gap-4">
+                <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-4">Enrolling Procedure</p>
+                  <ol className="text-white/80 space-y-3">
+                    {enrollSteps.map((step, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="shrink-0 w-6 h-6 rounded-full bg-[#f0722b] text-white text-xs font-black flex items-center justify-center">{i + 1}</span>
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   );
 }

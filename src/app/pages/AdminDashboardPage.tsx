@@ -190,15 +190,15 @@ export default function AdminDashboardPage() {
   return (
     <section className="min-h-screen bg-[#f3f4f6]">
       {/* Header */}
-      <div className="bg-[#0A1F44] px-8 py-5 flex items-center justify-between">
-        <h1 className="text-white font-barlow font-bold tracking-widest uppercase text-lg">Technica Football — Admin</h1>
+      <div className="bg-[#0A1F44] px-4 md:px-8 py-5 flex items-center justify-between">
+        <h1 className="text-white font-barlow font-bold tracking-widest uppercase text-sm md:text-lg truncate">Technica Football — Admin</h1>
         <button onClick={handleLogout} className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm font-barlow tracking-widest uppercase">
           <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>
 
-      <div className="bg-white border-b border-gray-200 px-8">
-        <div className="max-w-7xl mx-auto flex overflow-x-auto">
+      <div className="bg-white border-b border-gray-200 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex overflow-x-auto hide-scrollbar">
           {([
             { key: 'registrations', label: 'Registrations' },
             { key: 'term-classes', label: 'Term Classes' },
@@ -218,7 +218,7 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 py-8 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8 space-y-6 md:space-y-8 overflow-hidden">
         {/* CMS Tabs */}
         {mainTab === 'term-classes' && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -311,7 +311,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white md:rounded-2xl shadow-sm border-y md:border border-gray-100 overflow-hidden -mx-4 md:mx-0">
           <div className="overflow-x-auto w-full">
             <table className="w-full text-sm min-w-[900px]">
               <thead>
@@ -370,7 +370,7 @@ export default function AdminDashboardPage() {
 
                           {/* Confirm Delete Prompt */}
                           {confirmDeleteId === b.id ? (
-                            <div className="bg-red-50 border border-red-200 rounded-xl px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <div className="bg-red-50 border border-red-200 rounded-xl px-4 md:px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                               <AlertTriangle className="w-5 h-5 text-red-600 shrink-0" />
                               <div className="flex-1">
                                 <p className="text-red-800 font-bold text-sm">Are you sure you want to permanently delete this registration?</p>

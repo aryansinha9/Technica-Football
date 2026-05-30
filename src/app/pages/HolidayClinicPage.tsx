@@ -14,7 +14,7 @@ export default function HolidayClinicPage() {
       <PageHero title="Holiday Clinic" subtitle="School Holiday Programs" bottomColor="#f3f4f6" />
 
       {/* Intro */}
-      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-24 pb-40 px-8 md:px-16">
+      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-16 pb-24 px-8 md:px-16">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">ABOUT THE PROGRAM</h2>
           <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-8" />
@@ -25,7 +25,7 @@ export default function HolidayClinicPage() {
       </section>
 
       {/* Feature Cards */}
-      <section className="relative bg-white text-[#0A1F44] pt-20 pb-45 px-8 md:px-16">
+      <section className="relative bg-white text-[#0A1F44] pt-0 pb-35 px-8 md:px-16">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
             <path fill="#ffffff" fillOpacity="1" d="M0,235L480,270L960,250L1440,288L1440,320L960,320L480,320L0,320Z" />
@@ -48,7 +48,7 @@ export default function HolidayClinicPage() {
       </section>
 
       {/* Program Information */}
-      <section className="relative bg-[#0A1F44] text-white pt-15 pb-49 px-8 md:px-16">
+      <section className="relative bg-[#0A1F44] text-white pt-0 pb-34 px-8 md:px-16">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
             <path fill="#0A1F44" fillOpacity="1" d="M0,260L480,240L960,265L1440,245L1440,320L960,320L480,320L0,320Z" />
@@ -114,7 +114,7 @@ export default function HolidayClinicPage() {
       </section>
 
       {/* April Holidays Schedule */}
-      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-24 pb-36 px-8 md:px-16">
+      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-0 pb-24 px-8 md:px-16">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f3f4f6" fillOpacity="1" d="M0,255L480,240L960,260L1440,248L1440,320L960,320L480,320L0,320Z" />

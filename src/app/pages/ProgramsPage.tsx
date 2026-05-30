@@ -26,7 +26,7 @@ export default function ProgramsPage() {
             <h2 className="text-4xl md:text-5xl font-black tracking-wide mb-3">OUR PROGRAMS</h2>
             <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-6" />
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">
-              From our youngest players to teens, we have a program designed to develop every player's game at the right pace.
+              Football programs focused on developing confident, technical and intelligent players through structured coaching, engaging sessions and long-term development for all players.
             </p>
           </div>
 
@@ -66,12 +66,12 @@ export default function ProgramsPage() {
                     <div className="text-orange-500 font-barlow font-bold text-sm tracking-widest uppercase mb-2">{program.ages}</div>
                     <h3 className="text-2xl font-black mb-3 text-[#0A1F44] group-hover:text-[#f0722b] transition-colors">{program.title}</h3>
                     <p className="text-gray-600 leading-relaxed mb-6 text-sm flex-1">{program.description}</p>
-              <Link
-                to={program.href}
-                className="mt-auto w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors duration-300 flex items-center justify-center gap-2 text-sm"
-              >
-                Learn More <ChevronRight className="w-4 h-4" />
-              </Link>
+                    <Link
+                      to={program.href}
+                      className="mt-auto w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors duration-300 flex items-center justify-center gap-2 text-sm"
+                    >
+                      Learn More <ChevronRight className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
               );
@@ -81,24 +81,24 @@ export default function ProgramsPage() {
       </section>
 
       {/* Active Kids Strip */}
-      <section className="relative bg-white pt-20 pb-28 px-8 md:px-16">
+      <section className="relative bg-white pt-0 pb-24 px-8 md:px-16">
         {/* White wave UP into grey */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
             <path fill="#ffffff" fillOpacity="1" d="M0,245L480,265L960,248L1440,260L1440,320L960,320L480,320L0,320Z" />
           </svg>
         </div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="flex items-center gap-6">
-            <img src="/ACTIVE-KIDS.png" alt="Active Kids Provider" className="h-24 md:h-28 w-auto object-contain" />
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+          <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <img src="/ACTIVE-KIDS.png" alt="Active Kids Provider" className="h-16 md:h-20 w-auto object-contain" />
             <div>
-              <p className="font-barlow font-bold text-xl md:text-2xl uppercase tracking-wide text-[#0A1F44]">We Accept Active Kids Vouchers</p>
-              <p className="text-gray-600 mt-1">Registered provider — use your voucher towards any program.</p>
+              <p className="font-barlow font-bold text-lg md:text-xl uppercase tracking-wide text-[#0A1F44]">We Accept Active Kids Vouchers</p>
+              <p className="text-gray-600 mt-0.5 text-sm">Registered provider — use your voucher towards any program.</p>
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <img src="/LOCAL-BUSINESS.png" alt="Best New Business 2024" className="h-24 md:h-28 w-auto object-contain" />
-            <p className="font-barlow font-bold text-xl md:text-2xl uppercase tracking-wide text-[#0A1F44]">"Voted Best New Business 2024"</p>
+          <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <img src="/LOCAL-BUSINESS.png" alt="Best New Business 2024" className="h-16 md:h-20 w-auto object-contain" />
+            <p className="font-barlow font-bold text-lg md:text-xl uppercase tracking-wide text-[#0A1F44]">"Awarded Best New Business 2024"</p>
           </div>
         </div>
       </section>
