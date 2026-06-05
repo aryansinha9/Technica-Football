@@ -217,6 +217,17 @@ export default function ClubTechnikaTrainingPage() {
             <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto mb-4" />
             <p className="text-gray-600">Interested in Club Technical Training? Fill in the form and we'll be in touch.</p>
           </div>
+
+          {/* Program summary info strip */}
+          <div className="bg-[#0A1F44] rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="shrink-0">
+              <span className="bg-[#f0722b] text-white font-barlow font-bold text-xs tracking-widest uppercase px-3 py-1.5 rounded-lg">Type of Program</span>
+            </div>
+            <div className="text-white/80 text-sm">
+              <span className="font-bold text-white">Club Technical Training</span> — 45 min – 1 hour &nbsp;·&nbsp; <span className="font-bold text-white">Duration:</span> Throughout winter season
+            </div>
+          </div>
+
           {submitted ? (
             <div className="bg-white rounded-2xl border border-green-200 shadow-sm p-12 text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">

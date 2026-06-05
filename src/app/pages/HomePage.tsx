@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import TiltedCard from '../../components/TiltedCard';
 import ExploreButton from '../components/ExploreButton';
+import AnimatedCTA from '../components/AnimatedCTA';
 import FillSweepButton from '../components/FillSweepButton';
 import { useTestimonials, usePrograms, useSponsors } from '../lib/useSiteContent';
 
@@ -71,10 +72,10 @@ export default function HomePage() {
         </div>
 
         {/* Charcoal Top Bar */}
-        <div className="absolute top-0 inset-x-0 h-[140px] md:h-[130px] bg-[#21211f] z-20">
+        <div className="absolute top-0 inset-x-0 h-[50px] md:h-[0px] bg-[#21211f] z-20">
           <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[99%] pointer-events-none z-10">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 220 1440 70" preserveAspectRatio="none" className="block w-full h-[25px] md:h-[40px] lg:h-[55px]">
-              <path fill="#21211f" fillOpacity="1" d="M0,224L480,288L960,224L1440,288L1440,0L0,0Z" />
+              <path fill="#21211f" fillOpacity="1" d="M0,240L480,265L960,240L1440,265L1440,0L0,0Z" />
             </svg>
           </div>
         </div>
@@ -92,23 +93,23 @@ export default function HomePage() {
         {/* Blue accent gradient bottom-right */}
         <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-[#0A1F44]/50 to-transparent z-10 pointer-events-none" />
 
-        {/* Explore Programs CTA — bottom-left, fades on scroll */}
+        {/* Explore Programs CTA — positioned under TECHNICA */}
         <div
           className="absolute z-[60] hidden sm:block"
           style={{
-            bottom: '80px',
-            left: '180px',
+            bottom: '25%', /* Adjust this value to move it up or down */
+            left: '7%', /* Adjust this value to move it left or right */
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
           }}
         >
-          <ExploreButton href="/programs" label="Explore Programs" isExternal={false} />
+          <AnimatedCTA href="/programs" label="Explore Programs" />
         </div>
 
         {/* Gray bottom band + wave */}
-        <div className="absolute bottom-0 left-0 w-full h-[60px] md:h-[100px] bg-[#f3f4f6] z-[45] pointer-events-none" />
-        <div className="absolute bottom-[59px] md:bottom-[99px] left-0 w-full z-[45] pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-full h-[0px] md:h-[0px] bg-[#f3f4f6] z-[45] pointer-events-none" />
+        <div className="absolute bottom-[0px] md:bottom-[0px] left-0 w-full z-[45] pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 130 1440 190" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[65px] lg:h-[90px]">
             <path fill="#f3f4f6" fillOpacity="1" d="M0,160L470,130L960,160L1440,224L1440,320L960,320L480,320L0,320Z" />
           </svg>
@@ -137,12 +138,12 @@ export default function HomePage() {
         </div>
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 pb-6 pt-2">
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-            <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-12 md:h-16 w-auto object-contain" />
-            <p className="font-bold text-base md:text-lg font-barlow uppercase tracking-wider">"Awarded 'Best New Business 2024'"</p>
+            <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-16 md:h-20 w-auto object-contain" />
+            <p className="font-bold text-lg md:text-xl font-barlow uppercase tracking-wider">"Awarded 'Best New Business 2024'"</p>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
-            <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-12 md:h-16 w-auto object-contain" />
-            <p className="font-semibold text-gray-600 font-barlow uppercase text-base md:text-lg tracking-wide">We accept Active Kids vouchers</p>
+            <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-16 md:h-20 w-auto object-contain" />
+            <p className="font-bold text-black font-barlow uppercase text-lg md:text-xl tracking-wide">We accept Active Kids vouchers</p>
           </div>
         </div>
       </section>
@@ -401,7 +402,6 @@ export default function HomePage() {
                   <path d="M42 6 L74 16 V44 C74 68 60 82 42 90 C24 82 10 68 10 44 V16 Z" fill="#0A1F44" stroke="#e9e9ea" strokeWidth="3" />
                   <path d="M42 22 l2.6 5.6 6 .7 -4.5 4.2 1.2 6 -5.3-3 -5.3 3 1.2-6 -4.5-4.2 6-.7 Z" fill="#f0722b" />
                   <path d="M26 42 H58 V50 H47 V72 H37 V50 H26 Z" fill="#fff" />
-                  <rect x="46" y="50" width="11" height="6" fill="#fff" />
                 </svg>
               </div>
               <h3 className="font-barlow font-bold text-[clamp(22px,2vw,29px)] tracking-[0.02em] uppercase text-center text-white mt-1 mb-1.5 leading-[1.05]">Academy Development Squad</h3>

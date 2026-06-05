@@ -44,49 +44,6 @@ export default function TermProgramPage() {
         </div>
       </section>
 
-      {/* Term 2 Schedule */}
-      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-4 pb-30 px-8 md:px-16">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">TERM 2 PROGRAM SCHEDULE</h2>
-            <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {termClasses.map((tc) => {
-              const s = spots[tc.id] ?? null;
-              const spotsColor = s !== null && s <= 5 ? 'text-red-500' : s !== null && s <= 8 ? 'text-amber-500' : 'text-green-500';
-              return (
-                <div key={tc.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300">
-                  <div className="bg-[#0A1F44] px-6 py-5">
-                    <p className="font-barlow font-bold tracking-widest uppercase text-white text-sm">{tc.subtitle}</p>
-                    <p className="text-white/60 text-sm mt-1">{tc.location}</p>
-                  </div>
-                  <div className="p-6 flex flex-col gap-3 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-500 text-sm">Started {tc.startedDate}</span>
-                      {s !== null && (
-                        <span className={`text-sm font-bold flex items-center gap-1 ${spotsColor}`}>
-                          <Users className="w-3.5 h-3.5" />{s} spot{s !== 1 ? 's' : ''} left
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-3xl font-black text-[#0A1F44]">{tc.price ? `$${tc.price}` : 'Contact Us'}</div>
-                    <div className="mt-auto pt-3">
-                      <Link
-                        to={`/programs/term-program/class/${tc.slug}`}
-                        className="w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors flex items-center justify-center gap-2 text-sm"
-                      >
-                        Book Now <ChevronRight className="w-4 h-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Feature Cards */}
       <section className="relative bg-white text-[#0A1F44] pt-0 pb-32 px-8 md:px-16">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
@@ -174,6 +131,54 @@ export default function TermProgramPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Term 2 Schedule */}
+      <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-10 pb-30 px-8 md:px-16">
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
+            <path fill="#f3f4f6" fillOpacity="1" d="M0,255L480,240L960,260L1440,248L1440,320L960,320L480,320L0,320Z" />
+          </svg>
+        </div>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">TERM 2 PROGRAM SCHEDULE</h2>
+            <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {termClasses.map((tc) => {
+              const s = spots[tc.id] ?? null;
+              const spotsColor = s !== null && s <= 5 ? 'text-red-500' : s !== null && s <= 8 ? 'text-amber-500' : 'text-green-500';
+              return (
+                <div key={tc.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300">
+                  <div className="bg-[#0A1F44] px-6 py-5">
+                    <p className="font-barlow font-bold tracking-widest uppercase text-white text-sm">{tc.subtitle}</p>
+                    <p className="text-white/60 text-sm mt-1">{tc.location}</p>
+                  </div>
+                  <div className="p-6 flex flex-col gap-3 flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-500 text-sm">Started {tc.startedDate}</span>
+                      {s !== null && (
+                        <span className={`text-sm font-bold flex items-center gap-1 ${spotsColor}`}>
+                          <Users className="w-3.5 h-3.5" />{s} spot{s !== 1 ? 's' : ''} left
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-3xl font-black text-[#0A1F44]">{tc.price ? `$${tc.price}` : 'Contact Us'}</div>
+                    <div className="mt-auto pt-3">
+                      <Link
+                        to={`/programs/term-program/class/${tc.slug}`}
+                        className="w-full bg-[#0A1F44] text-white font-barlow font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-[#f0722b] transition-colors flex items-center justify-center gap-2 text-sm"
+                      >
+                        Book Now <ChevronRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

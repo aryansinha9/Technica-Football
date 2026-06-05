@@ -8,7 +8,7 @@ const programOptions = [
   'Individual Sessions',
   'Academy Development Squad',
   'Holiday Clinic',
-  'Club Technica Training',
+  'Club Technical Training',
   'Vacation Care',
   'General Inquiry',
 ];
@@ -95,7 +95,75 @@ export default function ContactPage() {
       <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-24 pb-32 px-8 md:px-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
-          {/* Left: Inquiry Form */}
+          {/* Left: Contact Details */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-2">REACH OUT TO US</h2>
+            <div className="h-1 bg-[#f0722b] rounded-full w-24 mb-8" />
+            <p className="text-gray-600 leading-relaxed mb-10">
+              Have a question about our programs, want to book a session, or interested in partnering with us? We'd love to hear from you.
+            </p>
+
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
+              <div>
+                <p className="font-barlow font-bold tracking-widest uppercase text-orange-500 text-sm mb-1">Founder & Head Coach</p>
+                <p className="text-2xl font-black">Mackenzie Dunn</p>
+              </div>
+              <div className="border-t border-gray-100" />
+              <a href="tel:0400422802" className="flex items-center gap-4 group">
+                <Phone className="w-6 h-6 text-[#0A1F44] shrink-0 group-hover:text-[#f0722b] transition-colors" />
+                <div>
+                  <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-0.5">Phone</p>
+                  <p className="font-bold text-lg group-hover:text-[#f0722b] transition-colors">0400 422 802</p>
+                </div>
+              </a>
+              <a href="mailto:info@technicafootball.com.au" className="flex items-center gap-4 group">
+                <Mail className="w-6 h-6 text-[#0A1F44] shrink-0 group-hover:text-[#f0722b] transition-colors" />
+                <div>
+                  <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-0.5">Email</p>
+                  <p className="font-bold text-lg group-hover:text-[#f0722b] transition-colors">info@technicafootball.com.au</p>
+                </div>
+              </a>
+              <div className="border-t border-gray-100 pt-4">
+                <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-4">Follow Us</p>
+                <div className="flex gap-3">
+                  <a
+                    href="https://www.facebook.com/profile.php?id=100086871345661"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="w-12 h-12 rounded-xl bg-[#0A1F44] flex items-center justify-center hover:bg-[#f0722b] transition-colors"
+                  >
+                    <Facebook className="w-5 h-5 text-white" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/technicafootball/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="w-12 h-12 rounded-xl bg-[#0A1F44] flex items-center justify-center hover:bg-[#f0722b] transition-colors"
+                  >
+                    <Instagram className="w-5 h-5 text-white" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Map — directly under contact details */}
+            <div className="relative w-full rounded-2xl overflow-hidden border-2 border-[#f0722b] shadow-md mt-6" style={{ minHeight: '280px', flex: 1 }}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(20%) contrast(1.05)', position: 'absolute', inset: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Technica Football Location"
+              />
+            </div>
+          </div>
+
+          {/* Right: Inquiry Form */}
           <div>
             <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-2">SEND AN ENQUIRY</h2>
             <div className="h-1 bg-[#f0722b] rounded-full w-24 mb-8" />
@@ -220,74 +288,6 @@ export default function ContactPage() {
                 </button>
               </form>
             )}
-          </div>
-
-          {/* Right: Contact Details */}
-          <div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-2">REACH OUT TO US</h2>
-            <div className="h-1 bg-[#f0722b] rounded-full w-24 mb-8" />
-            <p className="text-gray-600 leading-relaxed mb-10">
-              Have a question about our programs, want to book a session, or interested in partnering with us? We'd love to hear from you.
-            </p>
-
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-              <div>
-                <p className="font-barlow font-bold tracking-widest uppercase text-orange-500 text-sm mb-1">Founder & Head Coach</p>
-                <p className="text-2xl font-black">Mackenzie Dunn</p>
-              </div>
-              <div className="border-t border-gray-100" />
-              <a href="tel:0400422802" className="flex items-center gap-4 group">
-                <Phone className="w-6 h-6 text-[#0A1F44] shrink-0 group-hover:text-[#f0722b] transition-colors" />
-                <div>
-                  <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-0.5">Phone</p>
-                  <p className="font-bold text-lg group-hover:text-[#f0722b] transition-colors">0400 422 802</p>
-                </div>
-              </a>
-              <a href="mailto:info@technicafootball.com.au" className="flex items-center gap-4 group">
-                <Mail className="w-6 h-6 text-[#0A1F44] shrink-0 group-hover:text-[#f0722b] transition-colors" />
-                <div>
-                  <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-0.5">Email</p>
-                  <p className="font-bold text-lg group-hover:text-[#f0722b] transition-colors">info@technicafootball.com.au</p>
-                </div>
-              </a>
-              <div className="border-t border-gray-100 pt-4">
-                <p className="text-xs text-gray-500 font-barlow tracking-widest uppercase mb-4">Follow Us</p>
-                <div className="flex gap-3">
-                  <a
-                    href="https://www.facebook.com/profile.php?id=100086871345661"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                    className="w-12 h-12 rounded-xl bg-[#0A1F44] flex items-center justify-center hover:bg-[#f0722b] transition-colors"
-                  >
-                    <Facebook className="w-5 h-5 text-white" />
-                  </a>
-                  <a
-                    href="https://www.instagram.com/technicafootball/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    className="w-12 h-12 rounded-xl bg-[#0A1F44] flex items-center justify-center hover:bg-[#f0722b] transition-colors"
-                  >
-                    <Instagram className="w-5 h-5 text-white" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Map — directly under contact details, matching form height */}
-            <div className="relative w-full rounded-2xl overflow-hidden border-2 border-[#f0722b] shadow-md mt-6" style={{ minHeight: '280px', flex: 1 }}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1572.9842075545314!2d150.9116118!3d-33.7135074!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80233407745e107b%3A0x2c5c6d4a807d16e5!2sTechnica%20Football!5e1!3m2!1sen!2sau!4v1777697188142!5m2!1sen!2sau"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'grayscale(20%) contrast(1.05)', position: 'absolute', inset: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Technica Football Location"
-              />
-            </div>
           </div>
         </div>
       </section>

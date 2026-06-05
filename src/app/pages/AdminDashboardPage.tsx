@@ -188,7 +188,7 @@ export default function AdminDashboardPage() {
   );
 
   return (
-    <section className="min-h-screen bg-[#f3f4f6]">
+    <section className="min-h-screen bg-[#f3f4f6] pb-64 md:pb-96">
       {/* Header */}
       <div className="bg-[#0A1F44] px-4 md:px-8 py-5 flex items-center justify-between">
         <h1 className="text-white font-barlow font-bold tracking-widest uppercase text-sm md:text-lg truncate">Technica Football — Admin</h1>
@@ -218,7 +218,7 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8 space-y-6 md:space-y-8 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-8 pb-40 space-y-6 md:space-y-8">
         {/* CMS Tabs */}
         {mainTab === 'term-classes' && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

@@ -1,0 +1,130 @@
+.animated-cta-btn {
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  height: 4rem;
+  align-items: center;
+  border-radius: 9999px;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.animated-cta-btn-item {
+  background-color: transparent;
+}
+
+.animated-cta-btn-item .animated-cta-btn-bg {
+  border-color: #f0722b;
+  background-color: #f0722b;
+}
+
+.animated-cta-btn-inner,
+.animated-cta-btn-inner-hover,
+.animated-cta-btn-inner-static {
+  pointer-events: none;
+  display: block;
+}
+
+.animated-cta-btn-inner {
+  position: relative;
+}
+
+.animated-cta-btn-inner-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(70%);
+}
+
+.animated-cta-btn-bg {
+  overflow: hidden;
+  border-radius: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animated-cta-btn-bg,
+.animated-cta-btn-bg-layer,
+.animated-cta-btn-bg-layers {
+  display: block;
+}
+
+.animated-cta-btn-bg-layers {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: -60%;
+  aspect-ratio: 1 / 1;
+  width: max(200%, 12rem);
+}
+
+.animated-cta-btn-bg-layer {
+  border-radius: 9999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+}
+
+.animated-cta-btn-bg-layer.-layer1 {
+  background-color: #0A1F44; /* Site Primary Blue */
+}
+
+.animated-cta-btn-bg-layer.-layer2 {
+  background-color: #f3f4f6; /* Light Grey */
+}
+
+.animated-cta-btn-bg-layer.-layer3 {
+  background-color: #f0722b; /* Back to Orange */
+}
+
+.animated-cta-btn:hover .animated-cta-btn-inner-static {
+  opacity: 0;
+  transform: translateY(-70%);
+  transition:
+    transform 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.3s linear;
+}
+
+.animated-cta-btn:hover .animated-cta-btn-inner-hover {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    transform 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animated-cta-btn:hover .animated-cta-btn-bg-layer {
+  transition:
+    transform 1.3s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.3s linear;
+}
+
+.animated-cta-btn:hover .animated-cta-btn-bg-layer-1 {
+  transform: scale(1);
+}
+
+.animated-cta-btn:hover .animated-cta-btn-bg-layer-2 {
+  transition-delay: 0.1s;
+  transform: scale(1);
+}
+
+.animated-cta-btn:hover .animated-cta-btn-bg-layer-3 {
+  transition-delay: 0.2s;
+  transform: scale(1);
+}

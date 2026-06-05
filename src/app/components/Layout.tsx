@@ -13,7 +13,7 @@ export default function Layout() {
       {/* Header */}
       <header className="relative z-[100] flex items-center justify-between px-6 md:px-16 py-2 bg-[#21211f]">
         <div className="flex items-center z-50">
-          <Link to="/" onClick={closeMenu} className="flex items-center gap-3 sm:gap-4">
+          <Link to="/" onClick={closeMenu} className="flex items-center gap-2 sm:gap-3">
             <img src="/TFLOGO.png" alt="Technica Football Logo" className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain" />
             <div className="flex flex-col">
               <span className="font-barlow font-black tracking-[0.1em] text-white text-[15px] sm:text-lg md:text-xl lg:text-2xl uppercase leading-none">Technica</span>
@@ -37,7 +37,7 @@ export default function Layout() {
               <Link to="/programs/individual-sessions" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Individual Sessions</Link>
               <Link to="/programs/academy-development-squad" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Holiday Clinic</Link>
-              <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Club Technica Training</Link>
+              <Link to="/programs/club-technica-training" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Club Technical Training</Link>
               <Link to="/programs/vacation-care" className="hover:text-orange-500 transition-colors font-barlow tracking-widest text-sm uppercase block px-4 py-1">Vacation Care</Link>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function Layout() {
               <Link to="/programs/individual-sessions" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Individual Sessions</Link>
               <Link to="/programs/academy-development-squad" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Academy Development Squad</Link>
               <Link to="/programs/holiday-clinic" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Holiday Clinic</Link>
-              <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technica Training</Link>
+              <Link to="/programs/club-technica-training" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Club Technical Training</Link>
               <Link to="/programs/vacation-care" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase text-lg">Vacation Care</Link>
             </div>
             <Link to="/contact" onClick={closeMenu} className="hover:text-orange-500 transition-colors font-barlow tracking-widest uppercase">Contact</Link>

@@ -8,7 +8,7 @@ const PROGRAM_SLUGS = [
   { id: 'individual-sessions', label: 'Individual Sessions' },
   { id: 'holiday-clinic', label: 'Holiday Clinic' },
   { id: 'vacation-care', label: 'Vacation Care' },
-  { id: 'club-technica-training', label: 'Club Technica Training' },
+  { id: 'club-technica-training', label: 'Club Technical Training' },
   { id: 'academy-development-squad', label: 'Academy Development Squad' },
 ];
 
