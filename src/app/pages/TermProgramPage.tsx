@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useProgramPage, useTermClasses } from '../lib/useSiteContent';
+import { sanitizeHtml } from '../lib/sanitizeHtml';
 
 const enrollSteps = [
   'Choose a class/day from the schedule below.',
@@ -103,7 +104,7 @@ export default function TermProgramPage() {
                 <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
-                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• Wright Reserve, Quakers Hill' }} />
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• Wright Reserve, Quakers Hill') }} />
                 </div>
               </div>
             </div>
@@ -112,7 +113,7 @@ export default function TermProgramPage() {
                 <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div className="w-full">
                   <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Program Cost'}</p>
-                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• Foundation Class: $189 — Full 8-Week Term<br/>• Elite Class: $209 — Full 8-Week Term<br/>• $20 — Single Trial Session' }} />
+                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• Foundation Class: $189 — Full 8-Week Term<br/>• Elite Class: $209 — Full 8-Week Term<br/>• $20 — Single Trial Session') }} />
                 </div>
               </div>
               <div className="border-t border-white/10" />

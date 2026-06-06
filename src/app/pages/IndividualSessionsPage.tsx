@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronRight, Send, Clock, MapPin, DollarSign, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { useProgramPage } from '../lib/useSiteContent';
+import { sanitizeHtml } from '../lib/sanitizeHtml';
 
 export default function IndividualSessionsPage() {
   const { page, loading } = useProgramPage('individual-sessions');
@@ -125,7 +126,7 @@ export default function IndividualSessionsPage() {
                 <MapPin className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-1">{page?.info_sections?.[2]?.label || 'Locations'}</p>
-                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• The Ponds (Fyfe Rd)<br/>• Russell Reserve<br/>• Hills Centenary' }} />
+                  <div className="text-white/80 space-y-1 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page?.info_sections?.[2]?.value.replace(/\n/g, '<br/>') || '• The Ponds (Fyfe Rd)<br/>• Russell Reserve<br/>• Hills Centenary') }} />
                 </div>
               </div>
             </div>
@@ -134,7 +135,7 @@ export default function IndividualSessionsPage() {
                 <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
                 <div className="w-full">
                   <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page?.info_sections?.[3]?.label || 'Cost'}</p>
-                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• $60 — 45-minute session (1 player)<br/>• $75 — 1-hour session (1 player)<br/>• Bundles for 3 or 5 sessions with discounts available' }} />
+                  <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• $60 — 45-minute session (1 player)<br/>• $75 — 1-hour session (1 player)<br/>• Bundles for 3 or 5 sessions with discounts available') }} />
                 </div>
               </div>
               <div className="border-t border-white/10" />

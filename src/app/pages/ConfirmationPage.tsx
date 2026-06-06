@@ -39,12 +39,21 @@ export default function ConfirmationPage() {
       // 2. Fetch booking details for display
       if (bookingId) {
         const { data } = await supabase.from('bookings')
-          .select('class_label, player_name, total_paid, addon_45min, addon_60min, parent_email')
+          .select('class_label, player_name, total_paid, addon_45min, addon_60min, parent_email, stripe_session_id')
           .eq('id', bookingId).single();
-        if (data) setBooking(data);
+
+        if (data) {
+          // IDOR guard: only show details if the session_id in the URL matches
+          // the one stored in the DB for this booking. This ensures only the person
+          // who completed the Stripe checkout can see the confirmation details.
+          if (!sessionId || data.stripe_session_id === sessionId) {
+            setBooking(data);
+          }
+          // If session_id doesn't match, we silently show "booking confirmed" without details
+        }
       } else if (sessionId) {
         const { data } = await supabase.from('bookings')
-          .select('class_label, player_name, total_paid, addon_45min, addon_60min, parent_email')
+          .select('class_label, player_name, total_paid, addon_45min, addon_60min, parent_email, stripe_session_id')
           .eq('stripe_session_id', sessionId).single();
         if (data) setBooking(data);
       }

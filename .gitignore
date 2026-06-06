@@ -2,4 +2,12 @@ node_modules
 dist
 .env
 .DS_Store
-node_modules
+
+# Dev artifacts and database schema — keep local, not in repo
+test-upload.js
+supabase-schema.sql
+supabase-cms-schema.sql
+migrate-classes.sql
+storage-policies.sql
+default_shadcn_theme.css
+Player Pathway Section.html
