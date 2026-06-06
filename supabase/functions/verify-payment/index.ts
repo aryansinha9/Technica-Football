@@ -217,7 +217,7 @@ Deno.serve(async (req) => {
 
           // ── Send via Resend ─────────────────────────────────────────────
           const emailPayload: Record<string, unknown> = {
-            from: 'Technica Football <onboarding@resend.dev>',
+            from: 'Technica Football <info@technicafootball.com.au>',
             to: booking.parent_email,
             subject: `Registration Confirmed — ${className}`,
             html: emailHtml,
