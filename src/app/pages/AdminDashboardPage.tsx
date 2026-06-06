@@ -158,22 +158,31 @@ export default function AdminDashboardPage() {
     'Additional Info': b.registrations?.additional_info || '',
   }));
 
+  const triggerDownload = (blob: Blob, filename: string) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const exportCSV = () => {
     const csv = Papa.unparse(buildExportData());
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `technica-registrations-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
+    triggerDownload(blob, `technica-registrations-${new Date().toISOString().split('T')[0]}.csv`);
   };
 
   const exportExcel = () => {
     const ws = XLSX.utils.json_to_sheet(buildExportData());
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Registrations');
-    XLSX.writeFile(wb, `technica-registrations-${new Date().toISOString().split('T')[0]}.xlsx`);
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    triggerDownload(blob, `technica-registrations-${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
   const tabs: { key: FilterTab; label: string }[] = [
