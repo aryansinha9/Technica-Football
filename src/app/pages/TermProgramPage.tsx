@@ -116,6 +116,20 @@ export default function TermProgramPage() {
                   <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page?.info_sections?.[3]?.value.replace(/\n/g, '<br/>') || '• Foundation Class: $189 — Full 8-Week Term<br/>• Elite Class: $209 — Full 8-Week Term<br/>• $20 — Single Trial Session') }} />
                 </div>
               </div>
+              
+              {page?.info_sections?.[4] && (
+                <>
+                  <div className="border-t border-white/10" />
+                  <div className="flex items-start gap-4">
+                    <DollarSign className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
+                    <div className="w-full">
+                      <p className="font-barlow font-bold tracking-widest uppercase text-[#f0722b] text-sm mb-3">{page.info_sections[4].label}</p>
+                      <div className="text-white/80 space-y-2 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.info_sections[4].value.replace(/\n/g, '<br/>')) }} />
+                    </div>
+                  </div>
+                </>
+              )}
+
               <div className="border-t border-white/10" />
               <div className="flex items-start gap-4">
                 <CalendarCheck className="w-6 h-6 text-[#f0722b] shrink-0 mt-0.5" />
