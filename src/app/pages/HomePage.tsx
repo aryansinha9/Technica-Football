@@ -73,7 +73,7 @@ export default function HomePage() {
 
         {/* Charcoal Top Bar */}
         <div className="absolute top-0 inset-x-0 h-[50px] md:h-[0px] bg-[#21211f] z-20">
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] translate-y-[99%] pointer-events-none z-10">
+          <div className="absolute top-full left-0 w-full overflow-hidden leading-[0] -translate-y-[1px] pointer-events-none z-10">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 220 1440 70" preserveAspectRatio="none" className="block w-full h-[25px] md:h-[40px] lg:h-[55px]">
               <path fill="#21211f" fillOpacity="1" d="M0,240L480,265L960,240L1440,265L1440,0L0,0Z" />
             </svg>
@@ -115,7 +115,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── 1. Leading the Development Section ─── */}
-      <section className="relative z-[45] bg-[#f3f4f6] pt-0 pb-20 px-8 md:px-16 text-center text-[#0A1F44]">
+      <section className="relative z-[45] bg-[#f3f4f6] pt-0 pb-20 px-8 md:px-16 text-center text-[#0A1F44] -mt-[1px] pt-[1px]">
         <div className="max-w-4xl mx-auto transform -translate-y-[10px] md:-translate-y-[20px]">
           <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-wide text-[#0A1F44]">
             LEADING THE DEVELOPMENT IN FORMING TECHNICAL FOOTBALL PLAYERS
@@ -129,7 +129,7 @@ export default function HomePage() {
       {/* ─── 2. Slim Highlight Bar ─── */}
       <section className="relative z-[45] bg-white text-black pt-0 pb-0 px-8 md:px-16">
         {/* White wave jutting UP into Gray */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[70px] lg:h-[100px]">
             <path fill="#ffffff" fillOpacity="1" d="M0,235L480,270L960,250L1440,288L1440,320L960,320L480,320L0,320Z" />
           </svg>
@@ -149,7 +149,7 @@ export default function HomePage() {
       {/* ─── 3. Our Programs ─── */}
       <section className="relative z-30 bg-[#21211f] text-white pt-27 pb-24 px-8 md:px-16">
         {/* Top Wave (White dripping into Charcoal) */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 320 1440 110" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#ffffff" fillOpacity="1" d="M0,430L300,360L750,400L1440,340L1440,320L960,320L480,320L0,320Z" />
           </svg>
@@ -226,7 +226,7 @@ export default function HomePage() {
       {/* ─── 3b. Player Progression Pathway ─── */}
       <section className="relative z-[35] bg-[#f9fafb] text-[#0A1F44] pt-11 pb-24 px-8 md:px-16" aria-labelledby="pw-title">
         {/* Wave transition from charcoal programs section */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f9fafb" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
           </svg>
@@ -436,7 +436,7 @@ export default function HomePage() {
       {/* Section itself uses fixed padding — content area has min-h to prevent height shifts */}
       <section className="relative z-40 bg-[#f0722b] text-white pt-20 pb-24 px-16 md:px-24 lg:px-32 text-center">
         {/* Orange wave jutting UP into pathway section */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f0722b" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
           </svg>
@@ -508,7 +508,7 @@ export default function HomePage() {
       {/* ─── 5. Core Focus ─── */}
       <section className="relative z-50 bg-[#0A1F44] text-white pt-16 pb-20">
         {/* Grey wave jutting UP into Navy */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#0A1F44" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
           </svg>
@@ -636,7 +636,7 @@ export default function HomePage() {
       {/* ─── 6. Official Training Kit ─── */}
       <section className="relative z-[60] bg-[#21211f] w-full pt-10 pb-27 px-8 md:px-16 flex flex-col items-center">
         {/* Charcoal wave jutting UP into Blue */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#21211f" fillOpacity="1" d="M0,260L350,220L750,280L1100,210L1440,270L1440,320L0,320Z" />
           </svg>
@@ -705,7 +705,7 @@ export default function HomePage() {
       {/* ─── 7. Our Partners ─── */}
       <section className="relative z-[70] bg-[#f9fafb] text-[#0A1F44] pt-7 pb-20 px-8 md:px-16 text-center">
         {/* Light Grey wave jutting UP into Charcoal */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none -translate-y-[99%]">
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
             <path fill="#f9fafb" fillOpacity="1" d="M0,220L400,290L850,230L1250,280L1440,240L1440,320L0,320Z" />
           </svg>
