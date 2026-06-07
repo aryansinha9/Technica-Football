@@ -83,7 +83,7 @@ export default function HomePage() {
         {/* Full TECHNICA text — centred, even letter spacing */}
         <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
           <h1
-            className="text-[12vw] sm:text-[100px] md:text-[170px] lg:text-[250px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
+            className="text-[12vw] sm:text-[100px] md:text-[14vw] lg:text-[250px] font-black leading-none text-white/90 whitespace-nowrap select-none -mt-32 md:-mt-44"
             style={{ letterSpacing: '0.001em', fontKerning: 'none' }}
           >
             TECHNICA
