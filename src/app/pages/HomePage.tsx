@@ -95,10 +95,8 @@ export default function HomePage() {
 
         {/* Explore Programs CTA — positioned under TECHNICA */}
         <div
-          className="absolute z-[60] hidden sm:block"
+          className="absolute z-[60] w-full flex justify-center sm:w-auto sm:block left-0 sm:left-[7%] bottom-[20%] sm:bottom-[25%]"
           style={{
-            bottom: '25%', /* Adjust this value to move it up or down */
-            left: '7%', /* Adjust this value to move it left or right */
             opacity: buttonOpacity,
             pointerEvents: buttonOpacity < 0.05 ? 'none' : 'auto',
             transition: 'opacity 0.1s linear',
