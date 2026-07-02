@@ -5,12 +5,13 @@ import TiltedCard from '../../components/TiltedCard';
 import ExploreButton from '../components/ExploreButton';
 import AnimatedCTA from '../components/AnimatedCTA';
 import FillSweepButton from '../components/FillSweepButton';
-import { useTestimonials, usePrograms, useSponsors } from '../lib/useSiteContent';
+import { useTestimonials, usePrograms, useSponsors, useSiteContent } from '../lib/useSiteContent';
 
 export default function HomePage() {
   const { testimonials } = useTestimonials();
   const { programs } = usePrograms(true);
   const { sponsors } = useSponsors();
+  const { content } = useSiteContent();
   const [_activeSlide, setActiveSlide] = useState(0);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [fading, setFading] = useState(false);
@@ -57,7 +58,7 @@ export default function HomePage() {
     }
     const maxScroll = scrollWidth - clientWidth;
     const progress = Math.min(1, Math.max(0, scrollLeft / maxScroll));
-    const index = Math.round(progress * 5);
+    const index = Math.round(progress * Math.max(0, programs.length - 1));
     setActiveProgramIndex(index);
   };
 
@@ -117,11 +118,11 @@ export default function HomePage() {
       {/* ─── 1. Leading the Development Section ─── */}
       <section className="relative z-[45] bg-[#f3f4f6] pt-0 pb-20 px-8 md:px-16 text-center text-[#0A1F44] -mt-[1px] pt-[1px]">
         <div className="max-w-4xl mx-auto transform -translate-y-[10px] md:-translate-y-[20px]">
-          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-wide text-[#0A1F44]">
-            LEADING THE DEVELOPMENT IN FORMING TECHNICAL FOOTBALL PLAYERS
+          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-wide uppercase text-[#0A1F44]">
+            {content.home_leading.heading}
           </h2>
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light">
-            We build players on a foundation of technical mastery, developing them to excel on the pitch in all areas of skill, intelligence, and discipline. Each session is designed to challenge, inspire, and prepare players for the next level of their game.
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light whitespace-pre-wrap">
+            {content.home_leading.body}
           </p>
         </div>
       </section>
@@ -137,11 +138,11 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 pb-6 pt-2">
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
             <img src="/LOCAL-BUSINESS.png" alt="Local Business Award" className="h-16 md:h-20 w-auto object-contain" />
-            <p className="font-bold text-lg md:text-xl font-barlow uppercase tracking-wider">"Awarded 'Best New Business 2024'"</p>
+            <p className="font-bold text-lg md:text-xl font-barlow uppercase tracking-wider">{content.home_highlight.award_text}</p>
           </div>
           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-center md:text-left">
             <img src="/ACTIVE-KIDS.png" alt="Active Kids Vouchers" className="h-16 md:h-20 w-auto object-contain" />
-            <p className="font-bold text-black font-barlow uppercase text-lg md:text-xl tracking-wide">We accept Active Kids vouchers</p>
+            <p className="font-bold text-black font-barlow uppercase text-lg md:text-xl tracking-wide">{content.home_highlight.vouchers_text}</p>
           </div>
         </div>
       </section>
@@ -173,7 +174,7 @@ export default function HomePage() {
         </button>
 
         <div className="max-w-7xl mx-auto relative">
-          <h2 className="text-4xl md:text-5xl font-black mb-16 text-center text-white">OUR PROGRAMS</h2>
+          <h2 className="text-4xl md:text-5xl font-black mb-16 text-center uppercase text-white">{content.home_programs.heading}</h2>
 
           <div
             ref={programsScrollRef}
@@ -220,6 +221,24 @@ export default function HomePage() {
               <div key={i} className={`h-2 rounded-full transition-all duration-300 ${i === activeProgramIndex ? 'w-10 bg-orange-500' : 'w-4 bg-gray-500/50'}`} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ─── 3a. New Section (editable via Site Content) ─── */}
+      <section className="relative z-[32] bg-[#f3f4f6] text-[#0A1F44] pt-14 pb-24 px-8 md:px-16 text-center">
+        {/* Light grey wave jutting UP into Charcoal programs section */}
+        <div className="absolute bottom-full left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none translate-y-[1px]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 200 1440 120" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
+            <path fill="#f3f4f6" fillOpacity="1" d="M0,220L400,290L850,230L1250,280L1440,240L1440,320L0,320Z" />
+          </svg>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 leading-tight tracking-wide uppercase text-[#0A1F44]">
+            {content.home_new_section.heading}
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-light whitespace-pre-wrap">
+            {content.home_new_section.body}
+          </p>
         </div>
       </section>
 
@@ -293,15 +312,15 @@ export default function HomePage() {
           <div className="flex items-center justify-center gap-[clamp(12px,2vw,24px)] mb-1.5 pw-anim-tf">
             <span className="h-[2px] flex-[0_1_150px] min-w-[24px] bg-[#f0722b] opacity-85" />
             <span className="font-barlow font-semibold text-[#f0722b] text-[clamp(15px,2.3vw,28px)] tracking-[0.4em] uppercase pl-[0.4em] whitespace-nowrap text-center">
-              Technica Football
+              {content.home_pathway.eyebrow}
             </span>
             <span className="h-[2px] flex-[0_1_150px] min-w-[24px] bg-[#f0722b] opacity-85" />
           </div>
           <h2 id="pw-title" className="font-barlow font-bold text-[clamp(42px,8.5vw,92px)] leading-[0.98] tracking-[0.02em] text-center uppercase text-[#0A1F44] m-0 pw-anim-tf">
-            Player Pathway
+            {content.home_pathway.heading}
           </h2>
           <p className="font-barlow font-medium text-[clamp(14px,2.1vw,25px)] tracking-[0.1em] uppercase text-center text-[#0A1F44]/70 mt-2.5 pw-anim-tf" style={{ textWrap: 'balance' }}>
-            A Clear Path. Purposeful Development. Higher Standards.
+            {content.home_pathway.tagline}
           </p>
 
           {/* Card Row */}
@@ -424,9 +443,9 @@ export default function HomePage() {
               <circle cx="27" cy="31" r="20" /><circle cx="27" cy="31" r="12" /><circle cx="27" cy="31" r="4" fill="#f0722b" />
               <line x1="33" y1="25" x2="50" y2="8" /><path d="M44 8 L50 8 L50 14" />
             </svg>
-            <div className="font-barlow font-bold text-[clamp(24px,2.6vw,34px)] tracking-[0.04em] uppercase whitespace-nowrap text-white">Our Goal</div>
+            <div className="font-barlow font-bold text-[clamp(24px,2.6vw,34px)] tracking-[0.04em] uppercase whitespace-nowrap text-white">{content.home_pathway.goal_heading}</div>
             <div className="w-[2px] self-stretch min-h-[46px] bg-white/14 max-[620px]:hidden" />
-            <div className="text-[clamp(15px,1.5vw,21px)] leading-relaxed text-white/80 max-[620px]:text-base">To develop confident, skilled and resilient players who love the game and strive for excellence.</div>
+            <div className="text-[clamp(15px,1.5vw,21px)] leading-relaxed text-white/80 max-[620px]:text-base">{content.home_pathway.goal_text}</div>
           </div>
 
         </div>
@@ -461,7 +480,7 @@ export default function HomePage() {
         </button>
 
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-black mb-12 tracking-wide">TESTIMONIALS</h2>
+          <h2 className="text-4xl md:text-5xl font-black mb-12 tracking-wide uppercase">{content.home_testimonials.heading}</h2>
 
           {/*
             Fixed-height content area — tall enough for the longest quote (Attrayee).
@@ -556,7 +575,7 @@ export default function HomePage() {
             <div className="mb-24">
               <div className="flex items-center justify-center gap-6 mb-12">
                 <div className="pitch-line hidden md:block"></div>
-                <h2 className="text-4xl md:text-5xl font-barlow font-black tracking-widest uppercase text-white whitespace-nowrap">OUR CORE FOCUS</h2>
+                <h2 className="text-4xl md:text-5xl font-barlow font-black tracking-widest uppercase text-white whitespace-nowrap">{content.home_core_focus.heading}</h2>
                 <div className="pitch-line hidden md:block"></div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -565,24 +584,24 @@ export default function HomePage() {
                   <div className="mb-6 flex justify-center items-center h-[100px]">
                     <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>sports_soccer</span>
                   </div>
-                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">TOUCH</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Mastering the initial contact to kill momentum and prepare the next tactical move instantly.</p>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">{content.home_core_focus.card1_title}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.card1_text}</p>
                 </div>
                 {/* Dribbling */}
                 <div className="focus-card bg-white/5 border border-white/10 p-8 flex flex-col items-center text-center group hover:border-[#f0722b]/50 hover:bg-white/10 transition-all duration-300 rounded-lg">
                   <div className="mb-6 flex justify-center items-center h-[100px]">
                     <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>conversion_path</span>
                   </div>
-                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">DRIBBLING</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Technical ball mastery combined with explosive changes of direction to bypass defensive lines.</p>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">{content.home_core_focus.card2_title}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.card2_text}</p>
                 </div>
                 {/* Passing */}
                 <div className="focus-card bg-white/5 border border-white/10 p-8 flex flex-col items-center text-center group hover:border-[#f0722b]/50 hover:bg-white/10 transition-all duration-300 rounded-lg">
                   <div className="mb-6 flex justify-center items-center h-[100px]">
                     <span className="material-symbols-outlined text-[#f0722b] leading-none" style={{ fontSize: '100px' }}>trending_flat</span>
                   </div>
-                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">PASSING</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">Weight, timing, and trajectory. Developing the ability to break lines with surgical precision.</p>
+                  <h3 className="font-barlow text-2xl md:text-3xl font-black uppercase mb-4 tracking-widest">{content.home_core_focus.card3_title}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.card3_text}</p>
                 </div>
               </div>
             </div>
@@ -591,7 +610,7 @@ export default function HomePage() {
             <div>
               <div className="flex items-center justify-center gap-6 mb-12">
                 <div className="pitch-line hidden md:block"></div>
-                <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">SUPPORTING FACTORS</h2>
+                <h2 className="text-2xl md:text-3xl font-barlow font-black tracking-widest uppercase text-[#f0722b] whitespace-nowrap">{content.home_core_focus.supporting_heading}</h2>
                 <div className="pitch-line hidden md:block"></div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -600,32 +619,32 @@ export default function HomePage() {
                   <div className="mb-4 flex justify-center items-center h-[70px]">
                     <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>record_voice_over</span>
                   </div>
-                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">COMMUNICATION</h4>
-                  <p className="text-white/70 text-sm leading-relaxed">Verbal and non-verbal cues that sync the unit during high-intensity transition phases.</p>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">{content.home_core_focus.sup1_title}</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.sup1_text}</p>
                 </div>
                 {/* Scanning */}
                 <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
                   <div className="mb-4 flex justify-center items-center h-[70px]">
                     <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>visibility</span>
                   </div>
-                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">SCANNING</h4>
-                  <p className="text-white/70 text-sm leading-relaxed">Constant environmental awareness to build a mental map of the pitch before the ball arrives.</p>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">{content.home_core_focus.sup2_title}</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.sup2_text}</p>
                 </div>
                 {/* Movement */}
                 <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
                   <div className="mb-4 flex justify-center items-center h-[70px]">
                     <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>directions_run</span>
                   </div>
-                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">MOVEMENT</h4>
-                  <p className="text-white/70 text-sm leading-relaxed">Intelligent spacing and decoy runs designed to manipulate opponent structure and create gaps.</p>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">{content.home_core_focus.sup3_title}</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.sup3_text}</p>
                 </div>
                 {/* Effort */}
                 <div className="focus-card border border-white/5 bg-transparent p-8 hover:bg-white/5 transition-all duration-300 rounded-lg">
                   <div className="mb-4 flex justify-center items-center h-[70px]">
                     <span className="material-symbols-outlined text-white/50 leading-none" style={{ fontSize: '70px' }}>bolt</span>
                   </div>
-                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">EFFORT</h4>
-                  <p className="text-white/70 text-sm leading-relaxed">The non-negotiable standard of work rate required to execute high-press and recovery tactics.</p>
+                  <h4 className="font-barlow text-xl font-bold uppercase mb-3 tracking-wider">{content.home_core_focus.sup4_title}</h4>
+                  <p className="text-white/70 text-sm leading-relaxed">{content.home_core_focus.sup4_text}</p>
                 </div>
               </div>
             </div>
@@ -643,8 +662,8 @@ export default function HomePage() {
         </div>
         {/* Heading — now at top */}
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-barlow font-bold uppercase tracking-widest text-center mb-16">
-          <span className="text-white">Official</span>{' '}
-          <span className="text-[#f0722b]">Training Kit</span>
+          <span className="text-white">{content.home_kit.heading_white}</span>{' '}
+          <span className="text-[#f0722b]">{content.home_kit.heading_orange}</span>
         </h2>
         {/* Product image grid — unchanged */}
         <div className="relative w-full max-w-[1800px] mx-auto text-center transition-colors duration-500 rounded-xl overflow-hidden shadow-2xl group border-[8px] border-[#f0722b]">
@@ -697,7 +716,7 @@ export default function HomePage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-10 py-4 rounded-xl hover:bg-white hover:text-[#f0722b] transition-colors duration-300 text-base shadow-lg"
           >
-            See All Options <ChevronRight className="w-5 h-5" />
+            {content.home_kit.button_label} <ChevronRight className="w-5 h-5" />
           </a>
         </div>
       </section>
@@ -711,7 +730,7 @@ export default function HomePage() {
           </svg>
         </div>
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl font-black mb-24 tracking-wider">OUR PARTNERS</h2>
+          <h2 className="text-5xl font-black mb-24 tracking-wider uppercase">{content.home_partners.heading}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 lg:gap-20 items-center justify-items-center opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
             {sponsors.map(sponsor => (
               <a

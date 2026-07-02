@@ -3,8 +3,9 @@ import PageHero from '../components/PageHero';
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { useProgramPage, useTermClasses } from '../lib/useSiteContent';
+import { useProgramPage, useTermClasses, useSiteContent } from '../lib/useSiteContent';
 import { sanitizeHtml } from '../lib/sanitizeHtml';
+import { getTermStatus, extractTermLabel } from '../lib/termDates';
 
 const enrollSteps = [
   'Choose a class/day from the schedule below.',
@@ -16,6 +17,14 @@ const enrollSteps = [
 export default function TermProgramPage() {
   const { page, loading: pageLoading } = useProgramPage('term-program');
   const { classes: termClasses, loading: classesLoading } = useTermClasses();
+  const { content } = useSiteContent();
+
+  // Schedule heading: admin override via Site Content, otherwise derived
+  // from the current classes (e.g. "Term 3 - Sunday 9:00am" → "TERM 3
+  // PROGRAM SCHEDULE") so it updates automatically each term.
+  const derivedTerm = termClasses.map(tc => extractTermLabel(tc.subtitle)).find(Boolean);
+  const scheduleHeading = content.term_program_page.schedule_heading
+    || (derivedTerm ? `${derivedTerm.toUpperCase()} PROGRAM SCHEDULE` : 'PROGRAM SCHEDULE');
 
   // Create a combined loading state if you want to delay render
   // const loading = pageLoading || classesLoading;
@@ -150,7 +159,7 @@ export default function TermProgramPage() {
         </div>
       </section>
 
-      {/* Term 2 Schedule */}
+      {/* Term Schedule */}
       <section className="relative bg-[#f3f4f6] text-[#0A1F44] pt-10 pb-30 px-8 md:px-16">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-10 pointer-events-none -translate-y-[99%]">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 235 1440 85" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[60px] lg:h-[80px]">
@@ -159,13 +168,15 @@ export default function TermProgramPage() {
         </div>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3">TERM 2 PROGRAM SCHEDULE</h2>
+            <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3 uppercase">{scheduleHeading}</h2>
             <div className="h-1 bg-[#f0722b] rounded-full w-32 mx-auto" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {termClasses.map((tc) => {
               const s = spots[tc.id] ?? null;
               const spotsColor = s !== null && s <= 5 ? 'text-red-500' : s !== null && s <= 8 ? 'text-amber-500' : 'text-green-500';
+              const status = getTermStatus(tc.dateRange);
+              const startLabel = status === 'upcoming' ? 'Starts' : status === 'ended' ? 'Ran from' : 'Started';
               return (
                 <div key={tc.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300">
                   <div className="bg-[#0A1F44] px-6 py-5">
@@ -174,7 +185,7 @@ export default function TermProgramPage() {
                   </div>
                   <div className="p-6 flex flex-col gap-3 flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-500 text-sm">Started {tc.startedDate}</span>
+                      <span className="text-gray-500 text-sm">{startLabel} {tc.startedDate}</span>
                       {s !== null && (
                         <span className={`text-sm font-bold flex items-center gap-1 ${spotsColor}`}>
                           <Users className="w-3.5 h-3.5" />{s} spot{s !== 1 ? 's' : ''} left

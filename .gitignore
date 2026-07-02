@@ -11,3 +11,9 @@ migrate-classes.sql
 storage-policies.sql
 default_shadcn_theme.css
 Player Pathway Section.html
+
+# Migration SQL — run manually in Supabase, keep local
+supabase-migration-2026-07.sql
+
+# Local tooling artifacts
+.claude/

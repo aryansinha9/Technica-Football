@@ -1,9 +1,10 @@
 import { useParams, Link } from 'react-router';
 import { useEffect, useState } from 'react';
-import { ChevronRight, MapPin, Phone, Mail, Clock, AlertTriangle, CalendarDays, Users } from 'lucide-react';
+import { ChevronRight, MapPin, Phone, Mail, Clock, AlertTriangle, CalendarDays, Users, CalendarCheck } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { supabase } from '../lib/supabase';
 import { useTermClasses, type TermClass } from '../lib/useSiteContent';
+import { getTermStatus, extractTermLabel } from '../lib/termDates';
 
 export default function ClassDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -61,19 +62,42 @@ export default function ClassDetailPage() {
   const bulletPoints = descLines.filter(l => l.startsWith('- ')).map(l => l.replace('- ', ''));
   const outroLines = descLines.filter(l => !l.startsWith('- ') && l !== introParagraph);
 
+  // Term status is computed from the class's date range, so the banner and
+  // "Starts/Started" wording update automatically when dates are edited.
+  const termStatus = getTermStatus(classData.dateRange);
+  const startLabel = termStatus === 'upcoming' ? 'Starts' : 'Started';
+  const termLabel = extractTermLabel(classData.subtitle);
+  const serviceTitle = `TECHNICA FOOTBALL TERM PROGRAM${termLabel ? ` — ${termLabel.toUpperCase()}` : ''}`;
+
   return (
     <>
       <PageHero title={classData.title} subtitle={classData.subtitle} bottomColor="#f3f4f6" />
 
-      {/* Alert Banner */}
-      <section className="bg-[#f3f4f6] pt-8 pb-0 px-8 md:px-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-4 flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <p className="text-amber-800 text-sm font-medium">This course has started, but you can book the remaining sessions.</p>
+      {/* Status Banner — driven by the class dates */}
+      {termStatus !== 'unknown' && (
+        <section className="bg-[#f3f4f6] pt-8 pb-0 px-8 md:px-16">
+          <div className="max-w-4xl mx-auto">
+            {termStatus === 'started' && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-6 py-4 flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                <p className="text-amber-800 text-sm font-medium">This program has started, but you can book the remaining sessions.</p>
+              </div>
+            )}
+            {termStatus === 'upcoming' && (
+              <div className="bg-green-50 border border-green-200 rounded-xl px-6 py-4 flex items-start gap-3">
+                <CalendarCheck className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                <p className="text-green-800 text-sm font-medium">Enrolments are open! This program starts on {classData.startedDate}.</p>
+              </div>
+            )}
+            {termStatus === 'ended' && (
+              <div className="bg-gray-100 border border-gray-200 rounded-xl px-6 py-4 flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-gray-500 shrink-0 mt-0.5" />
+                <p className="text-gray-600 text-sm font-medium">This program has finished. Keep an eye out for the next term's dates.</p>
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Class Overview Card */}
       <section className="bg-[#f3f4f6] pt-8 pb-12 px-8 md:px-16">
@@ -88,7 +112,7 @@ export default function ClassDetailPage() {
             <div className="p-8">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
                 <div>
-                  <p className="text-gray-500 text-sm mb-1">Started {classData.startedDate}</p>
+                  <p className="text-gray-500 text-sm mb-1">{startLabel} {classData.startedDate}</p>
                   <p className="text-4xl font-black text-[#0A1F44]">${classData.price}</p>
                   <div className="flex items-center gap-2 mt-2 text-sm text-gray-500">
                     <MapPin className="w-4 h-4" />
@@ -120,7 +144,7 @@ export default function ClassDetailPage() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <span className="text-[#f0722b] font-barlow font-bold text-xs tracking-widest uppercase">Service Description</span>
-            <h2 className="text-2xl md:text-3xl font-black tracking-wide text-[#0A1F44] mt-2">TECHNICA FOOTBALL TERM PROGRAM — TERM 2</h2>
+            <h2 className="text-2xl md:text-3xl font-black tracking-wide text-[#0A1F44] mt-2">{serviceTitle}</h2>
             <div className="h-1 bg-[#f0722b] rounded-full w-24 mt-4" />
           </div>
           <p className="text-gray-700 leading-relaxed text-lg mb-6">{introParagraph}</p>
