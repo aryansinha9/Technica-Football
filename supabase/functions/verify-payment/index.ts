@@ -81,7 +81,23 @@ Deno.serve(async (req) => {
       );
     }
 
-    // 2. Update the booking status
+    // 2. Idempotency guard — the confirmation page can be reloaded/revisited,
+    // which re-invokes this function. Only the first successful call may
+    // decrement spots and send emails.
+    const { data: existing } = await supabase
+      .from('bookings')
+      .select('payment_status')
+      .eq('id', bookingId)
+      .single();
+
+    if (existing?.payment_status === 'paid') {
+      return new Response(
+        JSON.stringify({ success: true, alreadyProcessed: true }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+      );
+    }
+
+    // 3. Update the booking status
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
       .update({ payment_status: 'paid', stripe_session_id: sessionId })
@@ -242,6 +258,79 @@ Deno.serve(async (req) => {
           } else {
             console.log('Confirmation email sent to:', booking.parent_email);
           }
+
+          // ── Admin notification email ────────────────────────────────────
+          try {
+            const adminEmail = Deno.env.get('ADMIN_NOTIFICATION_EMAIL') || 'info@technicafootball.com.au';
+
+            // Pull the linked registration for player details (may be null
+            // for legacy bookings).
+            let registration: Record<string, unknown> | null = null;
+            if (booking.registration_id) {
+              const { data: regData } = await supabase
+                .from('registrations')
+                .select('*')
+                .eq('id', booking.registration_id)
+                .single();
+              registration = regData;
+            }
+
+            const row = (label: string, value: unknown) => `
+              <tr>
+                <td style="padding: 6px 0; color: #6b7280; font-size: 14px; width: 180px; vertical-align: top;">${label}</td>
+                <td style="padding: 6px 0; color: #0A1F44; font-weight: bold; font-size: 14px;">${value ?? '—'}</td>
+              </tr>`;
+
+            const adminHtml = `
+              <div style="font-family: Arial, sans-serif; color: #0A1F44; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                <div style="background-color: #0A1F44; padding: 24px; text-align: center;">
+                  <h1 style="color: #ffffff; margin: 0; font-size: 22px; letter-spacing: 3px; font-weight: 900;">TECHNICA FOOTBALL</h1>
+                  <p style="color: #f0722b; margin: 6px 0 0; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">New Paid Registration</p>
+                </div>
+                <div style="padding: 28px;">
+                  <p style="color: #374151; margin-top: 0;">A new registration has been paid and confirmed.</p>
+                  <table style="width: 100%; border-collapse: collapse;">
+                    ${row('Player', booking.player_name)}
+                    ${row('Class', classData.subtitle || booking.class_label)}
+                    ${row('Parent', `${booking.parent_first_name} ${booking.parent_last_name}`)}
+                    ${row('Email', booking.parent_email)}
+                    ${row('Phone', booking.parent_phone)}
+                    ${row('Add-ons', [booking.addon_45min ? '45-min private session' : null, booking.addon_60min ? '1-hr private session' : null].filter(Boolean).join(', ') || 'None')}
+                    ${row('Total Paid', `$${(booking.total_paid / 100).toFixed(0)} AUD`)}
+                    ${registration ? row('Player DOB', registration.player_birthday) : ''}
+                    ${registration ? row('Medical', registration.medical_conditions || 'None') : ''}
+                    ${registration ? row('Experience', registration.player_experience) : ''}
+                    ${registration ? row('Emergency Contact', `${registration.emergency_first_name} ${registration.emergency_last_name} (${registration.emergency_relationship})`) : ''}
+                  </table>
+                  <p style="color: #6b7280; font-size: 13px; margin-top: 20px;">Full details are available in the admin dashboard.</p>
+                </div>
+              </div>
+            `;
+
+            const adminRes = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${resendApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                from: 'Technica Football <info@technicafootball.com.au>',
+                to: adminEmail,
+                subject: `New Registration — ${booking.player_name} (${classData.subtitle || booking.class_label})`,
+                html: adminHtml,
+              }),
+            });
+
+            if (!adminRes.ok) {
+              console.error('Failed to send admin notification:', await adminRes.text());
+            } else {
+              console.log('Admin notification sent to:', adminEmail);
+            }
+          } catch (adminErr) {
+            console.error('Error sending admin notification:', adminErr);
+          }
+        } else {
+          console.error('RESEND_API_KEY is not set — no confirmation or admin emails were sent.');
         }
       } catch (err) {
         console.error('Error in Resend block:', err);

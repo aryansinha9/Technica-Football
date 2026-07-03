@@ -11,3 +11,6 @@ migrate-classes.sql
 storage-policies.sql
 default_shadcn_theme.css
 Player Pathway Section.html
+
+# Local tooling artifacts
+.claude/

@@ -39,6 +39,9 @@ export default function CMSTermClasses() {
 
     const { error } = await supabase.from('classes').insert({
       id: newId,
+      // Legacy display label (NOT NULL in the original schema) — newer UI
+      // prefers subtitle/title but older rows still rely on it.
+      label: `${newClass.subtitle} / ${newClass.location}`,
       slug: newClass.slug,
       title: newClass.title,
       subtitle: newClass.subtitle,
@@ -136,6 +139,9 @@ export default function CMSTermClasses() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">Manage term programs, their details, and 8-week session dates.</p>
+        <button onClick={handleAddNew} disabled={saving} className="flex items-center gap-2 bg-[#0A1F44] text-white text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl hover:bg-[#f0722b] transition-colors disabled:opacity-50">
+          {saving && !editId ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />} Add Class
+        </button>
       </div>
 
       {classes.map(c => (

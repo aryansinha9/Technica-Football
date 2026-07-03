@@ -11,8 +11,9 @@ import CMSPrograms from '../components/cms/CMSPrograms';
 import CMSSponsors from '../components/cms/CMSSponsors';
 import CMSTestimonials from '../components/cms/CMSTestimonials';
 import CMSTermClasses from '../components/cms/CMSTermClasses';
+import CMSSiteContent from '../components/cms/CMSSiteContent';
 
-type MainTab = 'registrations' | 'programs' | 'program-pages' | 'coaches' | 'sponsors' | 'testimonials' | 'term-classes';
+type MainTab = 'registrations' | 'programs' | 'program-pages' | 'coaches' | 'sponsors' | 'testimonials' | 'term-classes' | 'site-content';
 type FilterTab = string;
 
 interface Booking {
@@ -211,6 +212,7 @@ export default function AdminDashboardPage() {
           {([
             { key: 'registrations', label: 'Registrations' },
             { key: 'term-classes', label: 'Term Classes' },
+            { key: 'site-content', label: 'Site Content' },
             { key: 'programs', label: 'Programs' },
             { key: 'program-pages', label: 'Program Pages' },
             { key: 'coaches', label: 'Coaches' },
@@ -233,6 +235,12 @@ export default function AdminDashboardPage() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
             <h2 className="font-black text-[#0A1F44] text-lg mb-6">Term Classes & Schedule</h2>
             <CMSTermClasses />
+          </div>
+        )}
+        {mainTab === 'site-content' && (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h2 className="font-black text-[#0A1F44] text-lg mb-6">Site Content — Homepage & Page Text</h2>
+            <CMSSiteContent />
           </div>
         )}
         {mainTab === 'coaches' && (

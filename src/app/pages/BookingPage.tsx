@@ -4,6 +4,7 @@ import { ChevronRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { supabase } from '../lib/supabase';
 import { useTermClasses, type TermClass } from '../lib/useSiteContent';
+import { getTermStatus } from '../lib/termDates';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -152,7 +153,11 @@ export default function BookingPage() {
     e.preventDefault();
     setRegLoading(true);
     try {
-      const { data, error } = await supabase.from('registrations').insert({
+      // Generate the id client-side: RLS no longer allows anonymous reads of
+      // the registrations table, so we can't rely on INSERT ... RETURNING.
+      const newRegistrationId = crypto.randomUUID();
+      const { error } = await supabase.from('registrations').insert({
+        id: newRegistrationId,
         player_first_name: reg.player_first_name,
         player_last_name: reg.player_last_name,
         player_birthday: reg.player_birthday,
@@ -166,15 +171,24 @@ export default function BookingPage() {
         parent_email: reg.parent_email,
         parent_phone: reg.parent_phone,
         additional_info: reg.additional_info || null,
-      }).select('id').single();
+      });
 
       if (error) throw error;
-      setRegistrationId(data.id);
+      setRegistrationId(newRegistrationId);
       setRegSubmitted(true);
       // Pre-fill booking form
       setBookEmail(reg.parent_email);
       setBookPhone(reg.parent_phone);
       setPlayerName(`${reg.player_first_name} ${reg.player_last_name}`);
+
+      // Notify the club about the new registration (fire-and-forget — a
+      // failure here should never block the parent from booking).
+      supabase.functions.invoke('notify-registration', {
+        body: {
+          registrationId: newRegistrationId,
+          classTitle: `${classData.title} — ${classData.subtitle}`,
+        },
+      }).catch(err => console.error('Registration notification failed:', err));
     } catch {
       alert('Registration failed. Please try again.');
     } finally {
@@ -188,16 +202,30 @@ export default function BookingPage() {
     setLookupLoading(true);
     setLookupError('');
     try {
-      const { data, error } = await supabase.from('registrations')
-        .select('*').eq('parent_email', lookupEmail.toLowerCase().trim()).order('created_at', { ascending: false }).limit(1).single();
-      if (error || !data) {
+      // Preferred path: SECURITY DEFINER RPC that returns only the minimal
+      // fields needed to pre-fill the form (the table itself is no longer
+      // publicly readable). Falls back to a direct select if the RPC hasn't
+      // been created yet.
+      let record: { id: string; parent_email: string; parent_phone: string; player_first_name: string; player_last_name: string } | null = null;
+      const { data: rpcData, error: rpcError } = await supabase
+        .rpc('lookup_registration', { p_email: lookupEmail.toLowerCase().trim() });
+      if (!rpcError && Array.isArray(rpcData) && rpcData.length > 0) {
+        record = rpcData[0];
+      } else if (rpcError) {
+        const { data } = await supabase.from('registrations')
+          .select('id, parent_email, parent_phone, player_first_name, player_last_name')
+          .eq('parent_email', lookupEmail.toLowerCase().trim())
+          .order('created_at', { ascending: false }).limit(1).single();
+        record = data;
+      }
+      if (!record) {
         setLookupError('No registration found for this email. Please register first.');
         return;
       }
-      setRegistrationId(data.id);
-      setBookEmail(data.parent_email);
-      setBookPhone(data.parent_phone);
-      setPlayerName(`${data.player_first_name} ${data.player_last_name}`);
+      setRegistrationId(record.id);
+      setBookEmail(record.parent_email);
+      setBookPhone(record.parent_phone);
+      setPlayerName(`${record.player_first_name} ${record.player_last_name}`);
       setLookupSuccess(true);
       setRegSubmitted(true);
     } catch {
@@ -215,8 +243,10 @@ export default function BookingPage() {
     setBookingError('');
 
     try {
-      // 1. Create booking record
-      const { data: booking, error: bookErr } = await supabase.from('bookings').insert({
+      // 1. Create booking record (id generated client-side — see handleRegister)
+      const newBookingId = crypto.randomUUID();
+      const { error: bookErr } = await supabase.from('bookings').insert({
+        id: newBookingId,
         registration_id: registrationId,
         parent_first_name: parentFirst,
         parent_last_name: parentLast,
@@ -232,14 +262,14 @@ export default function BookingPage() {
         total_paid: grandTotal * 100,
         payment_status: 'pending',
         terms_agreed: true,
-      }).select('id').single();
+      });
 
       if (bookErr) throw bookErr;
 
       // 2. Call Supabase Edge Function to create Stripe Checkout
       const { data: checkoutData, error: checkoutErr } = await supabase.functions.invoke('create-checkout', {
         body: {
-          bookingId: booking.id,
+          bookingId: newBookingId,
           classTitle: `${classData.title} — ${classData.subtitle}`,
           classPrice: classData.price * 100,
           addon45min: addon45,
@@ -464,7 +494,7 @@ export default function BookingPage() {
                     <p className="text-xs text-gray-400 font-barlow tracking-widest uppercase mb-1">Program</p>
                     <p className="font-bold text-[#0A1F44]">{classData.title}</p>
                     <p className="text-sm text-gray-500">{classData.subtitle}</p>
-                    <p className="text-xs text-gray-400 mt-1">Starts {classData.startedDate} • {classData.location}</p>
+                    <p className="text-xs text-gray-400 mt-1">{getTermStatus(classData.dateRange) === 'started' ? 'Started' : 'Starts'} {classData.startedDate} • {classData.location}</p>
                   </div>
                   <div className="border-t border-gray-100" />
                   <div className="space-y-3">

@@ -188,6 +188,93 @@ export const FALLBACK_TERM_CLASSES: TermClass[] = [
   }
 ];
 
+// ─── Editable Site Content (site_content table) ───────────
+//
+// Each row is one section of a page: { id, value: { field: text } }.
+// The fallbacks below are the exact copy currently shipped with the
+// design — if the table is missing or a row/field hasn't been saved
+// yet, the site renders identically to before.
+
+export type SiteSection = Record<string, string>;
+export type SiteContentMap = Record<string, SiteSection>;
+
+export const FALLBACK_SITE_CONTENT: SiteContentMap = {
+  home_leading: {
+    heading: 'LEADING THE DEVELOPMENT IN FORMING TECHNICAL FOOTBALL PLAYERS',
+    body: 'We build players on a foundation of technical mastery, developing them to excel on the pitch in all areas of skill, intelligence, and discipline. Each session is designed to challenge, inspire, and prepare players for the next level of their game.',
+  },
+  home_new_section: {
+    heading: 'HEADING 1',
+    body: 'This is a placeholder paragraph for the new homepage section. Edit this text from the Admin Dashboard under Site Content to describe this part of the Technica Football story.',
+  },
+  home_highlight: {
+    award_text: `"Awarded 'Best New Business 2024'"`,
+    vouchers_text: 'We accept Active Kids vouchers',
+  },
+  home_programs: {
+    heading: 'OUR PROGRAMS',
+  },
+  home_pathway: {
+    eyebrow: 'Technica Football',
+    heading: 'Player Pathway',
+    tagline: 'A Clear Path. Purposeful Development. Higher Standards.',
+    goal_heading: 'Our Goal',
+    goal_text: 'To develop confident, skilled and resilient players who love the game and strive for excellence.',
+  },
+  home_testimonials: {
+    heading: 'TESTIMONIALS',
+  },
+  home_core_focus: {
+    heading: 'OUR CORE FOCUS',
+    card1_title: 'TOUCH',
+    card1_text: 'Mastering the initial contact to kill momentum and prepare the next tactical move instantly.',
+    card2_title: 'DRIBBLING',
+    card2_text: 'Technical ball mastery combined with explosive changes of direction to bypass defensive lines.',
+    card3_title: 'PASSING',
+    card3_text: 'Weight, timing, and trajectory. Developing the ability to break lines with surgical precision.',
+    supporting_heading: 'SUPPORTING FACTORS',
+    sup1_title: 'COMMUNICATION',
+    sup1_text: 'Verbal and non-verbal cues that sync the unit during high-intensity transition phases.',
+    sup2_title: 'SCANNING',
+    sup2_text: 'Constant environmental awareness to build a mental map of the pitch before the ball arrives.',
+    sup3_title: 'MOVEMENT',
+    sup3_text: 'Intelligent spacing and decoy runs designed to manipulate opponent structure and create gaps.',
+    sup4_title: 'EFFORT',
+    sup4_text: 'The non-negotiable standard of work rate required to execute high-press and recovery tactics.',
+  },
+  home_kit: {
+    heading_white: 'Official',
+    heading_orange: 'Training Kit',
+    button_label: 'See All Options',
+  },
+  home_partners: {
+    heading: 'OUR PARTNERS',
+  },
+  term_program_page: {
+    // Leave empty to auto-generate from the current classes,
+    // e.g. "TERM 3 PROGRAM SCHEDULE".
+    schedule_heading: '',
+  },
+};
+
+export function useSiteContent() {
+  const [content, setContent] = useState<SiteContentMap>(FALLBACK_SITE_CONTENT);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    supabase.from('site_content').select('id, value').then(({ data }) => {
+      if (data && data.length > 0) {
+        const merged: SiteContentMap = { ...FALLBACK_SITE_CONTENT };
+        data.forEach((row: { id: string; value: SiteSection }) => {
+          merged[row.id] = { ...FALLBACK_SITE_CONTENT[row.id], ...(row.value || {}) };
+        });
+        setContent(merged);
+      }
+      setLoading(false);
+    });
+  }, []);
+  return { content, loading };
+}
+
 // ─── Hooks ────────────────────────────────────────────────
 
 export function useCoaches() {
@@ -283,13 +370,15 @@ export function useTermClasses() {
           max_capacity: c.max_capacity
         }));
 
-        // Sort: Foundation classes first, then alphabetically by ID
+        // Sort: Foundation classes first, then alphabetically by subtitle.
+        // Uses the editable title (not the immutable row id) so classes
+        // repurposed in the CMS sort correctly.
         mapped.sort((a, b) => {
-          const aIsFoundation = a.id.toLowerCase().includes('foundation');
-          const bIsFoundation = b.id.toLowerCase().includes('foundation');
+          const aIsFoundation = (a.title || a.id).toLowerCase().includes('foundation');
+          const bIsFoundation = (b.title || b.id).toLowerCase().includes('foundation');
           if (aIsFoundation && !bIsFoundation) return -1;
           if (!aIsFoundation && bIsFoundation) return 1;
-          return a.id.localeCompare(b.id);
+          return (a.subtitle || a.id).localeCompare(b.subtitle || b.id);
         });
 
         setClasses(mapped);

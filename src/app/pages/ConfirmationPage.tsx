@@ -36,7 +36,26 @@ export default function ConfirmationPage() {
         }
       }
 
-      // 2. Fetch booking details for display
+      // 2. Fetch booking details for display.
+      // Preferred path: SECURITY DEFINER RPC that only returns a booking when
+      // the caller knows the matching Stripe session id (the bookings table is
+      // no longer publicly readable). Falls back to direct selects if the RPC
+      // hasn't been created yet.
+      if (sessionId) {
+        const { data: rpcData, error: rpcError } = await supabase.rpc('get_booking_confirmation', {
+          p_session_id: sessionId,
+          p_booking_id: bookingId || null,
+        });
+        if (!rpcError && Array.isArray(rpcData) && rpcData.length > 0) {
+          setBooking(rpcData[0]);
+          setLoading(false);
+          return;
+        }
+        if (!rpcError) {
+          // RPC exists but found nothing (e.g. verify-payment hasn't stored
+          // the session id yet) — fall through to the legacy queries below.
+        }
+      }
       if (bookingId) {
         const { data } = await supabase.from('bookings')
           .select('class_label, player_name, total_paid, addon_45min, addon_60min, parent_email, stripe_session_id')
