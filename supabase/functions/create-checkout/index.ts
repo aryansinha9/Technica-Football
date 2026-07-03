@@ -4,7 +4,11 @@
 //
 // This function creates a Stripe Checkout Session with dynamic line items.
 
-import Stripe from 'https://esm.sh/stripe@14.14.0?target=deno';
+// Use the npm: specifier (Supabase's documented pattern) rather than the
+// esm.sh ?target=deno build — the latter pulls a deprecated deno.land/std
+// polyfill transitively (via object-inspect) that the bundler can no longer
+// fetch, which breaks deployment.
+import Stripe from 'npm:stripe@14.14.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const ALLOWED_ORIGINS = [
