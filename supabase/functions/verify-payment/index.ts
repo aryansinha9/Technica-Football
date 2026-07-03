@@ -1,7 +1,11 @@
 // Supabase Edge Function: verify-payment
 // Verifies a Stripe Checkout session, updates booking status to 'paid', and decrements spots.
 
-import Stripe from 'https://esm.sh/stripe@14.14.0?target=deno';
+// Use the npm: specifier (Supabase's documented pattern) rather than the
+// esm.sh ?target=deno build — the latter pulls a deprecated deno.land/std
+// polyfill transitively (via object-inspect) that the bundler can no longer
+// fetch, which breaks deployment.
+import Stripe from 'npm:stripe@14.14.0';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const ALLOWED_ORIGINS = [
@@ -63,7 +67,12 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, { apiVersion: '2023-10-16' });
+    const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
+      apiVersion: '2023-10-16',
+      // Required under the npm: specifier so Stripe uses Deno's fetch for
+      // outbound HTTP instead of the Node http client.
+      httpClient: Stripe.createFetchHttpClient(),
+    });
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
