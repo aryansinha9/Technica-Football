@@ -415,6 +415,8 @@ export default function AdminDashboardPage() {
                               {/* Registration Detail Grid */}
                               {b.registrations ? (
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs mb-5">
+                                  <Detail label="Parent Phone" value={b.parent_phone || '—'} />
+                                  <Detail label="Parent Email" value={b.parent_email || '—'} />
                                   <Detail label="Player DOB" value={b.registrations.player_birthday} />
                                   <Detail label="Gender" value={b.registrations.player_gender} />
                                   <Detail label="Experience" value={b.registrations.player_experience || '—'} />
