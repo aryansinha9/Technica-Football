@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, Save, AlertTriangle, Loader2, Plus, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
+import { Trash2, Save, AlertTriangle, Loader2, Plus, Copy, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useTermClasses, type TermClass, type TermSession } from '../../lib/useSiteContent';
 
@@ -9,6 +9,7 @@ export default function CMSTermClasses() {
   const [editData, setEditData] = useState<Partial<TermClass>>({});
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [duplicatingId, setDuplicatingId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const inputCls = 'w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm text-[#0A1F44] focus:outline-none focus:ring-2 focus:ring-[#f0722b]/40';
@@ -69,6 +70,59 @@ export default function CMSTermClasses() {
       alert('Failed to create class');
     }
     setSaving(false);
+  };
+
+  // Copy an existing class (details + every session date) into a brand new
+  // row so a term can be rebuilt without re-typing everything. Bookings are
+  // never copied — the duplicate starts with a full set of spots.
+  const handleDuplicate = async (source: TermClass) => {
+    setDuplicatingId(source.id);
+    const stamp = Date.now();
+    const newId = `class-${stamp}`;
+    const capacity = source.max_capacity ?? 15;
+    const newClass: TermClass = {
+      ...source,
+      id: newId,
+      slug: `${source.slug || 'class'}-copy-${stamp}`,
+      title: `${source.title} (Copy)`,
+      sessions: (source.sessions || []).map(session => ({ ...session })),
+      spots_remaining: capacity,
+      max_capacity: capacity,
+    };
+
+    const { error } = await supabase.from('classes').insert({
+      id: newId,
+      // Legacy display label (NOT NULL in the original schema) — newer UI
+      // prefers subtitle/title but older rows still rely on it.
+      label: `${newClass.subtitle} / ${newClass.location}`,
+      slug: newClass.slug,
+      title: newClass.title,
+      subtitle: newClass.subtitle,
+      location: newClass.location,
+      address: newClass.address,
+      full_address: newClass.fullAddress,
+      age_group: newClass.ageGroup,
+      price: newClass.price,
+      started_date: newClass.startedDate,
+      date_range: newClass.dateRange,
+      session_duration: newClass.sessionDuration,
+      total_sessions: newClass.totalSessions,
+      description: newClass.description,
+      sessions: newClass.sessions,
+      spots_remaining: newClass.spots_remaining,
+      max_capacity: newClass.max_capacity
+    });
+
+    if (!error) {
+      setClasses([...classes, newClass]);
+      setExpandedId(null);
+      setEditId(newId);
+      setEditData(newClass);
+    } else {
+      console.error(error);
+      alert('Failed to duplicate class');
+    }
+    setDuplicatingId(null);
   };
 
   const handleSaveEdit = async (id: string) => {
@@ -138,7 +192,7 @@ export default function CMSTermClasses() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">Manage term programs, their details, and 8-week session dates.</p>
+        <p className="text-sm text-gray-500">Manage term programs, their details, and 8-week session dates. Use Duplicate to copy a class (including every session date) as the starting point for a new one.</p>
         <button onClick={handleAddNew} disabled={saving} className="flex items-center gap-2 bg-[#0A1F44] text-white text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl hover:bg-[#f0722b] transition-colors disabled:opacity-50">
           {saving && !editId ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />} Add Class
         </button>
@@ -228,6 +282,9 @@ export default function CMSTermClasses() {
                     {expandedId === c.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                   <button onClick={() => { setEditId(c.id); setEditData({ sessions: c.sessions || [] }); }} className="text-xs font-barlow font-bold tracking-widest uppercase text-[#0A1F44] border border-gray-200 px-4 py-2 rounded-xl hover:bg-gray-50">Edit</button>
+                  <button onClick={() => handleDuplicate(c)} disabled={duplicatingId !== null} title="Duplicate this class with all its session dates" className="flex items-center gap-2 text-xs font-barlow font-bold tracking-widest uppercase text-[#0A1F44] border border-gray-200 px-4 py-2 rounded-xl hover:bg-gray-50 disabled:opacity-50">
+                    {duplicatingId === c.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Copy className="w-3.5 h-3.5" />} Duplicate
+                  </button>
                   <button onClick={() => setConfirmDeleteId(c.id)} className="text-xs font-barlow font-bold tracking-widest uppercase text-red-500 border border-red-200 px-3 py-2 rounded-xl hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
                 </div>
               </div>

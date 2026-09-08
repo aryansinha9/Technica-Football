@@ -50,6 +50,19 @@ const SECTIONS: SectionDef[] = [
     ],
   },
   {
+    id: 'home_stats',
+    title: 'Homepage — Hero Stats Bar',
+    description: 'The three white stats across the bottom of the hero image, separated by white lines.',
+    fields: [
+      { key: 'stat1_value', label: 'Stat 1 — Number' },
+      { key: 'stat1_label', label: 'Stat 1 — Label' },
+      { key: 'stat2_value', label: 'Stat 2 — Number' },
+      { key: 'stat2_label', label: 'Stat 2 — Label' },
+      { key: 'stat3_value', label: 'Stat 3 — Number' },
+      { key: 'stat3_label', label: 'Stat 3 — Label' },
+    ],
+  },
+  {
     id: 'home_programs',
     title: 'Homepage — Our Programs',
     description: 'Section heading only. The program cards themselves are edited under the Programs tab.',
@@ -108,9 +121,14 @@ const SECTIONS: SectionDef[] = [
   },
   {
     id: 'home_partners',
-    title: 'Homepage — Our Partners',
-    description: 'Section heading only. The partner logos are edited under the Sponsors tab.',
-    fields: [{ key: 'heading', label: 'Heading' }],
+    title: 'Homepage — Our Partners & Sponsorship Package',
+    description: 'Section heading plus the sponsorship package download card. The partner logos are edited under the Sponsors tab.',
+    fields: [
+      { key: 'heading', label: 'Heading' },
+      { key: 'sponsorship_heading', label: 'Sponsorship Card — Heading' },
+      { key: 'sponsorship_text', label: 'Sponsorship Card — Text', multiline: true },
+      { key: 'sponsorship_button_label', label: 'Sponsorship Card — Button Label', hint: 'Downloads /Technica-Football-Sponsorship-Package.pdf' },
+    ],
   },
   {
     id: 'term_program_page',

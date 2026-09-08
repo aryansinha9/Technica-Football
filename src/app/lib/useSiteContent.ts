@@ -211,6 +211,14 @@ export const FALLBACK_SITE_CONTENT: SiteContentMap = {
     award_text: `"Awarded 'Best New Business 2024'"`,
     vouchers_text: 'We accept Active Kids vouchers',
   },
+  home_stats: {
+    stat1_value: '1000+',
+    stat1_label: 'Hours Coached',
+    stat2_value: '250+',
+    stat2_label: 'Players Coached',
+    stat3_value: '2022',
+    stat3_label: 'Coaching Since',
+  },
   home_programs: {
     heading: 'OUR PROGRAMS',
   },
@@ -249,6 +257,9 @@ export const FALLBACK_SITE_CONTENT: SiteContentMap = {
   },
   home_partners: {
     heading: 'OUR PARTNERS',
+    sponsorship_heading: 'Become a Sponsor',
+    sponsorship_text: 'Click below to download our sponsorship package and see how your brand can partner with Technica Football.',
+    sponsorship_button_label: 'Download Sponsorship Package',
   },
   term_program_page: {
     // Leave empty to auto-generate from the current classes,
