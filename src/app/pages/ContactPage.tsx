@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, Mail, Facebook, Instagram, Send, ChevronRight } from 'lucide-react';
+import { Phone, Mail, Facebook, Instagram, Send, ChevronRight, Download } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import { useSponsors } from '../lib/useSiteContent';
 
@@ -334,15 +334,30 @@ export default function ContactPage() {
         <div className="max-w-2xl mx-auto">
           <p className="text-orange-500 font-barlow font-bold tracking-[0.3em] uppercase text-sm mb-4">Partnership Opportunities</p>
           <h3 className="text-3xl md:text-4xl font-black mb-4">Become a Sponsor</h3>
-          <p className="text-white/70 leading-relaxed mb-8">
+          <p className="text-white/70 leading-relaxed mb-4">
             Interested in sponsoring Technica Football? Get in touch with us to explore partnership opportunities and how your brand can support the next generation of football talent.
           </p>
-          <a
-            href="mailto:info@technicafootball.com.au?subject=Sponsorship Enquiry"
-            className="inline-flex items-center gap-2 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-8 py-4 rounded-xl hover:bg-white hover:text-[#f0722b] transition-colors duration-300 text-base shadow-lg"
-          >
-            Enquire About Sponsorship <ChevronRight className="w-5 h-5" />
-          </a>
+          <p className="text-white/70 leading-relaxed mb-8">
+            Click below to download our sponsorship package for full details on partnership tiers and benefits.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/Technica-Football-Sponsorship-Package.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white text-[#0A1F44] font-barlow font-bold tracking-widest uppercase px-8 py-4 rounded-xl hover:bg-[#f0722b] hover:text-white transition-colors duration-300 text-base shadow-lg"
+            >
+              <Download className="w-5 h-5" /> Download Sponsorship Package
+            </a>
+            <a
+              href="mailto:info@technicafootball.com.au?subject=Sponsorship Enquiry"
+              className="inline-flex items-center gap-2 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-8 py-4 rounded-xl hover:bg-white hover:text-[#f0722b] transition-colors duration-300 text-base shadow-lg"
+            >
+              Enquire About Sponsorship <ChevronRight className="w-5 h-5" />
+            </a>
+          </div>
+          <p className="text-xs text-white/40 mt-5 font-barlow tracking-widest uppercase">PDF &middot; 20 pages</p>
         </div>
       </section>
 
