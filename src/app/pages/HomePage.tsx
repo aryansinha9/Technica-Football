@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Link } from 'react-router';
 import TiltedCard from '../../components/TiltedCard';
 import ExploreButton from '../components/ExploreButton';
@@ -104,6 +104,17 @@ export default function HomePage() {
           }}
         >
           <AnimatedCTA href="/programs" label="Explore Programs" />
+        </div>
+
+        {/* Stats bar — white figures separated by white dividers, above the wave */}
+        <div className="absolute inset-x-0 bottom-[70px] md:bottom-[105px] lg:bottom-[135px] z-[50] px-4">
+          {/* Centred on mobile (under the CTA); pinned bottom-right on larger
+              screens so it never runs into the bottom-left Explore button. */}
+          <div className="mx-auto sm:mx-0 sm:ml-auto sm:w-fit sm:mr-[7%] flex items-stretch justify-center divide-x divide-white/60">
+            <HeroStat value={content.home_stats.stat1_value} label={content.home_stats.stat1_label} />
+            <HeroStat value={content.home_stats.stat2_value} label={content.home_stats.stat2_label} />
+            <HeroStat value={content.home_stats.stat3_value} label={content.home_stats.stat3_label} />
+          </div>
         </div>
 
         {/* Gray bottom band + wave */}
@@ -745,6 +756,26 @@ export default function HomePage() {
               </a>
             ))}
           </div>
+          {/* Sponsorship package — downloadable PDF */}
+          <div className="mt-20 max-w-2xl mx-auto bg-white border border-gray-100 rounded-2xl shadow-sm px-8 py-10">
+            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wide text-[#0A1F44] mb-3">
+              {content.home_partners.sponsorship_heading}
+            </h3>
+            <p className="text-gray-600 leading-relaxed mb-8">
+              {content.home_partners.sponsorship_text}
+            </p>
+            <a
+              href="/Technica-Football-Sponsorship-Package.pdf"
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-[#f0722b] text-white font-barlow font-bold tracking-widest uppercase px-10 py-4 rounded-xl hover:bg-[#0A1F44] transition-colors duration-300 text-base shadow-lg"
+            >
+              <Download className="w-5 h-5" /> {content.home_partners.sponsorship_button_label}
+            </a>
+            <p className="text-xs text-[#0A1F44]/40 mt-5 font-barlow tracking-widest uppercase">PDF &middot; 20 pages</p>
+          </div>
+
           <p className="text-center text-sm text-[#0A1F44]/40 mt-14 font-barlow tracking-wide">
             Want to work with us?{' '}
             <a href="mailto:info@technicafootball.com.au" className="underline hover:text-[#0A1F44]/70 transition-colors">Send us an email</a>{' '}
@@ -753,5 +784,18 @@ export default function HomePage() {
         </div>
       </section>
     </>
+  );
+}
+
+// One figure in the hero stats bar. The white divider between items comes from
+// `divide-x` on the parent, so each stat is a plain flex child.
+function HeroStat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="flex-1 px-3 sm:px-8 md:px-12 text-center">
+      <p className="font-black leading-none text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl">{value}</p>
+      {label && (
+        <p className="mt-2 font-barlow font-bold uppercase tracking-widest text-white/80 text-[10px] sm:text-xs md:text-sm">{label}</p>
+      )}
+    </div>
   );
 }
