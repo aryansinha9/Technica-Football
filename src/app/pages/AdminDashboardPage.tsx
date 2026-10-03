@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { LogOut, Download, Loader2, Save, ChevronDown, ChevronUp, Trash2, AlertTriangle } from 'lucide-react';
+import { LogOut, Download, Loader2, Save, ChevronDown, ChevronUp, Trash2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
@@ -31,6 +31,7 @@ interface Booking {
   addon_total: number;
   total_paid: number;
   payment_status: string;
+  stripe_session_id: string | null;
   created_at: string;
   registration_id: string;
   registrations?: {
@@ -70,6 +71,8 @@ export default function AdminDashboardPage() {
   const [savingSpots, setSavingSpots] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [checkingPaymentId, setCheckingPaymentId] = useState<string | null>(null);
+  const [paymentCheckMsg, setPaymentCheckMsg] = useState<Record<string, string>>({});
 
   useEffect(() => {
     checkAuth();
@@ -89,7 +92,8 @@ export default function AdminDashboardPage() {
     ]);
     if (bookingsRes.data) setBookings(bookingsRes.data);
     if (classesRes.data) {
-      setClasses(classesRes.data);
+      // Same order as the Term Classes CMS / public site.
+      setClasses([...classesRes.data].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)));
       const map: Record<string, number> = {};
       classesRes.data.forEach(c => { map[c.id] = c.spots_remaining; });
       setEditingSpots(map);
@@ -127,6 +131,32 @@ export default function AdminDashboardPage() {
     } finally {
       setDeleting(false);
     }
+  };
+
+  // For bookings stuck on pending (parent paid but never reached the
+  // confirmation page): ask Stripe whether the checkout was paid. If it was,
+  // verify-payment marks it paid and sends the confirmation + admin emails.
+  const handleCheckPayment = async (b: Booking) => {
+    if (!b.stripe_session_id) return;
+    setCheckingPaymentId(b.id);
+    const { data, error } = await supabase.functions.invoke('verify-payment', {
+      body: { sessionId: b.stripe_session_id, bookingId: b.id },
+    });
+    let msg: string;
+    if (error) {
+      let detail = '';
+      try { detail = (await (error as any).context?.json())?.error ?? ''; } catch { /* non-JSON body */ }
+      msg = detail === 'Payment not completed'
+        ? 'Stripe shows this checkout was not paid. If the parent was charged, they may have paid on a different attempt — search their email in Stripe.'
+        : `Could not check payment${detail ? `: ${detail}` : ''}.`;
+    } else {
+      msg = data?.alreadyProcessed
+        ? 'Already marked as paid.'
+        : 'Payment confirmed with Stripe. Marked as paid and confirmation email sent to the parent.';
+      await fetchData();
+    }
+    setPaymentCheckMsg(prev => ({ ...prev, [b.id]: msg }));
+    setCheckingPaymentId(null);
   };
 
   const filtered = filter === 'all' ? bookings : bookings.filter(b => b.class_id === filter);
@@ -430,8 +460,22 @@ export default function AdminDashboardPage() {
                                 <p className="text-xs text-gray-400 italic mb-5">No registration details available.</p>
                               )}
 
-                              {/* Delete Button */}
-                              <div className="flex justify-end border-t border-gray-200 pt-4">
+                              {paymentCheckMsg[b.id] && (
+                                <p className="text-xs text-[#0A1F44] bg-white border border-gray-200 rounded-xl px-4 py-3 mb-4">{paymentCheckMsg[b.id]}</p>
+                              )}
+
+                              {/* Actions */}
+                              <div className="flex flex-wrap justify-end gap-3 border-t border-gray-200 pt-4">
+                                {b.payment_status !== 'paid' && b.stripe_session_id && (
+                                  <button
+                                    onClick={e => { e.stopPropagation(); handleCheckPayment(b); }}
+                                    disabled={checkingPaymentId === b.id}
+                                    title="If the parent was charged but this still says pending, this confirms the payment with Stripe and sends their confirmation email"
+                                    className="flex items-center gap-2 text-[#0A1F44] hover:bg-white border border-gray-300 text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl transition-colors disabled:opacity-50"
+                                  >
+                                    {checkingPaymentId === b.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />} Check Payment with Stripe
+                                  </button>
+                                )}
                                 <button
                                   onClick={e => { e.stopPropagation(); setConfirmDeleteId(b.id); }}
                                   className="flex items-center gap-2 text-red-500 hover:text-red-700 hover:bg-red-50 border border-red-200 text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl transition-colors"
