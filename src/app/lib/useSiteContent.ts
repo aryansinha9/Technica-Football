@@ -77,6 +77,7 @@ export interface TermClass {
   sessions: TermSession[];
   spots_remaining?: number;
   max_capacity?: number;
+  sort_order?: number;
 }
 
 // ─── Fallback Data (current hardcoded content) ────────────
@@ -378,13 +379,16 @@ export function useTermClasses() {
           description: c.description || '',
           sessions: c.sessions || [],
           spots_remaining: c.spots_remaining,
-          max_capacity: c.max_capacity
+          max_capacity: c.max_capacity,
+          sort_order: c.sort_order ?? 0
         }));
 
-        // Sort: Foundation classes first, then alphabetically by subtitle.
-        // Uses the editable title (not the immutable row id) so classes
-        // repurposed in the CMS sort correctly.
+        // Sort by the admin-set order (CMS up/down arrows). Ties — e.g. before
+        // sort_order existed — fall back to Foundation classes first, then
+        // alphabetically by subtitle. Uses the editable title (not the
+        // immutable row id) so classes repurposed in the CMS sort correctly.
         mapped.sort((a, b) => {
+          if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
           const aIsFoundation = (a.title || a.id).toLowerCase().includes('foundation');
           const bIsFoundation = (b.title || b.id).toLowerCase().includes('foundation');
           if (aIsFoundation && !bIsFoundation) return -1;

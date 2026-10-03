@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, Save, AlertTriangle, Loader2, Plus, Copy, GripVertical, ChevronDown, ChevronUp } from 'lucide-react';
+import { Trash2, Save, AlertTriangle, Loader2, Plus, Copy, ChevronDown, ChevronUp, ArrowUp, ArrowDown } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useTermClasses, type TermClass, type TermSession } from '../../lib/useSiteContent';
 
@@ -11,6 +11,10 @@ export default function CMSTermClasses() {
   const [saving, setSaving] = useState(false);
   const [duplicatingId, setDuplicatingId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [reordering, setReordering] = useState(false);
+
+  // New and duplicated classes go to the bottom of the list.
+  const nextSortOrder = () => classes.reduce((max, c) => Math.max(max, c.sort_order ?? 0), -1) + 1;
 
   const inputCls = 'w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm text-[#0A1F44] focus:outline-none focus:ring-2 focus:ring-[#f0722b]/40';
   const labelCls = 'block text-xs font-barlow font-bold tracking-widest uppercase text-gray-500 mb-1';
@@ -35,7 +39,8 @@ export default function CMSTermClasses() {
       description: 'Class Description',
       sessions: [],
       spots_remaining: 15,
-      max_capacity: 15
+      max_capacity: 15,
+      sort_order: nextSortOrder()
     };
 
     const { error } = await supabase.from('classes').insert({
@@ -58,7 +63,8 @@ export default function CMSTermClasses() {
       description: newClass.description,
       sessions: newClass.sessions,
       spots_remaining: newClass.spots_remaining,
-      max_capacity: newClass.max_capacity
+      max_capacity: newClass.max_capacity,
+      sort_order: newClass.sort_order
     });
 
     if (!error) {
@@ -88,6 +94,7 @@ export default function CMSTermClasses() {
       sessions: (source.sessions || []).map(session => ({ ...session })),
       spots_remaining: capacity,
       max_capacity: capacity,
+      sort_order: nextSortOrder(),
     };
 
     const { error } = await supabase.from('classes').insert({
@@ -110,7 +117,8 @@ export default function CMSTermClasses() {
       description: newClass.description,
       sessions: newClass.sessions,
       spots_remaining: newClass.spots_remaining,
-      max_capacity: newClass.max_capacity
+      max_capacity: newClass.max_capacity,
+      sort_order: newClass.sort_order
     });
 
     if (!error) {
@@ -169,6 +177,32 @@ export default function CMSTermClasses() {
     setSaving(false);
   };
 
+  // Swap a class with its neighbour, then renumber the whole list 0..n-1 so
+  // the stored order always matches what's on screen. Only rows whose
+  // position actually changed are written.
+  const handleMove = async (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= classes.length) return;
+    const previous = classes;
+    const reordered = [...classes];
+    [reordered[index], reordered[target]] = [reordered[target], reordered[index]];
+    const renumbered = reordered.map((c, i) => ({ ...c, sort_order: i }));
+    const changed = renumbered.filter(c => previous.find(p => p.id === c.id)?.sort_order !== c.sort_order);
+
+    setClasses(renumbered);
+    setReordering(true);
+    const results = await Promise.all(
+      changed.map(c => supabase.from('classes').update({ sort_order: c.sort_order }).eq('id', c.id))
+    );
+    const failed = results.find(r => r.error);
+    if (failed) {
+      console.error(failed.error);
+      setClasses(previous);
+      alert('Failed to save the new order');
+    }
+    setReordering(false);
+  };
+
   const handleUpdateSession = (index: number, field: keyof TermSession, value: string) => {
     const currentSessions = [...(editData.sessions || [])];
     currentSessions[index] = { ...currentSessions[index], [field]: value };
@@ -192,13 +226,13 @@ export default function CMSTermClasses() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">Manage term programs, their details, and 8-week session dates. Use Duplicate to copy a class (including every session date) as the starting point for a new one.</p>
+        <p className="text-sm text-gray-500">Manage term programs, their details, and 8-week session dates. Use Duplicate to copy a class (including every session date) as the starting point for a new one. Use the arrows to change the order classes appear on the website.</p>
         <button onClick={handleAddNew} disabled={saving} className="flex items-center gap-2 bg-[#0A1F44] text-white text-xs font-barlow font-bold tracking-widest uppercase px-4 py-2 rounded-xl hover:bg-[#f0722b] transition-colors disabled:opacity-50">
           {saving && !editId ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />} Add Class
         </button>
       </div>
 
-      {classes.map(c => (
+      {classes.map((c, index) => (
         <div key={c.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           {confirmDeleteId === c.id ? (
             <div className="bg-red-50 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -278,6 +312,14 @@ export default function CMSTermClasses() {
                   <p className="text-sm text-gray-500">{c.subtitle} • {c.location}</p>
                 </div>
                 <div className="flex gap-2">
+                  <div className="flex flex-col">
+                    <button onClick={() => handleMove(index, -1)} disabled={reordering || index === 0} title="Move up" className="text-gray-400 hover:text-[#0A1F44] border border-gray-200 border-b-0 px-2 py-0.5 rounded-t-xl hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-gray-400">
+                      <ArrowUp className="w-3.5 h-3.5" />
+                    </button>
+                    <button onClick={() => handleMove(index, 1)} disabled={reordering || index === classes.length - 1} title="Move down" className="text-gray-400 hover:text-[#0A1F44] border border-gray-200 px-2 py-0.5 rounded-b-xl hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-gray-400">
+                      <ArrowDown className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                   <button onClick={() => setExpandedId(expandedId === c.id ? null : c.id)} className="text-gray-400 hover:text-[#0A1F44] border border-gray-200 px-3 py-2 rounded-xl hover:bg-gray-50 transition-colors">
                     {expandedId === c.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
